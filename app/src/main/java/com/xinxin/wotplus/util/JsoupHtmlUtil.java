@@ -32,6 +32,9 @@ public class JsoupHtmlUtil {
         Elements elements;
         Element element;
 
+        String date = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis()));
+        Log.d("time5", date);
+
         try {
 
             // 开始解析HTML
@@ -200,6 +203,7 @@ public class JsoupHtmlUtil {
             woter.setAchievements(achievements);
 
             System.out.println(woter.toString());
+            Log.d("time5", String.valueOf(System.currentTimeMillis()));
 
         } catch (Exception e) {
             e.printStackTrace();
