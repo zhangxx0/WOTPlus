@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">WOTPlus</string>
+    <string name="action_settings">设置</string>
+
+    <string name="nav_home">首页</string>
+    <string name="nav_achieve">成就</string>
+    <string name="nav_count">统计</string>
+    <string name="nav_level">等级</string>
+    <string name="nav_vehicle">战车</string>
+    <string name="nav_about">关于</string>
+</resources>

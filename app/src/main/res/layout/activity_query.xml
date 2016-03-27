@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/search_back2"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="32dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:columnCount="3"
+            app:useDefaultMargins="true">
+
+            <TextView
+                android:text="玩家昵称:"
+                android:textColor="@color/window_background"
+                app:layout_gravity="right" />
+
+            <EditText
+                android:id="@+id/nametext"
+                android:textColor="@color/window_background"
+                android:text="康恩饭_"
+                android:ems="10"
+                app:layout_columnSpan="2" />
+
+
+            <TextView
+                android:text="所属大区:"
+                android:textColor="@color/window_background"
+                app:layout_column="0"
+                app:layout_gravity="right" />
+
+            <RadioGroup
+                android:id="@+id/nsregion"
+                app:layout_columnSpan="2">
+
+                <RadioButton
+                    android:id="@+id/north"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="北区"
+                    android:textColor="@color/window_background" />
+
+                <RadioButton
+                    android:id="@+id/sourth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="南区"
+                    android:textColor="@color/window_background" />
+            </RadioGroup>
+
+            <Button
+                android:text="看看"
+                app:layout_column="1" />
+
+            <Button
+                android:id="@+id/query"
+                android:text="查询"
+                app:layout_column="2" />
+
+        </android.support.v7.widget.GridLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
