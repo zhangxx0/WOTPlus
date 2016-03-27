@@ -23,9 +23,9 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final int TYPE_ONE = 0;
     private final int TYPE_TWO = 1;
 
-    public WoterAdapter(Context context, Woter mWoter) {
+    public WoterAdapter(Context context, Woter woter) {
         this.mContext = context;
-        this.mWoter = mWoter;
+        this.mWoter = woter;
         layoutInflater = LayoutInflater.from(context);
     }
 

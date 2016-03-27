@@ -13,20 +13,25 @@ import android.view.ViewGroup;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.WoterAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
+import com.xinxin.wotplus.model.ClanInfo;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.JsoupHtmlUtil;
 
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 /**
  * Created by xinxin on 2016/3/25.
- *
+ * <p/>
  * 主页面Fragment
  */
 public class MainFragment extends BaseFragment {
@@ -66,8 +71,6 @@ public class MainFragment extends BaseFragment {
         }
 
 
-
-
         return view;
     }
 
@@ -77,6 +80,9 @@ public class MainFragment extends BaseFragment {
         String add2 = "http://www.baidu.com";
         String add3 = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/search/?name=%E5%BA%B7%E6%81%A9%E9%A5%AD_&name_gt=";
         String add4 = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/#wot&at_search=%E5%BA%B7%E6%81%A9%E9%A5%AD_";
+
+        // 军团信息URL
+        final String clanUrl = "http://ncw.worldoftanks.cn/zh-cn/community/clans/show_clan_block/?spa_id=1509154099&time_token=1459046879981";
 
         // （1）使用HttpURLConnection
 //        HttpUtil.sendHttpRequest(add4, new HttpCallbackListener() {
@@ -136,18 +142,83 @@ public class MainFragment extends BaseFragment {
             }
         });
 
+        // 获取军团信息的json
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clanUrl, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Log.d("TAG", response.toString());
+
+                        Gson gson = new Gson();
+                        ClanInfo clanInfo = gson.fromJson(response.toString(), ClanInfo.class);
+                        
+                        handleClaninfo(clanInfo);
+
+                        // Log.d("json", clanInfo.toString());
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", error.getMessage(), error);
+            }
+        });
+
         mQueue.add(stringRequest);
+        mQueue.add(jsonObjectRequest);
 
 
     }
 
-    // 解析获取到的文件
+    /**
+     * 处理军团信息
+     * @param clanInfo
+     */
+    private void handleClaninfo(ClanInfo clanInfo) {
+
+        Log.d("claninfo", "111");
+        Log.d("claninfo", clanInfo.getData().toString());
+        // Log.d("claninfo", clanInfo.getData().getClan_block().toString());
+        // System.out.println(clanInfo.getData().getClan_block().toString());
+
+        jsoupClanInfo(clanInfo.getData().getClan_block().toString());
+
+    }
+
+    /**
+     * 使用jsoup处理军团信息
+     * @param s
+     */
+    private void jsoupClanInfo(String s) {
+        Document doc = Jsoup.parse(s);
+        Element link = doc.select("img").first();
+
+//        String clanDescription = link.attr("alt");
+//        String clanImgSrc = link.attr("src");
+
+        Element clanPosition = doc.select(".number").first();
+        Element clanDays = doc.select(".number").last();
+
+//        String clanPositionS = clanPosition.text();
+//        String clanDaysS = clanDays.text();
+
+        // 赋值给woter，但是这个地方要考虑赋值的顺序，应该是在获取解析的主页面信息之后，再设置这几个军团信息；
+        woter.setClanDescription(link.attr("alt"));
+        woter.setClanImgSrc(link.attr("src"));
+        woter.setClanPosition(clanPosition.text());
+        woter.setClanDays(clanDays.text());
+
+    }
+
+    /**
+     * 解析获取到的文件
+      */
     private void jsoupHtml(String html) {
 
         // 使用返回的html字符串
         Document doc = Jsoup.parse(html);
 
-        JsoupHtmlUtil.handleWotPage(doc);
+        woter = JsoupHtmlUtil.handleWotPage(doc);
 
 
         // 使用保存的file

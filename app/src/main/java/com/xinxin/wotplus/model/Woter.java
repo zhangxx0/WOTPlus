@@ -48,6 +48,68 @@ public class Woter implements Serializable {
     private String dmgRecNum;
 
 
+    /**
+     * 军团信息
+     */
+    private String clanDescription;
+    private String clanImgSrc;
+    private String clanPosition;
+    private String clanDays;
+
+    /**
+     * 成就信息
+     */
+    private Achievements achievements;
+
+
+
+
+
+
+
+    public Achievements getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(Achievements achievements) {
+        this.achievements = achievements;
+    }
+
+    public String getClanDays() {
+        return clanDays;
+    }
+
+    public void setClanDays(String clanDays) {
+        this.clanDays = clanDays;
+    }
+
+    public String getClanPosition() {
+        return clanPosition;
+    }
+
+    public void setClanPosition(String clanPosition) {
+        this.clanPosition = clanPosition;
+    }
+
+    public String getClanImgSrc() {
+        return clanImgSrc;
+    }
+
+    public void setClanImgSrc(String clanImgSrc) {
+        this.clanImgSrc = clanImgSrc;
+    }
+
+    public String getClanDescription() {
+        return clanDescription;
+    }
+
+    public void setClanDescription(String clanDescription) {
+        this.clanDescription = clanDescription;
+    }
+
+
+
+
     public String getTimeStamp() {
         return timeStamp;
     }
