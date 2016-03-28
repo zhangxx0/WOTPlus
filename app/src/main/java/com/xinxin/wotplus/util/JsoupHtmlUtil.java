@@ -65,7 +65,7 @@ public class JsoupHtmlUtil {
 
             elements = doc.select(".b-speedometer-ratio");
             woter.setKillDeathNum(elements.get(0).text());
-            woter.setDmgRecNum(elements.get(0).text());
+            woter.setDmgRecNum(elements.get(1).text());
 
             /**
              * （2）成就信息

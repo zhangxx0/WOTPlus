@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-//        getSupportFragmentManager().beginTransaction().
-//                setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
-//                replace(R.id.fl_content, new MainFragment(), "latest").
-//                commit();
+        getSupportFragmentManager().beginTransaction().
+                setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
+                replace(R.id.fl_content, new MainFragment(), "latest").
+                commit();
 
     }
 

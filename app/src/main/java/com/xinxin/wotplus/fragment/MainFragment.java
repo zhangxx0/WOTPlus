@@ -315,9 +315,6 @@ public class MainFragment extends BaseFragment {
 
         woter = JsoupHtmlUtil.handleWotPage(doc);
 
-        String date = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis()));
-        Log.d("time4", date);
-
         // 使用保存的file
         //获得文件对象
 //        File file = new File(html1);
