@@ -32,19 +32,14 @@ public class JsoupHtmlUtil {
         Elements elements;
         Element element;
 
-        String date = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis()));
-        Log.d("time5", date);
-
         try {
-
-            // 开始解析HTML
-            elements = doc.getElementsByTag("title");
-            element = elements.get(0);
-            Log.d("Element", element.html());
 
             /**
              * (1)概要信息
              */
+            element = doc.getElementById("js-profile-name");
+            woter.setWoterName(element.text());
+
 
             // 创建时间戳
             element = doc.select(".js-date-format").first();

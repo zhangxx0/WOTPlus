@@ -1,6 +1,8 @@
 package com.xinxin.wotplus.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import com.xinxin.wotplus.MyApplication;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -88,7 +91,43 @@ public class HttpUtil {
             }
         }).start();
 
+    }
 
+    /**
+     * 获取网络图片
+     * xinxin
+     * 2016年3月30日23:32:12
+     *
+     * @param url
+     * @return
+     */
+    public static Bitmap getHttpBitmap(String url) {
+
+        URL myFileURL;
+        Bitmap bitmap = null;
+        try {
+            myFileURL = new URL(url);
+            //获得连接
+            HttpURLConnection conn = (HttpURLConnection) myFileURL.openConnection();
+            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+            conn.setConnectTimeout(6000);
+            //连接设置获得数据流
+            conn.setDoInput(true);
+            //不使用缓存
+            conn.setUseCaches(false);
+            //这句可有可无，没有影响
+            //conn.connect();
+            //得到数据流
+            InputStream is = conn.getInputStream();
+            //解析得到图片
+            bitmap = BitmapFactory.decodeStream(is);
+            //关闭数据流
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     // 判断网络是否可用，以下三个方法同

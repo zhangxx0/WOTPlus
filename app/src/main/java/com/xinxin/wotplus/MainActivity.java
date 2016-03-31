@@ -2,6 +2,7 @@ package com.xinxin.wotplus;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -71,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
         View view = mNavigationView.getHeaderView(0);
 
         String name = getIntent().getStringExtra("name");
+        String region = getIntent().getStringExtra("region");
+
+        // 放入SharePreference
+        SharedPreferences.Editor editor = getSharedPreferences("queryinfo", MODE_PRIVATE).edit();
+        editor.putString("name", name);
+        editor.putString("region", region);
+        editor.commit();
+
         header_text = (TextView) view.findViewById(R.id.id_header);
         header_text.setText(name);
 

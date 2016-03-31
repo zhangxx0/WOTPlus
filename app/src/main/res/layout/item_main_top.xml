@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:layout_margin="@dimen/linearlayout_margin"
         >
 
         <LinearLayout
@@ -41,6 +42,7 @@
                     android:text="战胜率" />
 
                 <TextView
+                    android:id="@+id/personWin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -74,6 +76,7 @@
                     android:text="战斗场数" />
 
                 <TextView
+                    android:id="@+id/personFight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -107,6 +110,7 @@
                     android:text="个人排名" />
 
                 <TextView
+                    android:id="@+id/personRanking"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -139,6 +143,7 @@
                     android:text="场均经验" />
 
                 <TextView
+                    android:id="@+id/personExp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -171,6 +176,7 @@
                     android:text="平均伤害" />
 
                 <TextView
+                    android:id="@+id/personDmg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

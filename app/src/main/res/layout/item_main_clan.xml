@@ -14,7 +14,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/linearlayout_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,26 +34,31 @@
             android:layout_height="0dp"
             android:layout_weight="2">
             <ImageView
+                android:id="@+id/clanFlag"
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_weight="1"
-                android:src="@drawable/emblem_64x64"/>
+                />
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_weight="3"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/clanDescription"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:textSize="16sp"
-                    android:text="[小伙伴] 【小伙伴】--我们是兄弟--『那些"/>
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:text=""/>
 
                 <TextView
+                    android:id="@+id/clanPosition"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:textSize="16sp"
-                    android:text="职务: 招募" />
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>
@@ -63,11 +69,12 @@
             android:layout_weight="1"
             >
             <TextView
+                android:id="@+id/clanDays"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="16sp"
-                android:text="在军团中服役天数: 1067"/>
+                android:text=""/>
         </LinearLayout>
 
 

@@ -1,12 +1,18 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -17,7 +23,10 @@ import com.xinxin.wotplus.MyApplication;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Woter;
 
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by xinxin on 2016/3/24.
@@ -61,8 +70,11 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public int getItemCount() {
         // 可以在这个地方判断军团信息是否存在，控制返回的视图数量；
-
-        return 4;
+        if (mWoter.getEnterClanFlag().equals("0")) {
+            return 3;
+        } else {
+            return 4;
+        }
     }
 
     @Override
@@ -90,9 +102,26 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof AccountViewHolder) {
+
+            ((AccountViewHolder) holder).woterName.setText(mWoter.getWoterName());
+
+            String timeStamp = mWoter.getTimeStamp();
+            Long creatLong = Long.parseLong(timeStamp.substring(0, timeStamp.indexOf(".")));
+            String creatDay = new SimpleDateFormat("yyyy-MM-dd").format(new Date(creatLong * 1000));
+            ((AccountViewHolder) holder).createAccount.setText(creatDay);
+
+            int days = (int) ((new Date().getTime() - new Date(creatLong * 1000).getTime()) / (1000 * 60 * 60 * 24));
+
+            ((AccountViewHolder) holder).fightDays.setText("您已经在坦克世界中战斗了：" + String.valueOf(days) + "天");
         }
 
         if (holder instanceof MainInfoViewHolder) {
+
+            ((MainInfoViewHolder) holder).personWin.setText(mWoter.getPersonWin());
+            ((MainInfoViewHolder) holder).personFight.setText(mWoter.getPersonFight());
+            ((MainInfoViewHolder) holder).personRanking.setText(mWoter.getPersonRanking());
+            ((MainInfoViewHolder) holder).personExp.setText(mWoter.getPersonExp());
+            ((MainInfoViewHolder) holder).personDmg.setText(mWoter.getPersonDmg());
 
         }
 
@@ -138,26 +167,93 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         if (holder instanceof ClanViewHolder) {
 
+            // 使用自定义的HttpURLConnection无效，，，不知道怎么加thread；
+//            bitmap[0] = HttpUtil.getHttpBitmap(mWoter.getClanImgSrc());
+//            ((ClanViewHolder) holder).clanFlag.setImageBitmap(bitmap[0]);
+
+            // 使用AsyncTask实现简单的图片获取；
+            // http://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
+            // 有空研究下http://blog.csdn.net/guolin_blog/article/details/17482165
+            new DownloadImageTask(((ClanViewHolder) holder).clanFlag).execute(mWoter.getClanImgSrc());
+
+            // 这里使用了省略，若想查看详细，可以设置一个点击的弹出；
+            ((ClanViewHolder) holder).clanDescription.setText(mWoter.getClanDescription());
+            ((ClanViewHolder) holder).clanPosition.setText(" 职务:" + mWoter.getClanPosition());
+            ((ClanViewHolder) holder).clanDays.setText("在军团中服役天数:" + mWoter.getClanDays());
         }
+
 
     }
 
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
+    /**
+     * 账号信息
+     * 2016年3月30日21:33:42
+     */
     class AccountViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView woterName;
+        private TextView createAccount;
+        private TextView fightDays;
 
         public AccountViewHolder(View itemView) {
             super(itemView);
+            woterName = (TextView) itemView.findViewById(R.id.woterName);
+            createAccount = (TextView) itemView.findViewById(R.id.createAccount);
+            fightDays = (TextView) itemView.findViewById(R.id.fightDays);
 
         }
     }
 
+    /**
+     * 排名信息
+     * 2016年3月30日21:34:03
+     */
     class MainInfoViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView personWin;
+        private TextView personFight;
+        private TextView personRanking;
+        private TextView personExp;
+        private TextView personDmg;
 
         public MainInfoViewHolder(View itemView) {
             super(itemView);
+            personWin = (TextView) itemView.findViewById(R.id.personWin);
+            personFight = (TextView) itemView.findViewById(R.id.personFight);
+            personRanking = (TextView) itemView.findViewById(R.id.personRanking);
+            personExp = (TextView) itemView.findViewById(R.id.personExp);
+            personDmg = (TextView) itemView.findViewById(R.id.personDmg);
         }
     }
 
+    /**
+     * 图表信息
+     */
     class ChartsViewHolder extends RecyclerView.ViewHolder {
         private PieChart killdiechart;
         private PieChart hurtinjuredchart;
@@ -169,22 +265,33 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+    /**
+     * 军团信息
+     * 2016年3月30日22:28:13
+     */
     class ClanViewHolder extends RecyclerView.ViewHolder {
 
+        private ImageView clanFlag;
+        private TextView clanDescription;
+        private TextView clanPosition;
+        private TextView clanDays;
 
         public ClanViewHolder(View itemView) {
             super(itemView);
-
-
+            clanFlag = (ImageView) itemView.findViewById(R.id.clanFlag);
+            clanDescription = (TextView) itemView.findViewById(R.id.clanDescription);
+            clanPosition = (TextView) itemView.findViewById(R.id.clanPosition);
+            clanDays = (TextView) itemView.findViewById(R.id.clanDays);
         }
     }
 
 
     /**
      * 获取击杀死亡率数据
+     *
      * @param count
      * @param range
-     * @return
+     * @return PieData
      */
     private PieData getKillDieData(int count, float range) {
 
@@ -229,9 +336,10 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     /**
      * 获取伤害收到数据
+     *
      * @param i
      * @param i1
-     * @return
+     * @return PieData
      */
     private PieData getHurtRecData(int i, int i1) {
 

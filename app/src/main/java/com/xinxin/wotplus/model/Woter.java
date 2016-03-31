@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 /**
  * Created by xinxin on 2016/3/24.
- *
+ * <p/>
  * 坦克世界玩家信息实体类
  */
 public class Woter implements Serializable {
 
     // 主要信息
+
     /**
      * account_wins : 54.42161269608293
      * account_id : 1509154099
@@ -21,14 +22,19 @@ public class Woter implements Serializable {
      * clan_tag : 小伙伴
      */
 
-    private String account_id;
-    private String account_name;
-    private String account_battles;
-    private String account_exp;
-    private String account_profile;
-    private String account_wins;
-    private String clan_tag;
-    private String clan_url;
+//    private String account_id;
+//    private String account_name;
+//    private String account_battles;
+//    private String account_exp;
+//    private String account_profile;
+//    private String account_wins;
+//    private String clan_tag;
+//    private String clan_url;
+
+    /**
+     * 主要信息
+     */
+    private String woterName;
 
     // 创建账号时间戳
     private String timeStamp;
@@ -47,10 +53,10 @@ public class Woter implements Serializable {
     private String dmgRecRate;
     private String dmgRecNum;
 
-
     /**
      * 军团信息
      */
+    private String enterClanFlag;
     private String clanDescription;
     private String clanImgSrc;
     private String clanPosition;
@@ -62,10 +68,13 @@ public class Woter implements Serializable {
     private Achievements achievements;
 
 
+    public String getWoterName() {
+        return woterName;
+    }
 
-
-
-
+    public void setWoterName(String woterName) {
+        this.woterName = woterName;
+    }
 
     public Achievements getAchievements() {
         return achievements;
@@ -106,8 +115,6 @@ public class Woter implements Serializable {
     public void setClanDescription(String clanDescription) {
         this.clanDescription = clanDescription;
     }
-
-
 
 
     public String getTimeStamp() {
@@ -190,67 +197,12 @@ public class Woter implements Serializable {
         this.personDmg = personDmg;
     }
 
-    public String getAccount_id() {
-        return account_id;
+    public String getEnterClanFlag() {
+        return enterClanFlag;
     }
 
-    public void setAccount_id(String account_id) {
-        this.account_id = account_id;
+    public void setEnterClanFlag(String enterClanFlag) {
+        this.enterClanFlag = enterClanFlag;
     }
 
-    public String getAccount_name() {
-        return account_name;
-    }
-
-    public void setAccount_name(String account_name) {
-        this.account_name = account_name;
-    }
-
-    public String getAccount_battles() {
-        return account_battles;
-    }
-
-    public void setAccount_battles(String account_battles) {
-        this.account_battles = account_battles;
-    }
-
-    public String getAccount_exp() {
-        return account_exp;
-    }
-
-    public void setAccount_exp(String account_exp) {
-        this.account_exp = account_exp;
-    }
-
-    public String getAccount_profile() {
-        return account_profile;
-    }
-
-    public void setAccount_profile(String account_profile) {
-        this.account_profile = account_profile;
-    }
-
-    public String getAccount_wins() {
-        return account_wins;
-    }
-
-    public void setAccount_wins(String account_wins) {
-        this.account_wins = account_wins;
-    }
-
-    public String getClan_tag() {
-        return clan_tag;
-    }
-
-    public void setClan_tag(String clan_tag) {
-        this.clan_tag = clan_tag;
-    }
-
-    public String getClan_url() {
-        return clan_url;
-    }
-
-    public void setClan_url(String clan_url) {
-        this.clan_url = clan_url;
-    }
 }
