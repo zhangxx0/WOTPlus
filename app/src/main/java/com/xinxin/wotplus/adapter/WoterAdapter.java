@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.google.gson.Gson;
 import com.xinxin.wotplus.MyApplication;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Woter;
@@ -48,6 +50,19 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.mContext = context;
         this.mWoter = woter;
         layoutInflater = LayoutInflater.from(context);
+        // 将woter存储到sharedpreference，供其他页面使用；
+        putWoterToPreference(woter);
+    }
+
+    // 将Woter放入Preference
+    public void putWoterToPreference(Woter woter) {
+        Gson gson = new Gson();
+        String woterString = gson.toJson(woter);
+        // Log.d("woter", woterString);
+
+        SharedPreferences.Editor editor = mContext.getSharedPreferences("woter", Context.MODE_PRIVATE).edit();
+        editor.putString("woterString", woterString);
+        editor.commit();
     }
 
     @Override

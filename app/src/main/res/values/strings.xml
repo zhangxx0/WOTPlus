@@ -8,4 +8,10 @@
     <string name="nav_level">等级</string>
     <string name="nav_vehicle">战车</string>
     <string name="nav_about">关于</string>
+
+    <string name="class_ace">特级</string>
+    <string name="class_1">一级</string>
+    <string name="class_2">二级</string>
+    <string name="class_3">三级</string>
+
 </resources>

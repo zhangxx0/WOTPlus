@@ -67,6 +67,25 @@ public class Woter implements Serializable {
      */
     private Achievements achievements;
 
+    /**
+     * 徽章与战绩
+     */
+    private BadgeAndRecord badgeAndRecord;
+
+
+
+
+
+
+
+
+    public BadgeAndRecord getBadgeAndRecord() {
+        return badgeAndRecord;
+    }
+
+    public void setBadgeAndRecord(BadgeAndRecord badgeAndRecord) {
+        this.badgeAndRecord = badgeAndRecord;
+    }
 
     public String getWoterName() {
         return woterName;
