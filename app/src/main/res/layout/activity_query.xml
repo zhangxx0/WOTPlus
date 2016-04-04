@@ -35,7 +35,7 @@
             <EditText
                 android:id="@+id/nametext"
                 android:textColor="@color/window_background"
-                android:text="五星de巴顿"
+                android:text="康恩饭_"
                 android:ems="10"
                 app:layout_columnSpan="2" />
 

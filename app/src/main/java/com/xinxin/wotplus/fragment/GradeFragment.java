@@ -17,9 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.GradeAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
+import com.xinxin.wotplus.model.Grade;
 import com.xinxin.wotplus.util.Constant;
 
 import org.json.JSONObject;
@@ -42,6 +44,11 @@ public class GradeFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_grade, container, false);
 
+        recyclerview_grade = (RecyclerView) view.findViewById(R.id.recyclerview_grade);
+        LinearLayoutManager lm = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerview_grade.setLayoutManager(lm);
+        recyclerview_grade.setItemAnimator(new DefaultItemAnimator());
+
         RequestQueue mQueue = Volley.newRequestQueue(getActivity());
 
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Constant.STATISTICS_URL_BASE, null,
@@ -50,6 +57,11 @@ public class GradeFragment extends BaseFragment {
                     public void onResponse(JSONObject response) {
                         try {
                             Log.d("统计", "response=" + response);
+                            Gson gson = new Gson();
+                            Grade grade = gson.fromJson(response.toString(), Grade.class);
+
+                            adapter = new GradeAdapter(getActivity(), grade);
+                            recyclerview_grade.setAdapter(adapter);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -62,8 +74,8 @@ public class GradeFragment extends BaseFragment {
                 Log.e("统计", "onErrorResponse, error=" + error);
             }
         }) {
-              //  getParams方法好像没起作用？里面的log也没有打印；
-              //  https://github.com/mcxiaoke/android-volley/issues/82
+            //  getParams方法好像没起作用？里面的log也没有打印；
+            //  https://github.com/mcxiaoke/android-volley/issues/82
 //            @Override
 //            public Map<String, String> getParams() {
 //                Map<String, String> params = new HashMap<String, String>();
@@ -96,14 +108,6 @@ public class GradeFragment extends BaseFragment {
         };
         mQueue.add(jsonObjRequest);
         mQueue.start();
-
-        recyclerview_grade = (RecyclerView) view.findViewById(R.id.recyclerview_grade);
-        LinearLayoutManager lm = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerview_grade.setLayoutManager(lm);
-        recyclerview_grade.setItemAnimator(new DefaultItemAnimator());
-
-        adapter = new GradeAdapter(getActivity());
-        recyclerview_grade.setAdapter(adapter);
 
         return view;
     }

@@ -5,8 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.xinxin.wotplus.MyApplication;
@@ -129,6 +131,35 @@ public class HttpUtil {
 
         return bitmap;
     }
+
+    /**
+     * 获取图片
+     */
+    public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
 
     // 判断网络是否可用，以下三个方法同
     //  来源：https://github.com/Freelander/Android_Data/blob/master/fake_land/NetworkUtils.java

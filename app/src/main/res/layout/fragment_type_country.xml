@@ -18,6 +18,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_margin="@dimen/linearlayout_margin_more"
                 android:layout_weight="1">
                 <!--坦克类型-->
                 <com.github.mikephil.charting.charts.PieChart
@@ -30,6 +31,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_margin="@dimen/linearlayout_margin_more"
                 android:layout_weight="1">
                 <!--国家-->
                 <com.github.mikephil.charting.charts.PieChart

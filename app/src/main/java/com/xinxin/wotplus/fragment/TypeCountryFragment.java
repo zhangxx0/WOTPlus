@@ -59,7 +59,7 @@ public class TypeCountryFragment extends BaseFragment {
         PieData mpieData = getTypeData();
         type_chart.setHoleRadius(60f);  //半径
         type_chart.setTransparentCircleRadius(64f);
-        type_chart.setCenterText("111");
+        type_chart.setCenterText(woter.getPersonFight());
         type_chart.setDrawHoleEnabled(true);
         type_chart.setRotationAngle(90);
         type_chart.setRotationEnabled(true);
@@ -67,7 +67,7 @@ public class TypeCountryFragment extends BaseFragment {
         type_chart.setDescription("");
         type_chart.setData(mpieData);
         Legend mLegend = type_chart.getLegend();  //设置比例图
-        mLegend.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);  //最右边显示
+        mLegend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
         // mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
         mLegend.setXEntrySpace(7f);
         mLegend.setYEntrySpace(5f);
@@ -75,7 +75,7 @@ public class TypeCountryFragment extends BaseFragment {
         PieData mpieData2 = getCountryData();
         country_charts.setHoleRadius(60f);  //半径
         country_charts.setTransparentCircleRadius(64f);
-        country_charts.setCenterText("111");
+        country_charts.setCenterText(woter.getPersonFight());
         country_charts.setDrawHoleEnabled(true);
         country_charts.setRotationAngle(90);
         country_charts.setRotationEnabled(true);
@@ -83,8 +83,7 @@ public class TypeCountryFragment extends BaseFragment {
         country_charts.setDescription("");
         country_charts.setData(mpieData2);
         Legend mLegend2 = country_charts.getLegend();  //设置比例图
-        mLegend2.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);  //最右边显示
-        // mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
+        mLegend2.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
         mLegend2.setXEntrySpace(7f);
         mLegend2.setYEntrySpace(5f);
 
@@ -92,6 +91,11 @@ public class TypeCountryFragment extends BaseFragment {
 
     }
 
+    /**
+     * 获取坦克类型piechart数据
+     *
+     * @return
+     */
     private PieData getTypeData() {
         TypesAndCountry tc = woter.getTypesAndCountry();
 
@@ -107,12 +111,19 @@ public class TypeCountryFragment extends BaseFragment {
         /**
          * 使用比值
          */
-        // 计算比值 24,936 13,595
-        float quarterly1 = Float.parseFloat(tc.getPercentageLt().toString().replace("%", ""));
-        float quarterly2 = Float.parseFloat(tc.getPercentageMt().toString().replace("%", ""));
-        float quarterly3 = Float.parseFloat(tc.getPercentageHt().toString().replace("%", ""));
-        float quarterly4 = Float.parseFloat(tc.getPercentageTd().toString().replace("%", ""));
-        float quarterly5 = Float.parseFloat(tc.getPercentageSpg().toString().replace("%", ""));
+        // 计算比值
+        // 使用百分比
+//        float quarterly1 = Float.parseFloat(tc.getPercentageLt().toString().replace("%", ""));
+//        float quarterly2 = Float.parseFloat(tc.getPercentageMt().toString().replace("%", ""));
+//        float quarterly3 = Float.parseFloat(tc.getPercentageHt().toString().replace("%", ""));
+//        float quarterly4 = Float.parseFloat(tc.getPercentageTd().toString().replace("%", ""));
+//        float quarterly5 = Float.parseFloat(tc.getPercentageSpg().toString().replace("%", ""));
+        // 使用场数
+        float quarterly1 = Float.parseFloat(tc.getNumsLt().replace(",",""));
+        float quarterly2 = Float.parseFloat(tc.getNumsMt().replace(",", ""));
+        float quarterly3 = Float.parseFloat(tc.getNumsHt().replace(",", ""));
+        float quarterly4 = Float.parseFloat(tc.getNumsTd().replace(",", ""));
+        float quarterly5 = Float.parseFloat(tc.getNumsSpg().replace(",", ""));
 
         yValues.add(new Entry(quarterly1, 0));
         yValues.add(new Entry(quarterly2, 1));
@@ -143,7 +154,11 @@ public class TypeCountryFragment extends BaseFragment {
         return pieData;
     }
 
-
+    /**
+     * 获取国家piechart数据
+     *
+     * @return
+     */
     private PieData getCountryData() {
         TypesAndCountry tc = woter.getTypesAndCountry();
 
@@ -162,15 +177,25 @@ public class TypeCountryFragment extends BaseFragment {
         /**
          * 使用比值
          */
-        // 计算比值 24,936 13,595
-        float quarterly1 = Float.parseFloat(tc.getPercentageUssr().toString().replace("%", ""));
-        float quarterly2 = Float.parseFloat(tc.getPercentageGe().toString().replace("%", ""));
-        float quarterly3 = Float.parseFloat(tc.getPercentageUsa().toString().replace("%", ""));
-        float quarterly4 = Float.parseFloat(tc.getPercentageFr().toString().replace("%", ""));
-        float quarterly5 = Float.parseFloat(tc.getPercentageUk().toString().replace("%", ""));
-        float quarterly6 = Float.parseFloat(tc.getPercentageCn().toString().replace("%", ""));
-        float quarterly7 = Float.parseFloat(tc.getPercentageJa().toString().replace("%", ""));
-        float quarterly8 = Float.parseFloat(tc.getPercentageCz().toString().replace("%", ""));
+        // 计算比值
+        // 使用百分比
+//        float quarterly1 = Float.parseFloat(tc.getPercentageUssr().toString().replace("%", ""));
+//        float quarterly2 = Float.parseFloat(tc.getPercentageGe().toString().replace("%", ""));
+//        float quarterly3 = Float.parseFloat(tc.getPercentageUsa().toString().replace("%", ""));
+//        float quarterly4 = Float.parseFloat(tc.getPercentageFr().toString().replace("%", ""));
+//        float quarterly5 = Float.parseFloat(tc.getPercentageUk().toString().replace("%", ""));
+//        float quarterly6 = Float.parseFloat(tc.getPercentageCn().toString().replace("%", ""));
+//        float quarterly7 = Float.parseFloat(tc.getPercentageJa().toString().replace("%", ""));
+//        float quarterly8 = Float.parseFloat(tc.getPercentageCz().toString().replace("%", ""));
+        // 使用场数比
+        float quarterly1 = Float.parseFloat(tc.getNumsUssr().toString().replace(",", ""));
+        float quarterly2 = Float.parseFloat(tc.getNumsGe().toString().replace(",", ""));
+        float quarterly3 = Float.parseFloat(tc.getNumsUsa().toString().replace(",", ""));
+        float quarterly4 = Float.parseFloat(tc.getNumsFr().toString().replace(",", ""));
+        float quarterly5 = Float.parseFloat(tc.getNumsUk().toString().replace(",", ""));
+        float quarterly6 = Float.parseFloat(tc.getNumsCn().toString().replace(",", ""));
+        float quarterly7 = Float.parseFloat(tc.getNumsJa().toString().replace(",", ""));
+        float quarterly8 = Float.parseFloat(tc.getNumsCz().toString().replace(",",""));
 
         yValues.add(new Entry(quarterly1, 0));
         yValues.add(new Entry(quarterly2, 1));
@@ -182,7 +207,7 @@ public class TypeCountryFragment extends BaseFragment {
         yValues.add(new Entry(quarterly8, 7));
 
         //y轴的集合
-        PieDataSet pieDataSet = new PieDataSet(yValues, "坦克类型"/*显示在比例图上*/);
+        PieDataSet pieDataSet = new PieDataSet(yValues, "国家"/*显示在比例图上*/);
         pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
@@ -190,11 +215,10 @@ public class TypeCountryFragment extends BaseFragment {
         // 饼图颜色
         colors.add(ColorTemplate.getHoloBlue());
 
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
         for (int c : ColorTemplate.COLORFUL_COLORS)
             colors.add(c);
-
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
         for (int c : ColorTemplate.LIBERTY_COLORS)
             colors.add(c);
 
