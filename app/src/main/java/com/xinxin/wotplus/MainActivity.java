@@ -18,7 +18,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.xinxin.wotplus.fragment.AchieveMentFragment;
+import com.xinxin.wotplus.fragment.GradeFragment;
 import com.xinxin.wotplus.fragment.MainFragment;
+import com.xinxin.wotplus.fragment.StatisticsFragment;
 
 /**
  * 2016年3月19日15:50:20 by zhang.xx
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 commit();
 
     }
-
 
 
     private void initView() {
@@ -123,6 +124,23 @@ public class MainActivity extends AppCompatActivity {
                                         replace(R.id.fl_content, new AchieveMentFragment(), "achieve").
                                         commit();
                                 Snackbar.make(navigationView, "Achieve", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                break;
+                            case R.id.nav_count:
+                                getSupportFragmentManager().beginTransaction().
+                                        setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
+                                        replace(R.id.fl_content, new StatisticsFragment(), "statistics").
+                                        commit();
+                                Snackbar.make(navigationView, "Statistics", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                break;
+                            case R.id.nav_level:
+                                getSupportFragmentManager().beginTransaction().
+                                        setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
+                                        replace(R.id.fl_content, new GradeFragment(), "grade").
+                                        commit();
+                                Snackbar.make(navigationView, "Grade", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                break;
+                            case R.id.nav_vehicle:
+
                                 break;
                             default:
                                 break;

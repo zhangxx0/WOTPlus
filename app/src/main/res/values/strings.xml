@@ -9,9 +9,38 @@
     <string name="nav_vehicle">战车</string>
     <string name="nav_about">关于</string>
 
+
+    <string name="badge">通用徽章</string>
+    <string name="record">全部战绩</string>
+    <string name="count">战斗统计</string>
+
+    <!--通用徽章-->
     <string name="class_ace">特级</string>
     <string name="class_1">一级</string>
     <string name="class_2">二级</string>
     <string name="class_3">三级</string>
+
+    <!--全部战绩-->
+    <string name="fight">参加战斗</string>
+    <string name="victory">胜利</string>
+    <string name="failure">失败</string>
+    <string name="survive">幸存</string>
+    <string name="exp">经验</string>
+    <string name="aveexp">场均经验</string>
+    <string name="maxexp">单次获得最大经验</string>
+
+    <!--战斗统计-->
+    <string name="destroy">击毁</string>
+    <string name="find">发现</string>
+    <string name="hitrate">命中率</string>
+    <string name="hitnum">杀伤</string>
+    <string name="avehit">战斗造成的平均伤害</string>
+    <string name="occupied_base">占领基地点数</string>
+    <string name="defend_base">基地防守得分</string>
+
+
+
+
+
 
 </resources>

@@ -7,7 +7,10 @@
     <dimen name="fresh_margin">8dp</dimen>
     <dimen name="cardview_margin">8dp</dimen>
 
-    <dimen name="linearlayout_margin">4dp</dimen>
+    <dimen name="linearlayout_margin">8dp</dimen>
+    <dimen name="linearlayout_margin_less">4dp</dimen>
+    <dimen name="linearlayout_margin_more">16dp</dimen>
+    <dimen name="linearlayout_margin_large">32dp</dimen>
 
 
 </resources>

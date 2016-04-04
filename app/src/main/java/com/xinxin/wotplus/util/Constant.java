@@ -38,4 +38,12 @@ public class Constant {
     public static final String USER_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/";
     // 军团信息URL
     public static final String CLAN_URL = "http://ncw.worldoftanks.cn/zh-cn/community/clans/show_clan_block/?spa_id=1509154099&time_token=1459046879981";
+
+    /**
+     * 统计
+     * 目标样例：
+     * public static final String STATISTICS_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/?timerange=28&group=all";
+     */
+    public static final String STATISTICS_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/";
+
 }

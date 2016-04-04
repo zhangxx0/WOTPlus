@@ -72,12 +72,21 @@ public class Woter implements Serializable {
      */
     private BadgeAndRecord badgeAndRecord;
 
+    /**
+     * 类型与国家
+     */
+    private TypesAndCountry typesAndCountry;
 
 
 
 
+    public TypesAndCountry getTypesAndCountry() {
+        return typesAndCountry;
+    }
 
-
+    public void setTypesAndCountry(TypesAndCountry typesAndCountry) {
+        this.typesAndCountry = typesAndCountry;
+    }
 
     public BadgeAndRecord getBadgeAndRecord() {
         return badgeAndRecord;

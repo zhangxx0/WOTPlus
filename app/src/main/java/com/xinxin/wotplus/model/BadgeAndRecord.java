@@ -1,10 +1,12 @@
 package com.xinxin.wotplus.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xinxin on 2016/4/3.
  * 徽章与战绩
  */
-public class BadgeAndRecord {
+public class BadgeAndRecord implements Serializable {
 
     // 特级 图片、数量、描述
     private String classAceImg; // 35*31
