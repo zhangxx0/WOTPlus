@@ -3,6 +3,9 @@ package com.xinxin.wotplus.util;
 import com.xinxin.wotplus.model.Achieve;
 import com.xinxin.wotplus.model.Achievements;
 import com.xinxin.wotplus.model.BadgeAndRecord;
+import com.xinxin.wotplus.model.Tank;
+import com.xinxin.wotplus.model.Tanks;
+import com.xinxin.wotplus.model.TanksType;
 import com.xinxin.wotplus.model.TypesAndCountry;
 import com.xinxin.wotplus.model.Woter;
 
@@ -296,7 +299,109 @@ public class JsoupHtmlUtil {
 
             /**
              * （5）战车信息
+             *  add date 2016年4月5日23:34:00
              */
+            Tanks tanksvo = new Tanks();
+            List<TanksType> tanksTypes = new ArrayList<TanksType>();
+            List<Tank> lts = new ArrayList<Tank>();
+            List<Tank> mts = new ArrayList<Tank>();
+            List<Tank> hts = new ArrayList<Tank>();
+            List<Tank> tds = new ArrayList<Tank>();
+            List<Tank> spgs = new ArrayList<Tank>();
+
+            // （1）战车类型信息 第一层list
+            Elements tanktypes = doc.select(".tablesorter-no-sort");
+
+            for (Element tankLt : tanktypes) {
+                TanksType tanksType = new TanksType();
+                Element tanksTypeName = tankLt.select(".b-tankstype-text").first();
+                Element tanksTypeNum = tankLt.select(".b-armory-col").first();
+                Element tanksTypeFightNum = tankLt.select(".t-profile_right").first();
+                Element tanksTypeWinRating = tankLt.select(".t-profile_center").first();
+                Element tanksTypeBadgeNum = tankLt.select(".t-profile_center").last();
+
+                tanksType.setTanksTypeName(tanksTypeName.text().substring(0, tanksTypeName.text().length() - 3));
+                tanksType.setTanksTypeNum(tanksTypeNum.text());
+                tanksType.setTanksTypeFightNum(tanksTypeFightNum.text());
+                tanksType.setTanksTypeWinRating(tanksTypeWinRating.text());
+                tanksType.setTanksTypeBadgeNum(tanksTypeBadgeNum.text());
+                // 添加到tanksTypes
+                tanksTypes.add(tanksType);
+            }
+
+            // (2) 各类型战车列表
+            Elements tanks = doc.select(".sortable");
+
+            for (int i = 0; i < tanks.size(); i++) {
+
+                // 坦克基本信息
+                Elements tankBaseInfos = tanks.get(i).select(".t-profile_tankstype");
+                // 坦克ID信息，用于下一步请求
+                Elements tankIdInfos = tanks.get(i).select(".t-profile_slidedown");
+
+                // 循环提取tank信息
+                for (int j = 0; j < tankBaseInfos.size(); j++) {
+                    Tank tank = new Tank();
+                    // 基本信息
+                    // -国家
+                    Element tankCountryIcon = tankBaseInfos.get(j).select(".b-armory-wrapper").first();
+                    // b-armory-wrapper b-armory-wrapper__china
+                    // 去掉前面的class，只留后面的这个
+                    tank.setTankCountry(tankCountryIcon.className().substring(17));
+                    // -级别
+                    Element tankLevel = tankBaseInfos.get(j).select(".b-armory-level").first();
+                    tank.setTankLevel(tankLevel.text());
+                    // -图标
+                    Element tankImg = tankBaseInfos.get(j).getElementsByTag("img").first();
+                    tank.setTankIcon("http:" + tankImg.attr("src"));
+                    // -名称
+                    Element tankName = tankBaseInfos.get(j).select(".b-name-vehicle").first();
+                    tank.setTankName(tankName.text());
+                    // -战斗
+                    Element tankFightNum = tankBaseInfos.get(j).select(".t-profile_right").first();
+                    tank.setTankFightNum(tankFightNum.text());
+                    // -胜率
+                    Element tankWinRate = tankBaseInfos.get(j).select(".t-profile_center").first();
+                    tank.setTankWinRate(tankWinRate.text());
+                    // -徽章
+                    Element tankBadge = tankBaseInfos.get(j).getElementsByTag("img").last();
+                    tank.setTankBadge("http:" + tankBadge.attr("src"));
+
+                    // ID信息
+                    Element tankIdInfo = tankIdInfos.get(j);
+                    tank.setTankId(tankIdInfo.attributes().get("data-vehicle-cd"));
+
+                    switch (i) {
+                        // 根据i add到不同的list的中去
+                        case 0:
+                            lts.add(tank);
+                            break;
+                        case 1:
+                            mts.add(tank);
+                            break;
+                        case 2:
+                            hts.add(tank);
+                            break;
+                        case 3:
+                            tds.add(tank);
+                            break;
+                        case 4:
+                            spgs.add(tank);
+                            break;
+                    }
+
+                }
+
+            }
+
+            tanksvo.setTanksTypes(tanksTypes);
+            tanksvo.setLts(lts);
+            tanksvo.setMts(mts);
+            tanksvo.setHts(hts);
+            tanksvo.setTds(tds);
+            tanksvo.setSpgs(spgs);
+
+            woter.setTanks(tanksvo);
 
 
         } catch (Exception e) {

@@ -77,8 +77,19 @@ public class Woter implements Serializable {
      */
     private TypesAndCountry typesAndCountry;
 
+    /**
+     * 战车
+     */
+    private Tanks tanks;
 
 
+    public Tanks getTanks() {
+        return tanks;
+    }
+
+    public void setTanks(Tanks tanks) {
+        this.tanks = tanks;
+    }
 
     public TypesAndCountry getTypesAndCountry() {
         return typesAndCountry;
