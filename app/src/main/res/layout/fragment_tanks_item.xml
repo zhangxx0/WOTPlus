@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/cardview_margin"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="2dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/linearlayout_margin">
+        
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/geniusforwarmedal"/>
+
+        <TextView
+            android:id="@+id/tanksTypeNameAndNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textSize="20sp"
+            android:textColor="@color/chocolate"
+            android:text="轻型坦克 50"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tanksTypeFightNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:gravity="right"
+            android:text="4,623"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tanksTypeWinRating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:gravity="right"
+            android:text="55%"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tanksTypeBadgeNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="50"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

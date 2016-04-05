@@ -21,6 +21,7 @@ import com.xinxin.wotplus.fragment.AchieveMentFragment;
 import com.xinxin.wotplus.fragment.GradeFragment;
 import com.xinxin.wotplus.fragment.MainFragment;
 import com.xinxin.wotplus.fragment.StatisticsFragment;
+import com.xinxin.wotplus.fragment.TanksFragment;
 
 /**
  * 2016年3月19日15:50:20 by zhang.xx
@@ -140,7 +141,11 @@ public class MainActivity extends AppCompatActivity {
                                 Snackbar.make(navigationView, "Grade", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;
                             case R.id.nav_vehicle:
-
+                                getSupportFragmentManager().beginTransaction().
+                                        setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
+                                        replace(R.id.fl_content, new TanksFragment(), "tanks").
+                                        commit();
+                                Snackbar.make(navigationView, "Tanks", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;
                             default:
                                 break;
