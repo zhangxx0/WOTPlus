@@ -40,9 +40,12 @@ public class StatisticsFragment extends BaseFragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new BadgeRecordFragment(), "徽章与战绩");
         adapter.addFragment(new TypeCountryFragment(), "类型与国家");
         viewPager.setAdapter(adapter);
+
     }
+
 }

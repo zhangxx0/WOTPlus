@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_level:
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
-                                        replace(R.id.fl_content, new GradeFragment(), "grade").
+                                        replace(R.id.fl_content, new GradeFragment()).
                                         commit();
                                 Snackbar.make(navigationView, "Grade", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;

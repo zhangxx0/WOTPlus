@@ -26,6 +26,19 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     List<TanksType> tanksTypes = new ArrayList<TanksType>();
 
+    public interface OnItemClickLitener
+    {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view , int position);
+    }
+
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
+    {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
 
     public TanksAdapter(Context mContext, Woter woter) {
         this.mContext = mContext;
@@ -41,12 +54,34 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText(tanksTypes.get(position).getTanksTypeName() +" "+ tanksTypes.get(position).getTanksTypeNum());
         ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(tanksTypes.get(position).getTanksTypeFightNum());
         ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(tanksTypes.get(position).getTanksTypeWinRating());
         ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(tanksTypes.get(position).getTanksTypeBadgeNum());
 
+        // 如果设置了回调，则设置点击事件
+        if (mOnItemClickLitener != null)
+        {
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    // int pos = holder.getLayoutPosition();
+                    // mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
+                    return false;
+                }
+            });
+        }
 
     }
 

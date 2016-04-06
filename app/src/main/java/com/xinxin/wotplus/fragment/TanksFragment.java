@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
@@ -49,6 +50,17 @@ public class TanksFragment extends BaseFragment {
         }
 
         tanksAdapter = new TanksAdapter(getActivity(), woter);
+        // 点击事件
+        tanksAdapter.setOnItemClickLitener(new TanksAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(), "position:"+position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+            }
+        });
         recyclerview_tanks.setAdapter(tanksAdapter);
 
         return view;
