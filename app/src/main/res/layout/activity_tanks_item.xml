@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/tankCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/linearlayout_margin"
@@ -22,7 +23,7 @@
                 android:src="@drawable/ch_china"/>
 
             <TextView
-                android:id="@+id/tankCountryAndLevel"
+                android:id="@+id/tankLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/linearlayout_margin_more"
@@ -40,9 +41,11 @@
 
             <ImageView
                 android:id="@+id/tankIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/type62" />
+                android:layout_width="125dp"
+                android:layout_height="31dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/type62"
+                android:adjustViewBounds="false" />
 
             <TextView
                 android:id="@+id/tankName"
@@ -77,8 +80,8 @@
 
         <ImageView
             android:id="@+id/tankBadge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="31dp"
             android:layout_marginRight="@dimen/linearlayout_margin_more"
             android:src="@drawable/geniusforwarmedal" />
     </LinearLayout>

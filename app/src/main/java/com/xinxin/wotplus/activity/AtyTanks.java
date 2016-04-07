@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
@@ -99,7 +100,9 @@ public class AtyTanks extends BaseActivity {
 
     // 加载toobar背景图片
     private void loadBackDrop() {
-        // final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
+        final ImageView imageView = (ImageView) findViewById(R.id.tanks_backdrop);
+        imageView.setImageResource(R.drawable.lt);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
     }
 
