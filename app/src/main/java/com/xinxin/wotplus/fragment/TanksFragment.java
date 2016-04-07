@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.activity.AtyTanks;
 import com.xinxin.wotplus.adapter.TanksAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.Woter;
@@ -55,6 +57,11 @@ public class TanksFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getActivity(), "position:"+position, Toast.LENGTH_SHORT).show();
+                Context context = view.getContext();
+                Intent intent = new Intent(context, AtyTanks.class);
+                intent.putExtra(AtyTanks.TANKS_TYPE,String.valueOf(position));
+
+                context.startActivity(intent);
             }
 
             @Override

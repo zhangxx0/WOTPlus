@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/linearlayout_margin"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/linearlayout_margin"
+                android:scaleType="fitXY"
+                android:src="@drawable/ch_china"/>
+
+            <TextView
+                android:id="@+id/tankCountryAndLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="right"
+                android:text="VII"
+                />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/tankIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/type62" />
+
+            <TextView
+                android:id="@+id/tankName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:text=" 查狄伦 25t" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical|right">
+
+
+        <TextView
+            android:id="@+id/tankFightNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/linearlayout_margin"
+            android:text="718" />
+
+        <TextView
+            android:id="@+id/tankWinRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/linearlayout_margin"
+            android:text="54%" />
+
+        <ImageView
+            android:id="@+id/tankBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/linearlayout_margin_more"
+            android:src="@drawable/geniusforwarmedal" />
+    </LinearLayout>
+
+
+</LinearLayout>

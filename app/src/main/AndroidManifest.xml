@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".QueryActivity"/>
         <activity android:name=".MainActivity"/>
+
+        <activity android:name=".activity.AtyTanks"/>
     </application>
 
 </manifest>
