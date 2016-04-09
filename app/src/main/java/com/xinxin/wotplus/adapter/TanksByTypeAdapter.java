@@ -1,11 +1,7 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +12,6 @@ import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Tank;
 import com.xinxin.wotplus.util.HttpUtil;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -29,6 +24,19 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private LayoutInflater layoutInflater;
 
     private List<Tank> tanksByTypeList;
+
+    public interface OnItemClickLitener
+    {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view , int position);
+    }
+
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
+    {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
 
     public TanksByTypeAdapter(List<Tank> tanksByTypeList, Context context) {
         this.tanksByTypeList = tanksByTypeList;
@@ -45,7 +53,7 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         Tank tank = tanksByTypeList.get(position);
 
         // 2016年4月8日01:17:44
@@ -75,6 +83,31 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankIcon).execute(tank.getTankIcon());
         new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankBadge).execute(tank.getTankBadge());
 
+        // 如果设置了回调，则设置点击事件
+        if (mOnItemClickLitener != null)
+        {
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View v)
+                {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
+                    return false;
+                }
+            });
+        }
+
     }
 
     @Override
@@ -99,39 +132,5 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    /**
-     * 获取图片
-     */
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-
-                // 怎么下载原图?现在的情况是缩小了
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                // 如果我们把它设为true，那么BitmapFactory.decodeFile(String path, Options opt)并不会真的返回一个Bitmap给你，它仅仅会把它的宽，高取回来给你，这样就不会占用太多的内存，也就不会那么频繁的发生OOM了
-                // options.inJustDecodeBounds = true;
-                // options.inSampleSize = 1;
-
-                mIcon11 = BitmapFactory.decodeStream(in);
-
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 }

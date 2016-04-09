@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/linearlayout_margin"
+    android:background="@drawable/recyclerview_bg"
     android:gravity="center_vertical">
 
     <LinearLayout

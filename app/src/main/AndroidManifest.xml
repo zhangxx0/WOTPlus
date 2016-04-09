@@ -27,6 +27,7 @@
         <activity android:name=".MainActivity"/>
 
         <activity android:name=".activity.AtyTanks"/>
+        <activity android:name=".activity.AtyTank"/>
     </application>
 
 </manifest>

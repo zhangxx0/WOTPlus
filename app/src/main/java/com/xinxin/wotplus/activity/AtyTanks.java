@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
@@ -50,7 +51,7 @@ public class AtyTanks extends BaseActivity {
         Intent intent = getIntent();
         final String tanksType = intent.getStringExtra(TANKS_TYPE);
         Log.d("TANKS_TYPE", tanksType);
-        String tanksTitle = TANKS_TITLE[Integer.parseInt(tanksType)];
+        final String tanksTitle = TANKS_TITLE[Integer.parseInt(tanksType)];
 
         final Toolbar tanksToolbar = (Toolbar) findViewById(R.id.tanks_toolbar);
         setSupportActionBar(tanksToolbar);
@@ -59,6 +60,8 @@ public class AtyTanks extends BaseActivity {
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.tanks_collapsing_toolbar);
         collapsingToolbar.setTitle(tanksTitle);
 
+        final ImageView imageView = (ImageView) findViewById(R.id.tanks_backdrop);
+
         // 从CharedPreference中获取woter
         SharedPreferences sharedPreferences = getSharedPreferences("woter", Context.MODE_PRIVATE);
         String woterString = sharedPreferences.getString("woterString", "");
@@ -66,24 +69,48 @@ public class AtyTanks extends BaseActivity {
         if (!TextUtils.isEmpty(woterString)) {
             woter = gson.fromJson(woterString, Woter.class);
             Log.d("GsonWoter", woter.toString());
+            // 提取勋章的ID与名称对照字段
+            // <string name=""></string> 此方法无效
+//            Achievements achievements = woter.getAchievements();
+//            List<Achieve> warheroList = achievements.getWarheroList();
+//            for (Achieve achieve : warheroList) {
+//                System.out.println("<string name=\"" + achieve.getAchivementId() + "\">" + achieve.getAchivementName() + "</string>");
+//            }
+
+
         }
 
         List<Tank> tanksByTypeList = new ArrayList<Tank>();
         switch (Integer.parseInt(tanksType)) {
             case 0:
                 tanksByTypeList = woter.getTanks().getLts();
+                imageView.setImageResource(R.drawable.lt);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
                 break;
             case 1:
                 tanksByTypeList = woter.getTanks().getMts();
+                imageView.setImageResource(R.drawable.mt);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
                 break;
             case 2:
                 tanksByTypeList = woter.getTanks().getHts();
+                imageView.setImageResource(R.drawable.ht);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
                 break;
             case 3:
                 tanksByTypeList = woter.getTanks().getTds();
+                imageView.setImageResource(R.drawable.td);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
                 break;
             case 4:
                 tanksByTypeList = woter.getTanks().getSpgs();
+                imageView.setImageResource(R.drawable.spg);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
                 break;
             default:
                 break;
@@ -92,18 +119,36 @@ public class AtyTanks extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_tanks_bytype);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TanksByTypeAdapter(tanksByTypeList, this);
+
+        final List<Tank> finalTanksByTypeList = tanksByTypeList;
+        adapter.setOnItemClickLitener(new TanksByTypeAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Tank tank = finalTanksByTypeList.get(position);
+
+                Intent intent = new Intent(AtyTanks.this, AtyTank.class);
+                if (tank != null) {
+                    intent.putExtra(AtyTank.TANK_TITLE, tank.getTankName());
+                    intent.putExtra(AtyTank.TANK_ID, tank.getTankId());
+                }
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
         recyclerView.setAdapter(adapter);
 
-        loadBackDrop();
+        // loadBackDrop();
 
     }
 
     // 加载toobar背景图片
     private void loadBackDrop() {
-        final ImageView imageView = (ImageView) findViewById(R.id.tanks_backdrop);
-        imageView.setImageResource(R.drawable.lt);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+
+
     }
 
     @Override

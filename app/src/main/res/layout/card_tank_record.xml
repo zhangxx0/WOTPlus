@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/cardview_margin"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/linearlayout_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/linearlayout_margin"
+            android:gravity="center"
+            android:text="战车统计"
+            android:textSize="24sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="@dimen/linearlayout_margin"
+            android:background="@color/state_item_pressed_2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/tankdestroy"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankdestroy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/exp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankexp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/maxexp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankmaxexp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/hitrate"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankhitrate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/hitnum"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankhitnum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/desdeadrate"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankdesdeadrate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/hitrecirate"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankhitrecirate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="2"
+                android:text="@string/perdestroy"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankperdestroy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:text="@string/perhitnum"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tankperhitnum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/linearlayout_margin_more"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="123"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

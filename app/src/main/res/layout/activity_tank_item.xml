@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/tank_achieve_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/linearlayout_margin"
+        android:layout_gravity="center"
+        android:src="@drawable/geniusforwarmedal" />
+
+    <TextView
+        android:id="@+id/tank_achieve_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="勋章名称" />
+
+    <TextView
+        android:id="@+id/achieve_num_for_tank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/linearlayout_margin"
+        android:gravity="center"
+        android:text="2" />
+
+</LinearLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tank_main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/tank_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tank_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--成就列表-->
+            <!--elevation 在我的手机上并不起作用 android:elevation="@dimen/linearlayout_margin" -->
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/cardview_margin"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardCornerRadius="3dp"
+                card_view:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/linearlayout_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/achieve_sub_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:text="战车成就"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginBottom="@dimen/linearlayout_margin"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_marginRight="@dimen/linearlayout_margin"
+                        android:background="@color/state_item_pressed_2" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerview_tank_achieves"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/linearlayout_margin"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_marginRight="@dimen/linearlayout_margin" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--统计信息-->
+            <include layout="@layout/card_tank_record" />
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <!--<android.support.design.widget.FloatingActionButton
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_anchor="@id/tanks_appbar"
+        app:layout_anchorGravity="bottom|right|end"
+        android:src="@drawable/ic_menu"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"/>-->
+
+</android.support.design.widget.CoordinatorLayout>
