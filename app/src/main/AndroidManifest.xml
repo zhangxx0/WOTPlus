@@ -28,6 +28,7 @@
 
         <activity android:name=".activity.AtyTanks"/>
         <activity android:name=".activity.AtyTank"/>
+        <activity android:name=".activity.AtySetting"/>
     </application>
 
 </manifest>

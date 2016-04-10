@@ -73,7 +73,12 @@ public class AtyTank extends BaseActivity {
         recyclerView.setLayoutManager(gm);
 
         RequestQueue mQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Constant.TANK_ACHIEVE_URL, null,
+        // 拼接战车战绩查询URL
+        SharedPreferences sharedPreferences = getSharedPreferences("woterId", Context.MODE_PRIVATE);
+        String woterId = sharedPreferences.getString("woterId", "");
+        String tankUrl = Constant.TANK_ACHIEVE_URL_BASE + woterId + "/vehicle_details/?vehicle_cd=" + tankId;
+
+        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, tankUrl, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -121,10 +126,7 @@ public class AtyTank extends BaseActivity {
                                     for (Achieve achieve : otherList) {
                                         map.put(achieve.getAchivementId(), achieve.getAchivementName());
                                     }
-
                                 }
-
-                                System.out.println(map.toString());
 
                                 adapter = new TankAchievesAdapter(achieveList, AtyTank.this, map);
                                 recyclerView.setAdapter(adapter);

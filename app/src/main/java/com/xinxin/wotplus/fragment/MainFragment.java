@@ -141,6 +141,11 @@ public class MainFragment extends BaseFragment {
                         Gson gson = new Gson();
                         final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
 
+                        // 保存woterId
+                        SharedPreferences.Editor editor = getActivity().getSharedPreferences("woterId", Context.MODE_PRIVATE).edit();
+                        editor.putString("woterId", xvmUserInfo.getPlayer().getAid());
+                        editor.commit();
+
                         Constant.WOTER_URL = Constant.WOTER_BASE_URL + xvmUserInfo.getPlayer().getAid() + "-" +
                                 CommonUtil.urlEncodeUTF8(xvmUserInfo.getPlayer().getUsername()) + "/";
 

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.xinxin.wotplus.activity.AtySetting;
 import com.xinxin.wotplus.fragment.AchieveMentFragment;
 import com.xinxin.wotplus.fragment.GradeFragment;
 import com.xinxin.wotplus.fragment.MainFragment;
@@ -106,47 +107,53 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
-                        setTitle(menuItem.getTitle()); // 改变页面标题，标明导航状态
-//                        currentNavigationId = menuItem.getItemId();
+                        // 改变页面标题，标明导航状态
+                        // 设置和关于两个页面时打开新的页面，不需要修改标题；
+                        setTitle(menuItem.getTitle());
                         mDrawerLayout.closeDrawers();
                         // 这个地方，点击不同的按钮，应该跳到不同的页面上去；
-                        //  或者是用不用的Fragment将主页的内容展示部分替换掉；
+                        //  或者是用Fragment将主页的内容展示部分替换掉；
                         switch (menuItem.getItemId()) {
                             case R.id.nav_home:
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new MainFragment(), "main").
                                         commit();
-                                Snackbar.make(navigationView, "Home", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;
                             case R.id.nav_achieve:
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new AchieveMentFragment(), "achieve").
                                         commit();
-                                Snackbar.make(navigationView, "Achieve", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;
                             case R.id.nav_count:
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new StatisticsFragment(), "statistics").
                                         commit();
-                                Snackbar.make(navigationView, "Statistics", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;
                             case R.id.nav_level:
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new GradeFragment()).
                                         commit();
-                                Snackbar.make(navigationView, "Grade", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;
                             case R.id.nav_vehicle:
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new TanksFragment(), "tanks").
                                         commit();
-                                Snackbar.make(navigationView, "Tanks", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                 break;
+
+                            case R.id.nav_settings:
+                                Intent intent0 = new Intent(MainActivity.this, AtySetting.class);
+                                intent0.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent0);
+                                break;
+                            case R.id.nav_about:
+
+                                break;
+
                             default:
                                 break;
                         }

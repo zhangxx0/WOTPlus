@@ -48,7 +48,9 @@ public class Constant {
      * 战车战绩
      * 目标样例：
      * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1503597733/vehicle_details/?vehicle_cd=3889
+     * 1503597733/vehicle_details/?vehicle_cd=3649
      */
     public static final String TANK_ACHIEVE_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1503597733/vehicle_details/?vehicle_cd=3649";
+    public static final String TANK_ACHIEVE_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
 
 }
