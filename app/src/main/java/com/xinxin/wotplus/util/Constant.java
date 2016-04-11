@@ -53,4 +53,12 @@ public class Constant {
     public static final String TANK_ACHIEVE_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1503597733/vehicle_details/?vehicle_cd=3649";
     public static final String TANK_ACHIEVE_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
 
+    /**
+     * FIR_API_TOKEN
+     * http://api.fir.im/apps/latest/xxx?api_token=xxx #使用 `id` 请求
+     */
+    public static final String FIR_API_TOKEN = "a7b07d1c2f864e6b7147f17f2850e0f8";
+    public static final String FIR_APP_ID = "570bad9000fc7436da000007";
+    public static final String FIR_VERSION_BASE = "http://api.fir.im/apps/latest/";
+
 }

@@ -46,6 +46,9 @@
     <string name="perdestroy">每场战斗平均击毁战车数</string>
     <string name="perhitnum">每场战斗平均伤害值</string>
 
+    <!--设置与关于-->
+    <string name="can_not_find_version_name">找不到版本号</string>
+
     <!--勋章ID、名称对照-->
     <string name="geniusforwarmedal">战争机器</string>
     <string name="wolfamongsheepmedal">伤害大师</string>

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.xinxin.wotplus.activity.AtyAbout;
 import com.xinxin.wotplus.activity.AtySetting;
 import com.xinxin.wotplus.fragment.AchieveMentFragment;
 import com.xinxin.wotplus.fragment.GradeFragment;
@@ -109,36 +110,40 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         // 改变页面标题，标明导航状态
                         // 设置和关于两个页面时打开新的页面，不需要修改标题；
-                        setTitle(menuItem.getTitle());
                         mDrawerLayout.closeDrawers();
                         // 这个地方，点击不同的按钮，应该跳到不同的页面上去；
                         //  或者是用Fragment将主页的内容展示部分替换掉；
                         switch (menuItem.getItemId()) {
                             case R.id.nav_home:
+                                setTitle(menuItem.getTitle());
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new MainFragment(), "main").
                                         commit();
                                 break;
                             case R.id.nav_achieve:
+                                setTitle(menuItem.getTitle());
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new AchieveMentFragment(), "achieve").
                                         commit();
                                 break;
                             case R.id.nav_count:
+                                setTitle(menuItem.getTitle());
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new StatisticsFragment(), "statistics").
                                         commit();
                                 break;
                             case R.id.nav_level:
+                                setTitle(menuItem.getTitle());
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new GradeFragment()).
                                         commit();
                                 break;
                             case R.id.nav_vehicle:
+                                setTitle(menuItem.getTitle());
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new TanksFragment(), "tanks").
@@ -151,9 +156,10 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent0);
                                 break;
                             case R.id.nav_about:
-
+                                Intent intent1 = new Intent(MainActivity.this, AtyAbout.class);
+                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent1);
                                 break;
-
                             default:
                                 break;
                         }
