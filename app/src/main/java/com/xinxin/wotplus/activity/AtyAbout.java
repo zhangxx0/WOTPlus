@@ -1,5 +1,12 @@
 package com.xinxin.wotplus.activity;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -51,15 +58,22 @@ public class AtyAbout extends BaseActivity {
      */
     public static class AboutFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
+        // 应用介绍
         private final String INTRODUCTION = "introduction";
+        // 当前版本
         private final String CURRENT_VERSION = "current_version";
+        // 检查更新
+        private final String CHECK = "check_version";
+        // 推荐
         private final String SHARE = "share";
+        // 给个Star
         private final String STAR = "Star";
+        // 打赏
         private final String ENCOURAGE = "encourage";
+        // 关于作者
         private final String BLOG = "blog";
         private final String GITHUB = "github";
         private final String EMAIL = "email";
-        private final String CHECK = "check_version";
 
         private Preference mIntroduction;
         private Preference mVersion;
@@ -98,6 +112,7 @@ public class AtyAbout extends BaseActivity {
             mGithub.setOnPreferenceClickListener(this);
             mEmail.setOnPreferenceClickListener(this);
 
+            // 设置当前版本
             mVersion.setSummary("WOTPlus Version-" + CommonUtil.getVersion(getActivity()));
 
             return view;
@@ -107,15 +122,74 @@ public class AtyAbout extends BaseActivity {
         @Override
         public boolean onPreferenceClick(Preference preference) {
 
-            if (mCheckVersion == preference) {
+            if (preference.equals(mIntroduction)) {
+                // 应用介绍：跳转到github readme
+                Uri uri = Uri.parse(getString(R.string.readme));
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(uri);
+                getActivity().startActivity(intent);
+            } else if (preference.equals(mCheckVersion)) {
                 // 检查版本更新
                 Snackbar.make(getView(), "正在检查。。。", Snackbar.LENGTH_SHORT).show();
                 CommonUtil.checkVersion(getActivity(), getView());
+            } else if (preference.equals(mShare)) {
+                // 分享推荐
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_txt));
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_app)));
+            } else if (preference.equals(mStar)) {
+                // 点赞
+                new AlertDialog.Builder(getActivity()).setTitle("Star")
+                        .setMessage("去项目地址给作者个Star，鼓励下作者")
+                        .setNegativeButton("复制", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                copyToClipboard(getView(), getString(R.string.app_html));
+                            }
+                        })
+                        .setPositiveButton("前往", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Uri uri = Uri.parse(getString(R.string.app_html));
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setData(uri);
+                                getActivity().startActivity(intent);
+                            }
+                        })
+                        .show();
+            } else if (preference.equals(mEncounrage)) {
+                // 打赏
+                new AlertDialog.Builder(getActivity()).setTitle("请作者冲个高级账号？")
+                        .setMessage("点击按钮后，作者支付宝账号将会复制到剪切板，" + "你就可以使用支付宝转账给作者了")
+                        .setPositiveButton("打赏", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                copyToClipboard(getView(), getString(R.string.alipay));
+                            }
+                        }).show();
+            } else if (preference.equals(mBolg)) {
+                copyToClipboard(getView(), mBolg.getSummary().toString());
+            } else if (preference.equals(mGithub)) {
+                copyToClipboard(getView(), mGithub.getSummary().toString());
+            } else if (preference.equals(mEmail)) {
+                copyToClipboard(getView(), mEmail.getSummary().toString());
             }
-
 
             return false;
         }
+
+        // 复制黏贴板
+        private void copyToClipboard(View view, String info) {
+            ClipboardManager manager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("msg", info);
+            manager.setPrimaryClip(clipData);
+            Snackbar.make(view, "已经复制到剪切板", Snackbar.LENGTH_SHORT).show();
+        }
     }
+
 
 }

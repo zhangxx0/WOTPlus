@@ -49,6 +49,14 @@
     <!--设置与关于-->
     <string name="can_not_find_version_name">找不到版本号</string>
 
+    <string name="readme">https://github.com/zhangxx0/WOTPlus/blob/master/README.md</string>
+    <!--放置豌豆荚的地址-->
+    <string name="share_txt">欢迎使用“WOTPlus”，查询坦克世界战绩，您可以在http://fir.im/rlps下载</string>
+    <string name="share_app">分享-WOTPlus</string>
+    <string name="app_html">https://github.com/zhangxx0/WOTPlus</string>
+    <string name="alipay">377241804@qq.com</string>
+
+
     <!--勋章ID、名称对照-->
     <string name="geniusforwarmedal">战争机器</string>
     <string name="wolfamongsheepmedal">伤害大师</string>
