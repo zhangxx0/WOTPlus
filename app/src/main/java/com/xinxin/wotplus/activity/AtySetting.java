@@ -1,5 +1,7 @@
 package com.xinxin.wotplus.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.util.CommonUtil;
 import com.xinxin.wotplus.util.DataClearManager;
 
 /**
@@ -48,6 +51,7 @@ public class AtySetting extends BaseActivity {
     public static class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
         private Preference mClearCache;
+        private Preference feedback;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,10 @@ public class AtySetting extends BaseActivity {
             mClearCache = findPreference("clear_cache");
             updateCache();
             mClearCache.setOnPreferenceClickListener(this);
+
+            feedback = findPreference("feedback");
+            feedback.setOnPreferenceClickListener(this);
+
         }
 
         /**
@@ -72,6 +80,15 @@ public class AtySetting extends BaseActivity {
                 DataClearManager.cleanApplicationData(getActivity());
                 updateCache();
                 Snackbar.make(getView(), "缓存已清除", Snackbar.LENGTH_SHORT).show();
+            } else if (preference.equals(feedback)) {
+                // 发送邮件
+                String model = android.os.Build.MODEL;
+                String version = android.os.Build.VERSION.RELEASE;
+                Intent data = new Intent(Intent.ACTION_SENDTO);
+                data.setData(Uri.parse("mailto:zxx377241804@gmail.com"));
+                data.putExtra(Intent.EXTRA_SUBJECT, "WOTPlus安卓客户端反馈");
+                data.putExtra(Intent.EXTRA_TEXT, "\n\n\n技术信息:\n" + "WOTPlus Version-" + CommonUtil.getVersion(getActivity()) + "\n" + model + "\n" + version);
+                startActivity(data);
             }
             return false;
         }

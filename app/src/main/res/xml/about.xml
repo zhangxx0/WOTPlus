@@ -38,13 +38,13 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="版权">
         <Preference
-            android:summary="数据来源String"
+            android:summary="@string/data_sourse"
             android:title="数据来源"/>
         <Preference
             android:summary="图片素材来源于网络，版权属于原作者"
             android:title="素材来源"/>
         <Preference
-            android:summary="license string"
+            android:summary="@string/license"
             android:title="License"/>
     </PreferenceCategory>
 </PreferenceScreen>

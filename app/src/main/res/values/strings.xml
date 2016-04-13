@@ -51,10 +51,13 @@
 
     <string name="readme">https://github.com/zhangxx0/WOTPlus/blob/master/README.md</string>
     <!--放置豌豆荚的地址-->
+    <string name="data_sourse">数据来源于坦克世界官网、XVM战绩查询</string>
     <string name="share_txt">欢迎使用“WOTPlus”，查询坦克世界战绩，您可以在http://fir.im/rlps下载</string>
     <string name="share_app">分享-WOTPlus</string>
     <string name="app_html">https://github.com/zhangxx0/WOTPlus</string>
     <string name="alipay">377241804@qq.com</string>
+    <string name="license">Copyright 2016 Zhangxx  Licensed under the Apache License, Version 2.0 (the \"License\"); you
+        may not use this file except in compliance with the License. You may obtain a copy of the License at     http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
 
 
     <!--勋章ID、名称对照-->
