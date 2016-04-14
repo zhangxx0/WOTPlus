@@ -64,8 +64,8 @@
     <color name="fab">#ff1b3a52</color>
     <color name="foreground_material_dark">@android:color/white</color>
     <color name="foreground_material_light">@android:color/black</color>
-    <color name="gold2">#fff1ca84</color>
-    <color name="green2">#ff5ca71f</color>
+    <color name="gold">#fff1ca84</color>
+    <color name="green">#ff5ca71f</color>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>

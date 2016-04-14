@@ -4,7 +4,10 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/cardview_margin"
+    android:layout_marginTop="@dimen/cardview_margin_top"
+    android:layout_marginBottom="@dimen/cardview_margin"
+    android:layout_marginLeft="@dimen/cardview_margin_edge"
+    android:layout_marginRight="@dimen/cardview_margin_edge"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="3dp"
@@ -19,6 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/linearlayout_margin_less"
             android:layout_weight="2">
             
             <TextView
@@ -27,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="康恩饭_"
+                android:textColor="@color/bg_blue"
                 android:textSize="24sp"/>
 
         </LinearLayout>
@@ -34,6 +39,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/linearlayout_margin_less"
             android:layout_weight="1">
 
             <TextView
@@ -47,6 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/green"
                 android:text="2012.06.14"/>
 
         </LinearLayout>
@@ -61,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/material_deep_teal_500"
                 android:text="您已经在坦克世界中战斗了：XXX天"/>
 
         </LinearLayout>

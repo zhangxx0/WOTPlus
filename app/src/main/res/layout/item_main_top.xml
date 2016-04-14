@@ -4,7 +4,10 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/cardview_margin"
+    android:layout_marginTop="@dimen/cardview_margin"
+    android:layout_marginBottom="@dimen/cardview_margin"
+    android:layout_marginLeft="@dimen/cardview_margin_edge"
+    android:layout_marginRight="@dimen/cardview_margin_edge"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="3dp"
@@ -33,19 +36,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/nav_count" />
+                    android:src="@drawable/ic_wins_popup" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="战胜率" />
+                    android:textSize="12sp"
+                    android:text="战胜率"
+                    />
 
                 <TextView
                     android:id="@+id/personWin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/green"
                     android:text="54.42%" />
             </LinearLayout>
 
@@ -67,12 +74,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/nav_count" />
+                    android:src="@drawable/ic_tank_battles_popup" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
                     android:text="战斗场数" />
 
                 <TextView
@@ -80,6 +88,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/default_edgeeffect_color"
                     android:text="21,794" />
             </LinearLayout>
 
@@ -88,7 +98,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -98,7 +108,7 @@
                 android:layout_gravity="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/pr" />
@@ -107,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:textSize="14sp"
                     android:text="个人排名" />
 
                 <TextView
@@ -114,6 +125,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/gold"
+                    android:textSize="24sp"
                     android:text="8,436" />
             </LinearLayout>
 
@@ -134,12 +149,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/nav_count" />
+                    android:src="@drawable/ic_tank_exp_popup" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
                     android:text="场均经验" />
 
                 <TextView
@@ -147,6 +163,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/accent_material_light"
                     android:text="596" />
             </LinearLayout>
 
@@ -167,12 +185,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/nav_count" />
+                    android:src="@drawable/ic_tank_avgdmg_popup" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
                     android:text="平均伤害" />
 
                 <TextView
@@ -180,6 +199,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/default_color"
                     android:text="1,187" />
             </LinearLayout>
 
