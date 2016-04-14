@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -29,6 +30,7 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         // 主要在于画页面
         setContentView(R.layout.activity_query);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         initView();
 

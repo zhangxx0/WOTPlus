@@ -5,7 +5,11 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="fresh_margin">8dp</dimen>
+
+    <!--cardview-->
     <dimen name="cardview_margin">8dp</dimen>
+    <dimen name="cardview_margin_top">16dp</dimen>
+    <dimen name="cardview_margin_edge">16dp</dimen>
 
     <dimen name="linearlayout_margin">8dp</dimen>
     <dimen name="linearlayout_margin_less">4dp</dimen>
