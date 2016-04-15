@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -20,6 +19,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.xinxin.wotplus.MyApplication;
 import com.xinxin.wotplus.R;
@@ -193,8 +193,8 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             // 这里使用了省略，若想查看详细，可以设置一个点击的弹出；
             ((ClanViewHolder) holder).clanDescription.setText(mWoter.getClanDescription());
-            ((ClanViewHolder) holder).clanPosition.setText(" 职务:" + mWoter.getClanPosition());
-            ((ClanViewHolder) holder).clanDays.setText("在军团中服役天数:" + mWoter.getClanDays());
+            ((ClanViewHolder) holder).clanPosition.setText(" 职务: " + mWoter.getClanPosition());
+            ((ClanViewHolder) holder).clanDays.setText("在军团中服役天数:" + mWoter.getClanDays()+"天");
         }
 
 
@@ -335,13 +335,13 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         // 饼图颜色
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
 
         pieDataSet.setColors(colors);
 
         DisplayMetrics metrics = MyApplication.getContext().getResources().getDisplayMetrics();
-        float px = 5 * (metrics.densityDpi / 160f);
+        float px = 2 * (metrics.densityDpi / 160f);
         pieDataSet.setSelectionShift(px); // 选中态多出的长度
 
         PieData pieData = new PieData(xValues, pieDataSet);
@@ -379,13 +379,13 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         // 饼图颜色
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
 
         pieDataSet.setColors(colors);
 
         DisplayMetrics metrics = MyApplication.getContext().getResources().getDisplayMetrics();
-        float px = 5 * (metrics.densityDpi / 160f);
+        float px = 2 * (metrics.densityDpi / 160f);
         pieDataSet.setSelectionShift(px); // 选中态多出的长度
 
         PieData pieData = new PieData(xValues, pieDataSet);

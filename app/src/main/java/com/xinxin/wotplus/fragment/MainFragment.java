@@ -1,6 +1,5 @@
 package com.xinxin.wotplus.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +30,7 @@ import com.xinxin.wotplus.model.XvmUserInfo;
 import com.xinxin.wotplus.util.CommonUtil;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.JsoupHtmlUtil;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -47,7 +47,7 @@ public class MainFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private WoterAdapter woterAdapter;
 
-    private ProgressDialog progressDialog;
+    private DeathWheelProgressDialog deathWheelProgressDialog;
 
     Woter woter = new Woter();
 
@@ -61,7 +61,7 @@ public class MainFragment extends BaseFragment {
                     try {
                         woterAdapter = new WoterAdapter(getActivity(), woter);
                         mRecyclerView.setAdapter(woterAdapter);
-                        progressDialog.dismiss();
+                        deathWheelProgressDialog.dismiss();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -86,7 +86,11 @@ public class MainFragment extends BaseFragment {
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
             /* 显示ProgressDialog */
-            progressDialog = ProgressDialog.show(getActivity(), "加载中", "请稍候。。。");
+            // progressDialog = ProgressDialog.show(getActivity(), "加载中", "请稍候。。。");
+            deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
+            deathWheelProgressDialog.show();
+
+            //
             getData();
 
             /**

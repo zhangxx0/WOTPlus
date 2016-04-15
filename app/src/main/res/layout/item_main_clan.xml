@@ -4,10 +4,10 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/cardview_margin"
     android:layout_marginBottom="@dimen/cardview_margin_edge"
     android:layout_marginLeft="@dimen/cardview_margin_edge"
     android:layout_marginRight="@dimen/cardview_margin_edge"
+    android:layout_marginTop="@dimen/cardview_margin"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="3dp"
@@ -17,51 +17,57 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/linearlayout_margin">
+        android:layout_margin="@dimen/linearlayout_margin"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less"
             android:layout_weight="1">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="24sp"
-                android:text="军团信息"/>
+                android:text="军团信息"
+                android:textColor="@color/bg_blue"
+                android:textSize="22sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2">
+
             <ImageView
                 android:id="@+id/clanFlag"
                 android:layout_width="0dp"
                 android:layout_height="64dp"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_weight="3"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/clanDescription"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
-                    android:textSize="16sp"
-                    android:singleLine="true"
                     android:ellipsize="end"
-                    android:text=""/>
+                    android:singleLine="true"
+                    android:text=""
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/clanPosition"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
-                    android:textSize="16sp"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/highlighted_text_material_light"
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -69,15 +75,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            >
+            android:layout_margin="@dimen/linearlayout_margin_less"
+            android:layout_weight="1">
+
             <TextView
                 android:id="@+id/clanDays"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="16sp"
-                android:text=""/>
+                android:text=""
+                android:textColor="@color/value1"
+                android:textSize="16sp" />
         </LinearLayout>
 
 

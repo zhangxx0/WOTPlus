@@ -31,4 +31,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3'
 
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
 }
