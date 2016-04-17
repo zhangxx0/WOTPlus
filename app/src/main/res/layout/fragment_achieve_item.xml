@@ -8,12 +8,22 @@
         android:id="@+id/achieve_sub_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:textColor="#292421"
+        android:layout_marginTop="@dimen/linearlayout_margin_more"
+        android:layout_marginLeft="@dimen/linearlayout_margin_more"
+        android:layout_marginBottom="@dimen/linearlayout_margin_less"
+        android:textColor="@color/text_shadow"
         android:textSize="20sp"
         android:text="战斗英雄 7/14"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/linearlayout_margin_more"
+        android:layout_marginRight="@dimen/linearlayout_margin_more"
+        android:layout_marginBottom="@dimen/linearlayout_margin"
+        android:background="@color/state_item_pressed_2" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginBottom="@dimen/linearlayout_margin"
         android:id="@+id/recyclerview_achieve_sub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

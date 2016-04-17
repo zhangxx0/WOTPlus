@@ -170,7 +170,6 @@ public class MainFragment extends BaseFragment {
 
         // 添加限制，如果SharedPreference中存在了woter信息，则不再从网络中获取
         // 由查找页面进入需要一个flag，查找页面进入时不管存不存在SharedPreference都需要从网络获取；
-        Log.d("getData queryFlag", queryFlag);
         if ("".equals(queryFlag)) {
             // 从CharedPreference中获取woter
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("woter", Context.MODE_PRIVATE);
@@ -178,21 +177,20 @@ public class MainFragment extends BaseFragment {
             Gson gson = new Gson();
             if (!TextUtils.isEmpty(woterString)) {
                 woter = gson.fromJson(woterString, Woter.class);
-                Log.d("GsonWoter", woter.toString());
             }
-            Log.d("getData", "1111");
             handler.sendEmptyMessage(1);
 
         } else {
 
-            Log.d("getData", "2222");
             getDataFromWeb();
 
         }
 
     }
 
-    // 从网络中获取数据
+    /**
+     * 从网络中获取数据
+     */
     private void getDataFromWeb() {
 
         // （1）使用HttpURLConnection 报403错误

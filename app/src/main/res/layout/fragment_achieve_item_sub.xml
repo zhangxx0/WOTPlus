@@ -7,16 +7,17 @@
 
     <ImageView
         android:id="@+id/achieve_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="62dp"
         android:layout_gravity="center"
-        android:src="@drawable/geniusforwarmedal"/>
+        android:src="@drawable/ach_empty"/>
 
     <TextView
         android:id="@+id/achieve_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="战争机器"/>
 
     <TextView
@@ -24,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/green"
         android:text="2" />
 
 </LinearLayout>
