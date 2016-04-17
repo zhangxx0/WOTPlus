@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -37,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView header_text;
 
+    public static final String queryFlag = "query";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
+        // 传递queryFlag,查询页进入传递字符串“query”
+        Bundle bundle = new Bundle();
+        bundle.putString(MainFragment.QUERY_FLAG_KEY, queryFlag);
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.setArguments(bundle);
+
         getSupportFragmentManager().beginTransaction().
                 setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
-                replace(R.id.fl_content, new MainFragment(), "latest").
+                replace(R.id.fl_content, mainFragment, "latest").
                 commit();
 
     }
@@ -89,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
         header_text.setText(name);
 
         // FloatingActionButton
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "FloatingActionButton clicked", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "FloatingActionButton clicked", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
 
     }
@@ -115,11 +121,20 @@ public class MainActivity extends AppCompatActivity {
                         //  或者是用Fragment将主页的内容展示部分替换掉；
                         switch (menuItem.getItemId()) {
                             case R.id.nav_home:
+
                                 setTitle(menuItem.getTitle());
+
+                                // 传递queryFlag,侧滑菜单传递空字符串
+                                Bundle bundle = new Bundle();
+                                bundle.putString(MainFragment.QUERY_FLAG_KEY, "");
+                                MainFragment mainFragment = new MainFragment();
+                                mainFragment.setArguments(bundle);
+
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
-                                        replace(R.id.fl_content, new MainFragment(), "main").
+                                        replace(R.id.fl_content, mainFragment, "main").
                                         commit();
+
                                 break;
                             case R.id.nav_achieve:
                                 setTitle(menuItem.getTitle());

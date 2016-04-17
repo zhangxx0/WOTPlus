@@ -64,7 +64,7 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
                 } else {
                     region = "sourth";
                 }
-                // 查询
+                // 查询 设置queryFlag为“query”
                 MainActivity.mainActionStart(this, name, region);
                 break;
             default:

@@ -2,6 +2,7 @@ package com.xinxin.wotplus.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -27,6 +28,10 @@ public class StatisticsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_statistics, container, false);
+
+        // FloatingActionButton
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.hide();
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         if (viewPager != null) {

@@ -37,7 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_dialog_email" />
+            app:backgroundTint="@color/fab"
+            app:rippleColor="#33728dff"
+            android:src="@drawable/fab_icon" />
 
     </android.support.design.widget.CoordinatorLayout>
 

@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,6 +30,7 @@ import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.WoterAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
+import com.xinxin.wotplus.listener.HidingScrollListener;
 import com.xinxin.wotplus.model.ClanInfo;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.model.XvmUserInfo;
@@ -37,6 +44,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.util.Date;
+
 /**
  * Created by xinxin on 2016/3/25.
  * <p/>
@@ -48,6 +57,8 @@ public class MainFragment extends BaseFragment {
     private WoterAdapter woterAdapter;
 
     private DeathWheelProgressDialog deathWheelProgressDialog;
+    public static final String QUERY_FLAG_KEY = "queryFlag";
+    private String queryFlag = "";
 
     Woter woter = new Woter();
 
@@ -78,19 +89,56 @@ public class MainFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         try {
+            // 获取queryFlag
+            Bundle bundle = getArguments();
+            Log.d("bundle", bundle.toString());
+            if (bundle.containsKey(QUERY_FLAG_KEY)) {
+                queryFlag = getArguments().getString(QUERY_FLAG_KEY);
+            }
+            Log.d("queryFlag", queryFlag);
+
+            // FloatingActionButton
+            final FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+            fab.show();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "自定义dialog查找玩家信息", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
+            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+            final int fabBottomMargin = lp.bottomMargin;
 
             mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
             // 设置RecyclerView的布局管理；
             LinearLayoutManager lm = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(lm);
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            mRecyclerView.setHasFixedSize(true);
+            mRecyclerView.addOnScrollListener(new HidingScrollListener() {
+                @Override
+                public void onHide() {
+                    fab.animate()
+                            .translationY(fab.getHeight() + fabBottomMargin)
+                            .setInterpolator(new AccelerateInterpolator(2))
+                            .start();
+                }
+
+
+                @Override
+                public void onShow() {
+                    fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                }
+            });
 
             /* 显示ProgressDialog */
             // progressDialog = ProgressDialog.show(getActivity(), "加载中", "请稍候。。。");
             deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
             deathWheelProgressDialog.show();
 
-            //
+            // 获取数据
             getData();
 
             /**
@@ -119,6 +167,33 @@ public class MainFragment extends BaseFragment {
 
     // 尝试获取页面信息
     private void getData() {
+
+        // 添加限制，如果SharedPreference中存在了woter信息，则不再从网络中获取
+        // 由查找页面进入需要一个flag，查找页面进入时不管存不存在SharedPreference都需要从网络获取；
+        Log.d("getData queryFlag", queryFlag);
+        if ("".equals(queryFlag)) {
+            // 从CharedPreference中获取woter
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("woter", Context.MODE_PRIVATE);
+            String woterString = sharedPreferences.getString("woterString", "");
+            Gson gson = new Gson();
+            if (!TextUtils.isEmpty(woterString)) {
+                woter = gson.fromJson(woterString, Woter.class);
+                Log.d("GsonWoter", woter.toString());
+            }
+            Log.d("getData", "1111");
+            handler.sendEmptyMessage(1);
+
+        } else {
+
+            Log.d("getData", "2222");
+            getDataFromWeb();
+
+        }
+
+    }
+
+    // 从网络中获取数据
+    private void getDataFromWeb() {
 
         // （1）使用HttpURLConnection 报403错误
 
@@ -169,7 +244,9 @@ public class MainFragment extends BaseFragment {
 
                                                 // 第三个请求
                                                 // 获取军团信息的json
-                                                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Constant.CLAN_URL, null,
+                                                String clan_url = Constant.CLAN_URL_BASE + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
+                                                Log.d("clan", clan_url);
+                                                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clan_url, null,
                                                         new Response.Listener<JSONObject>() {
                                                             @Override
                                                             public void onResponse(JSONObject response) {
@@ -191,7 +268,7 @@ public class MainFragment extends BaseFragment {
                                                         }, new Response.ErrorListener() {
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
-                                                        Log.e("TAG", error.getMessage(), error);
+                                                        Log.e("TAG3", error.getMessage(), error);
                                                     }
                                                 });
 
@@ -212,22 +289,26 @@ public class MainFragment extends BaseFragment {
                                 }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("TAG", error.getMessage(), error);
+                                Log.e("TAG2", error.getMessage(), error);
                             }
                         });
                         mQueue.add(stringRequest);
+
+//                        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                                10000,
+//                                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("TAG", error.getMessage(), error);
+                Log.e("TAG1", error.getMessage(), error);
             }
 
         });
 
         mQueue.add(firstjsonObjectRequest);
-
     }
 
     /**
@@ -305,4 +386,6 @@ public class MainFragment extends BaseFragment {
 //        }
 
     }
+
+
 }
