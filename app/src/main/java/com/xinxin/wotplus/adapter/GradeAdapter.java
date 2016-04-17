@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xinxin.wotplus.R;
@@ -19,6 +20,10 @@ public class GradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private LayoutInflater layoutInflater;
     private Grade grade;
+
+    private static final int[] gradeImgs = {R.drawable.ic_stat_rating, R.drawable.ic_stat_battles, R.drawable.ic_stat_destroyed
+            , R.drawable.ic_stat_dmg_caused,R.drawable.ic_stat_max_exp,R.drawable.ic_stat_wins,
+            R.drawable.ic_stat_hit_ratio,R.drawable.ic_stat_avg_exp};
 
     private static final String[] gradeNames = {"个人排名", "参加战斗的数量", "击毁车辆", "造成的总伤害",
             "单次获得最大经验", "战胜率", "命中率", "场均经验"};
@@ -52,6 +57,7 @@ public class GradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+        ((GradeViewHolder) holder).grade_img.setImageResource(gradeImgs[position]);
         ((GradeViewHolder) holder).grade_name.setText(gradeNames[position]);
         ((GradeViewHolder) holder).grade_data.setText(gradeDatas[position]);
         ((GradeViewHolder) holder).grade_ranking.setText(gradeRankings[position]);
@@ -66,9 +72,11 @@ public class GradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     class GradeViewHolder extends RecyclerView.ViewHolder {
 
         private TextView grade_name, grade_data, grade_ranking;
+        private ImageView grade_img;
 
         public GradeViewHolder(View itemView) {
             super(itemView);
+            grade_img = (ImageView) itemView.findViewById(R.id.grade_img);
             grade_name = (TextView) itemView.findViewById(R.id.grade_name);
             grade_data = (TextView) itemView.findViewById(R.id.grade_data);
             grade_ranking = (TextView) itemView.findViewById(R.id.grade_ranking);

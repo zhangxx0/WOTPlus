@@ -16,11 +16,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/linearlayout_margin">
 
+        <ImageView
+            android:id="@+id/grade_img"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/linearlayout_margin"
+            android:src="@drawable/ic_stat_rating"/>
         <TextView
             android:id="@+id/grade_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:layout_gravity="center"
             android:textSize="20sp"
             android:textColor="@color/chocolate"
             android:text="个人排名"/>
@@ -30,8 +38,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="right"
+            android:layout_gravity="center"
+            android:textColor="@color/green"
             android:text="8,445"/>
 
         <TextView
@@ -39,8 +49,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textSize="18sp"
             android:gravity="right"
+            android:textColor="@color/gold"
             android:text="7,519"/>
     </LinearLayout>
 

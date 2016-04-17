@@ -28,6 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:layout_marginLeft="@dimen/linearlayout_margin_large"
                 android:textSize="20sp"
                 android:textColor="@color/sienna"
                 android:text="评分"/>
@@ -39,6 +40,7 @@
                 android:layout_weight="1"
                 android:textSize="20sp"
                 android:gravity="right"
+                android:textColor="@color/bg_blue"
                 android:text="数据"/>
 
             <TextView
@@ -48,6 +50,7 @@
                 android:layout_weight="1"
                 android:textSize="20sp"
                 android:gravity="right"
+                android:textColor="@color/bg_blue"
                 android:text="排名"/>
         </LinearLayout>
 
