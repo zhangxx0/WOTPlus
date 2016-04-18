@@ -50,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_marginRight="@dimen/linearlayout_margin_less"
             android:textSize="18sp"
             android:gravity="right"
             android:textColor="@color/gold"

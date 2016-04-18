@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/geniusforwarmedal" />
+                android:src="@drawable/ic_tank_empty" />
 
             <TextView
                 android:id="@+id/tanksTypeNameAndNum"
@@ -36,7 +36,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="2"
                 android:text="坦克"
-                android:textColor="@color/chocolate"
+                android:textColor="@color/sienna"
                 android:textSize="20sp" />
 
             <TextView
@@ -47,6 +47,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="战斗"
+                android:textColor="@color/bg_blue"
                 android:textSize="20sp" />
 
             <TextView
@@ -57,6 +58,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="胜利"
+                android:textColor="@color/bg_blue"
                 android:textSize="20sp" />
 
             <TextView
@@ -65,8 +67,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:layout_marginRight="@dimen/linearlayout_margin_less"
                 android:gravity="right"
                 android:text="徽章"
+                android:textColor="@color/bg_blue"
                 android:textSize="20sp" />
         </LinearLayout>
 

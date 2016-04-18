@@ -42,11 +42,12 @@ public class Constant {
     public static final String CLAN_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/clans/show_clan_block/?spa_id=";
 
     /**
-     * 统计
+     * 等级
      * 目标样例：
-     * public static final String STATISTICS_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/?timerange=28&group=all";
+     * public static final String GRADE_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/?timerange=28&group=all";
+     * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/
      */
-    public static final String STATISTICS_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/";
+    public static final String GRADE_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
     /**
      * 战车战绩
      * 目标样例：

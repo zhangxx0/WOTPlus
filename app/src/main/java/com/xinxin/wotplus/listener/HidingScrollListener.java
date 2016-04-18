@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 
 /**
  * 引用自项目SeeWeather
+ * 用于FAB的上滑隐藏与下滑展示；
  * 2016年4月17日14:18:39
  */
 public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {

@@ -17,10 +17,12 @@
         android:layout_margin="@dimen/linearlayout_margin">
         
         <ImageView
+            android:id="@+id/tanksTypeImg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/geniusforwarmedal"/>
+            android:layout_gravity="center_vertical"
+            />
 
         <TextView
             android:id="@+id/tanksTypeNameAndNum"
@@ -37,9 +39,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="right"
             android:text="4,623"
+            android:textColor="@color/material_deep_teal_500"
             android:layout_gravity="center_vertical" />
 
         <TextView
@@ -47,9 +50,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="right"
             android:text="55%"
+            android:textColor="@color/green"
             android:layout_gravity="center_vertical" />
 
         <TextView
@@ -58,8 +62,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
+            android:layout_marginRight="@dimen/linearlayout_margin_less"
             android:text="50"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textColor="@color/gold"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
 

@@ -58,6 +58,7 @@
                         android:layout_margin="8dp"
                         android:gravity="center"
                         android:text="战车成就"
+                        android:textColor="@color/bg_blue"
                         android:textSize="24sp" />
 
                     <View

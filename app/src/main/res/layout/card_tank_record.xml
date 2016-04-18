@@ -21,12 +21,15 @@
             android:layout_margin="@dimen/linearlayout_margin"
             android:gravity="center"
             android:text="战车统计"
+            android:textColor="@color/bg_blue"
             android:textSize="24sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginBottom="@dimen/linearlayout_margin"
+            android:layout_marginLeft="@dimen/linearlayout_margin"
+            android:layout_marginRight="@dimen/linearlayout_margin"
             android:background="@color/state_item_pressed_2" />
 
         <LinearLayout
@@ -34,11 +37,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:src="@drawable/ic_stat_destroyed" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/tankdestroy"
                 android:textSize="16sp" />
 
@@ -49,7 +57,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -59,11 +69,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_total_exp" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/exp"
                 android:textSize="16sp" />
 
@@ -74,7 +90,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -84,11 +102,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_max_exp" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/maxexp"
                 android:textSize="16sp" />
 
@@ -99,7 +123,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -109,11 +135,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_hit_ratio" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/hitrate"
                 android:textSize="16sp" />
 
@@ -124,7 +156,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -134,11 +168,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_dmg_caused" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/hitnum"
                 android:textSize="16sp" />
 
@@ -149,7 +189,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -159,11 +201,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_dmg_ratio" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/desdeadrate"
                 android:textSize="16sp" />
 
@@ -174,7 +222,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -184,11 +234,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_destruction_ratio" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/hitrecirate"
                 android:textSize="16sp" />
 
@@ -199,7 +255,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -209,11 +267,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_avg_destroyed" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="2"
+                android:layout_gravity="center"
                 android:text="@string/perdestroy"
                 android:textSize="16sp" />
 
@@ -224,7 +288,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -234,11 +300,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/linearlayout_margin_more"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_stat_avg_dmg" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:text="@string/perhitnum"
                 android:textSize="16sp" />
 
@@ -249,7 +321,9 @@
                 android:layout_marginRight="@dimen/linearlayout_margin_more"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="123"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/gold"
                 android:textSize="16sp" />
 
         </LinearLayout>

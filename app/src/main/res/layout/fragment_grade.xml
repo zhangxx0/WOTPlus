@@ -23,12 +23,20 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/linearlayout_margin">
 
+            <ImageView
+                android:id="@+id/grade_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/linearlayout_margin"
+                android:src="@drawable/icon_sidebar_saishi"/>
             <TextView
                 android:id="@+id/grade_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:layout_marginLeft="@dimen/linearlayout_margin_large"
+                android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                android:layout_gravity="center"
                 android:textSize="20sp"
                 android:textColor="@color/sienna"
                 android:text="评分"/>
@@ -38,6 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 android:textSize="20sp"
                 android:gravity="right"
                 android:textColor="@color/bg_blue"
@@ -48,6 +57,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/linearlayout_margin_less"
                 android:textSize="20sp"
                 android:gravity="right"
                 android:textColor="@color/bg_blue"

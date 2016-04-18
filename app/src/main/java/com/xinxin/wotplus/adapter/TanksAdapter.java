@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xinxin.wotplus.R;
@@ -23,19 +24,20 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private LayoutInflater layoutInflater;
     private Woter woter;
+    private int[] tanksTypesImgs = {R.drawable.filter_ic_light, R.drawable.filter_ic_medium, R.drawable.filter_ic_heavy,
+            R.drawable.filter_ic_td, R.drawable.filter_ic_sau};
 
     List<TanksType> tanksTypes = new ArrayList<TanksType>();
 
-    public interface OnItemClickLitener
-    {
+    public interface OnItemClickLitener {
         void onItemClick(View view, int position);
-        void onItemLongClick(View view , int position);
+
+        void onItemLongClick(View view, int position);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
 
-    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
-    {
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
@@ -55,19 +57,17 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText(tanksTypes.get(position).getTanksTypeName() +" "+ tanksTypes.get(position).getTanksTypeNum());
+        ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText(tanksTypes.get(position).getTanksTypeName() + " " + tanksTypes.get(position).getTanksTypeNum());
         ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(tanksTypes.get(position).getTanksTypeFightNum());
         ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(tanksTypes.get(position).getTanksTypeWinRating());
         ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(tanksTypes.get(position).getTanksTypeBadgeNum());
+        ((TanksTypeViewHolder) holder).tanksTypeImg.setImageResource(tanksTypesImgs[position]);
 
         // 如果设置了回调，则设置点击事件
-        if (mOnItemClickLitener != null)
-        {
-            holder.itemView.setOnClickListener(new View.OnClickListener()
-            {
+        if (mOnItemClickLitener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
                     mOnItemClickLitener.onItemClick(holder.itemView, pos);
                 }
@@ -93,6 +93,7 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     class TanksTypeViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tanksTypeNameAndNum, tanksTypeFightNum, tanksTypeWinRating, tanksTypeBadgeNum;
+        private ImageView tanksTypeImg;
 
         public TanksTypeViewHolder(View itemView) {
             super(itemView);
@@ -100,6 +101,7 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tanksTypeFightNum = (TextView) itemView.findViewById(R.id.tanksTypeFightNum);
             tanksTypeWinRating = (TextView) itemView.findViewById(R.id.tanksTypeWinRating);
             tanksTypeBadgeNum = (TextView) itemView.findViewById(R.id.tanksTypeBadgeNum);
+            tanksTypeImg = (ImageView) itemView.findViewById(R.id.tanksTypeImg);
         }
     }
 }

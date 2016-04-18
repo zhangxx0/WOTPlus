@@ -1,5 +1,7 @@
 package com.xinxin.wotplus.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -56,7 +58,11 @@ public class GradeFragment extends BaseFragment {
 
         RequestQueue mQueue = Volley.newRequestQueue(getActivity());
 
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Constant.STATISTICS_URL_BASE, null,
+        // 拼接等级查询URL
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("woterId", Context.MODE_PRIVATE);
+        String woterId = sharedPreferences.getString("woterId", "");
+        String gradeUrl = Constant.GRADE_URL_BASE + woterId + "-/account_ratings/";
+        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, gradeUrl, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

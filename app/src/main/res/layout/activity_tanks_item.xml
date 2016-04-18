@@ -31,6 +31,7 @@
                 android:layout_gravity="right|center_vertical"
                 android:gravity="right"
                 android:text="VII"
+                android:textColor="@color/bg_blue"
                 />
         </FrameLayout>
 
@@ -54,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_vertical"
                 android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                android:text=" 查狄伦 25t" />
+                android:text=" 查狄伦 25t"
+                android:textColor="@color/text_shadow"/>
         </FrameLayout>
     </LinearLayout>
 
@@ -70,21 +72,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/linearlayout_margin"
-            android:text="718" />
+            android:text="718"
+            android:textColor="@color/material_deep_teal_500"/>
 
         <TextView
             android:id="@+id/tankWinRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/linearlayout_margin"
-            android:text="54%" />
+            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+            android:text="54%"
+            android:textColor="@color/green"/>
 
         <ImageView
             android:id="@+id/tankBadge"
             android:layout_width="35dp"
             android:layout_height="31dp"
             android:layout_marginRight="@dimen/linearlayout_margin_more"
-            android:src="@drawable/geniusforwarmedal" />
+            android:src="@drawable/ach_empty" />
     </LinearLayout>
 
 

@@ -7,17 +7,18 @@
 
     <ImageView
         android:id="@+id/tank_achieve_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="51dp"
         android:layout_marginTop="@dimen/linearlayout_margin"
         android:layout_gravity="center"
-        android:src="@drawable/geniusforwarmedal" />
+        android:src="@drawable/ach_empty" />
 
     <TextView
         android:id="@+id/tank_achieve_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="勋章名称" />
 
     <TextView
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/linearlayout_margin"
         android:gravity="center"
-        android:text="2" />
+        android:textColor="@color/green"
+        android:text="0" />
 
 </LinearLayout>

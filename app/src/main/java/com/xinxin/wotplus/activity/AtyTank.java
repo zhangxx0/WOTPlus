@@ -22,8 +22,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.adapter.TankAchievesAdapter;
 import com.xinxin.wotplus.base.BaseActivity;
-import com.xinxin.wotplus.fragment.TankAchievesAdapter;
 import com.xinxin.wotplus.model.Achieve;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.Achievements;
@@ -68,9 +68,7 @@ public class AtyTank extends BaseActivity {
         setTitle(tankTitle);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_tank_achieves);
-        GridLayoutManager gm = new GridLayoutManager(this, 2);
-        gm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(gm);
+
 
         RequestQueue mQueue = Volley.newRequestQueue(this);
         // 拼接战车战绩查询URL
@@ -88,6 +86,16 @@ public class AtyTank extends BaseActivity {
 
                             if (achieveTank != null) {
                                 List<AchieveTank.AchievementsEntity> achieveList = achieveTank.getAchievements();
+
+                                // 根据成就的多少，判断展示的行数 <=8 则展示1行，其余展示两行
+                                int spanCount = 1;
+                                if (achieveList.size() >= 8) {
+                                    spanCount = 2;
+                                }
+                                GridLayoutManager gm = new GridLayoutManager(AtyTank.this, spanCount);
+                                gm.setOrientation(LinearLayoutManager.HORIZONTAL);
+                                recyclerView.setLayoutManager(gm);
+
 
                                 // 从CharedPreference中获取woter
                                 SharedPreferences sharedPreferences = getSharedPreferences("woter", Context.MODE_PRIVATE);
@@ -130,6 +138,8 @@ public class AtyTank extends BaseActivity {
 
                                 adapter = new TankAchievesAdapter(achieveList, AtyTank.this, map);
                                 recyclerView.setAdapter(adapter);
+
+                                initCard(achieveTank);
                             }
 
                         } catch (Exception e) {
@@ -164,6 +174,29 @@ public class AtyTank extends BaseActivity {
         mQueue.add(jsonObjRequest);
         mQueue.start();
 
+    }
+
+    // card赋值
+    public void initCard(AchieveTank achieveTank) {
+        tankdestroy = (TextView) findViewById(R.id.tankdestroy);
+        tankexp = (TextView) findViewById(R.id.tankexp);
+        tankmaxexp = (TextView) findViewById(R.id.tankmaxexp);
+        tankhitrate = (TextView) findViewById(R.id.tankhitrate);
+        tankhitnum = (TextView) findViewById(R.id.tankhitnum);
+        tankdesdeadrate = (TextView) findViewById(R.id.tankdesdeadrate);
+        tankhitrecirate = (TextView) findViewById(R.id.tankhitrecirate);
+        tankperdestroy = (TextView) findViewById(R.id.tankperdestroy);
+        tankperhitnum = (TextView) findViewById(R.id.tankperhitnum);
+
+        tankdestroy.setText(achieveTank.getFrags_count());
+        tankexp.setText(achieveTank.getXp_amount());
+        tankmaxexp.setText(achieveTank.getXp_max());
+        tankhitrate.setText(achieveTank.getHits_percent());
+        tankhitnum.setText(achieveTank.getDamage_dealt());
+        tankdesdeadrate.setText(achieveTank.getFrags_killed_ratio());
+        tankhitrecirate.setText(achieveTank.getDamage_dealt_received_ratio());
+        tankperdestroy.setText(achieveTank.getFrags_per_battle());
+        tankperhitnum.setText(achieveTank.getDamage_per_battle());
     }
 
 
