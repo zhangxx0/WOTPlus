@@ -20,7 +20,7 @@
         <Preference
             android:key="encourage"
             android:title="打赏"
-            android:summary="请我喝杯咖啡？"/>
+            android:summary="请我喝杯饮料？"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="关于作者">
         <Preference

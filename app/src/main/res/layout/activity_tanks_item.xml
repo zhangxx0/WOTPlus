@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="15"
         android:gravity="center_vertical">
 
         <FrameLayout
@@ -63,7 +63,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="8"
         android:gravity="center_vertical|right">
 
 
@@ -71,7 +71,7 @@
             android:id="@+id/tankFightNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/linearlayout_margin"
+            android:layout_marginRight="@dimen/linearlayout_margin_less"
             android:text="718"
             android:textColor="@color/material_deep_teal_500"/>
 
