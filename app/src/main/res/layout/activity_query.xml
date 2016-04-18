@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:paddingBottom="60dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="60dp">
 
         <android.support.v7.widget.GridLayout
             android:layout_width="wrap_content"
@@ -35,57 +35,61 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/nametext"
-                app:layout_gravity="fill"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:hint="玩家昵称"
                 android:text="康恩饭_"
                 app:layout_columnSpan="3"
-                android:layout_height="wrap_content"
+                app:layout_gravity="fill"
                 app:met_baseColor="@color/yellow"
-                app:met_primaryColor="@color/gold"
-                android:hint="玩家昵称"
+                app:met_clearButton="true"
                 app:met_floatingLabel="highlight"
                 app:met_minCharacters="4"
-                app:met_clearButton="true"
-                />
+                app:met_primaryColor="@color/gold" />
 
-
+<!--
             <TextView
                 android:text="所属大区:"
                 android:textColor="@color/gold"
                 app:layout_column="0"
                 app:layout_gravity="right" />
+                -->
 
             <RadioGroup
                 android:id="@+id/nsregion"
-                app:layout_gravity="left"
-                app:layout_columnSpan="2"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_columnSpan="3"
+                app:layout_gravity="center"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
                 <RadioButton
                     android:id="@+id/north"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:text="北区"
-                    android:textSize="18sp"
-                    android:textColor="@color/green" />
+                    android:textColor="@color/green"
+                    android:textSize="20sp"
+                    android:checked="false" />
 
                 <RadioButton
                     android:id="@+id/sourth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="南区"
-                    android:textSize="18sp"
-                    android:textColor="@color/text_shadow" />
+                    android:textColor="@color/text_shadow"
+                    android:textSize="20sp"
+                    android:checked="false" />
             </RadioGroup>
 
             <Button
                 android:id="@+id/query"
+                android:background="@drawable/but_login_bg_guest"
                 android:text="查 询"
                 android:textColor="@color/gold"
                 android:textSize="20sp"
                 app:layout_columnSpan="3"
-                app:layout_gravity="fill"
-                android:background="@drawable/but_login_bg_guest"
-                />
+                app:layout_gravity="fill" />
 
         </android.support.v7.widget.GridLayout>
     </LinearLayout>
