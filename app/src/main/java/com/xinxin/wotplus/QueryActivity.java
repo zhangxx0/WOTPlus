@@ -3,6 +3,7 @@ package com.xinxin.wotplus;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,7 +17,7 @@ import com.xinxin.wotplus.base.BaseActivity;
  * Created by xinxin on 2016/3/19.
  * 昵称查询页面
  */
-public class QueryActivity extends BaseActivity implements View.OnClickListener {
+public class QueryActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
 
     private EditText nametext;
     private RadioGroup nsregion;
@@ -34,6 +35,7 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
 
         initView();
 
+        query.setOnTouchListener(this);
         query.setOnClickListener(this);
 
     }
@@ -53,6 +55,7 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.query:
+
                 name = nametext.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     Snackbar.make(v, "请输入昵称", Snackbar.LENGTH_LONG)
@@ -70,5 +73,15 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            query.setBackgroundResource(R.drawable.but_login_bg_guest_tap);
+        } else if(event.getAction() == MotionEvent.ACTION_UP) {
+            query.setBackgroundResource(R.drawable.but_login_bg_guest);
+        }
+        return false;
     }
 }
