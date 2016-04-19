@@ -30,6 +30,10 @@
         <activity android:name=".activity.AtyTank" />
         <activity android:name=".activity.AtySetting" />
         <activity android:name=".activity.AtyAbout" />
+        <activity
+            android:name=".activity.AtyQueryDialog"
+            android:theme="@style/DialogQueryTheme"/>
+
     </application>
 
 </manifest>

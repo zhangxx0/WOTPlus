@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +9,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.activity.AtyQueryDialog;
 import com.xinxin.wotplus.adapter.WoterAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.listener.HidingScrollListener;
@@ -103,8 +104,13 @@ public class MainFragment extends BaseFragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "自定义dialog查找玩家信息", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+//                    Snackbar.make(view, "自定义dialog查找玩家信息", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+
+                    // 弹出战绩查询对话框
+                    Intent intent = new Intent(getActivity(), AtyQueryDialog.class);
+                    startActivity(intent);
+
                 }
             });
 

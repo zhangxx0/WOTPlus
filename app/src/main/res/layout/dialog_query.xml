@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/search_back2"
-    android:orientation="vertical">
+    android:background="@color/bg_blue">
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/cardview_margin"
         android:orientation="vertical"
-        android:paddingBottom="60dp">
+        >
 
         <android.support.v7.widget.GridLayout
             android:layout_width="wrap_content"
@@ -27,18 +21,12 @@
             app:columnCount="3"
             app:useDefaultMargins="true">
 
-            <!--
-            <TextView
-                android:text="玩家昵称:"
-                android:textColor="@color/gold"
-                app:layout_gravity="right" />-->
-
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/nametext"
+                android:id="@+id/nametext_dia"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
                 android:hint="玩家昵称"
-                android:text="康恩饭_"
+                android:text=""
                 app:layout_columnSpan="3"
                 app:layout_gravity="fill"
                 app:met_baseColor="@color/yellow"
@@ -47,23 +35,14 @@
                 app:met_minCharacters="4"
                 app:met_primaryColor="@color/gold" />
 
-            <!--
-                        <TextView
-                            android:text="所属大区:"
-                            android:textColor="@color/gold"
-                            app:layout_column="0"
-                            app:layout_gravity="right" />
-                            -->
-
             <RadioGroup
-                android:id="@+id/nsregion"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:id="@+id/nsregion_dia"
                 android:orientation="horizontal"
                 app:layout_columnSpan="3"
                 app:layout_gravity="center">
 
                 <RadioButton
-                    android:id="@+id/north"
+                    android:id="@+id/north_dia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -73,7 +52,7 @@
                     android:textSize="20sp" />
 
                 <RadioButton
-                    android:id="@+id/sourth"
+                    android:id="@+id/sourth_dia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
@@ -83,7 +62,7 @@
             </RadioGroup>
 
             <Button
-                android:id="@+id/query"
+                android:id="@+id/query_dia"
                 android:background="@drawable/but_login_bg_guest"
                 android:text="查 询"
                 android:textColor="@color/gold"
@@ -95,4 +74,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>
