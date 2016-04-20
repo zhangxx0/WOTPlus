@@ -82,12 +82,13 @@ public class AtySetting extends BaseActivity {
                 Snackbar.make(getView(), "缓存已清除", Snackbar.LENGTH_SHORT).show();
             } else if (preference.equals(feedback)) {
                 // 发送邮件
-                String model = android.os.Build.MODEL;
-                String version = android.os.Build.VERSION.RELEASE;
+                String model = android.os.Build.MODEL; // 型号
+                String brand = android.os.Build.BRAND; // 品牌
+                String version = android.os.Build.VERSION.RELEASE; // 系统版本
                 Intent data = new Intent(Intent.ACTION_SENDTO);
                 data.setData(Uri.parse("mailto:zxx377241804@gmail.com"));
                 data.putExtra(Intent.EXTRA_SUBJECT, "WOTPlus安卓客户端反馈");
-                data.putExtra(Intent.EXTRA_TEXT, "\n\n\n技术信息:\n" + "WOTPlus Version-" + CommonUtil.getVersion(getActivity()) + "\n" + model + "\n" + version);
+                data.putExtra(Intent.EXTRA_TEXT, "\n\n\n技术信息:\n" + "WOTPlus Version-" + CommonUtil.getVersion(getActivity()) + "\n" + brand+" "+model + "\n" + version);
                 startActivity(data);
             }
             return false;

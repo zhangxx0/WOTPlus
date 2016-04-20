@@ -163,7 +163,7 @@ public class HttpUtil {
 
     // 判断网络是否可用，以下三个方法同
     //  来源：https://github.com/Freelander/Android_Data/blob/master/fake_land/NetworkUtils.java
-    private static boolean isNetworkAvailable() {
+    public static boolean isNetworkAvailable() {
 
         Context context = MyApplication.getContext();
         // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）

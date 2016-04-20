@@ -1,9 +1,10 @@
 package com.xinxin.wotplus;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,17 +13,24 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.util.HttpUtil;
 
 /**
  * Created by xinxin on 2016/3/19.
  * 昵称查询页面
  */
-public class QueryActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
+public class QueryActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText nametext;
     private RadioGroup nsregion;
     private RadioButton north,sourth;
     private Button query;
+
+    /**
+     * 大区标识
+     */
+    public static final String REGION_NORTH = "north";
+    public static final String REGION_SOUTH = "south";
 
     private static String name, region;
 
@@ -35,7 +43,6 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener,
 
         initView();
 
-        query.setOnTouchListener(this);
         query.setOnClickListener(this);
 
     }
@@ -46,9 +53,25 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener,
         north = (RadioButton) findViewById(R.id.north);
         sourth = (RadioButton) findViewById(R.id.sourth);
         query = (Button) findViewById(R.id.query);
+        // 缓存上一次查询的玩家昵称
+        SharedPreferences sharedPreferences = getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
+        String sname = sharedPreferences.getString("name", "");
+        String sregion = sharedPreferences.getString("region", "");
 
-        // 默认选中北区
-        north.setChecked(true);
+        if (!TextUtils.isEmpty(sname)) {
+            nametext.setText(sname);
+        }
+        if (!TextUtils.isEmpty(sregion)) {
+            if (REGION_NORTH.equals(sregion)) {
+                north.setChecked(true);
+            } else if (REGION_SOUTH.equals(sregion)) {
+                sourth.setChecked(true);
+            }
+        } else {
+            // 默认选中北区
+            north.setChecked(true);
+        }
+
     }
 
     @Override
@@ -57,31 +80,34 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener,
             case R.id.query:
 
                 name = nametext.getText().toString();
+                // 昵称不能为空
                 if (TextUtils.isEmpty(name)) {
                     Snackbar.make(v, "请输入昵称", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     return;
                 }
+                // 昵称长度不得少于 4个字数
+                if (name.length() < 4) {
+                    Snackbar.make(v, "昵称长度不得少于4个字数", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
                 if (north.isChecked()) {
-                    region = "north";
+                    region = REGION_NORTH;
                 } else {
-                    region = "sourth";
+                    region = REGION_SOUTH;
                 }
                 // 查询 设置queryFlag为“query”
-                MainActivity.mainActionStart(this, name, region);
+                if (!HttpUtil.isNetworkAvailable()) {
+                    Snackbar.make(v, "网络不可用！", Snackbar.LENGTH_LONG).show();
+                } else {
+                    MainActivity.mainActionStart(this, name, region);
+                }
                 break;
             default:
                 break;
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            query.setBackgroundResource(R.drawable.but_login_bg_guest_tap);
-        } else if(event.getAction() == MotionEvent.ACTION_UP) {
-            query.setBackgroundResource(R.drawable.but_login_bg_guest);
-        }
-        return false;
-    }
 }

@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -8,11 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.xinxin.wotplus.MainActivity;
+import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.util.HttpUtil;
 
 /**
  * Created by xinxin on 2016/4/19.
@@ -57,20 +59,31 @@ public class AtyQueryDialog extends BaseActivity implements View.OnTouchListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.query_dia:
-                Toast.makeText(this, "toast", Toast.LENGTH_SHORT).show();
 
                 name_dia = nametext_dia.getText().toString();
+                // 昵称不能为空
                 if (TextUtils.isEmpty(name_dia)) {
-                    Toast.makeText(this, "请输入昵称", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v, "请输入昵称", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+                // 昵称长度不得少于 4个字数
+                if (name_dia.length() < 4) {
+                    Snackbar.make(v, "昵称长度不得少于4个字数", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                     return;
                 }
                 if (north_dia.isChecked()) {
-                    region_dia = "north";
+                    region_dia = QueryActivity.REGION_NORTH;
                 } else {
-                    region_dia = "sourth";
+                    region_dia = QueryActivity.REGION_SOUTH;
                 }
                 // 查询 设置queryFlag为“query”
-                MainActivity.mainActionStart(this, name_dia, region_dia);
+                if (!HttpUtil.isNetworkAvailable()) {
+                    Snackbar.make(v, "网络不可用！", Snackbar.LENGTH_LONG).show();
+                } else {
+                    MainActivity.mainActionStart(this, name_dia, region_dia);
+                }
                 break;
             default:
                 break;

@@ -27,18 +27,12 @@
             app:columnCount="3"
             app:useDefaultMargins="true">
 
-            <!--
-            <TextView
-                android:text="玩家昵称:"
-                android:textColor="@color/gold"
-                app:layout_gravity="right" />-->
-
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/nametext"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
                 android:hint="玩家昵称"
-                android:text="康恩饭_"
+                android:text=""
                 app:layout_columnSpan="3"
                 app:layout_gravity="fill"
                 app:met_baseColor="@color/yellow"
@@ -46,14 +40,6 @@
                 app:met_floatingLabel="highlight"
                 app:met_minCharacters="4"
                 app:met_primaryColor="@color/gold" />
-
-            <!--
-                        <TextView
-                            android:text="所属大区:"
-                            android:textColor="@color/gold"
-                            app:layout_column="0"
-                            app:layout_gravity="right" />
-                            -->
 
             <RadioGroup
                 android:id="@+id/nsregion"
@@ -84,7 +70,7 @@
 
             <Button
                 android:id="@+id/query"
-                android:background="@drawable/but_login_bg_guest"
+                android:background="@drawable/query_button_press"
                 android:text="查 询"
                 android:textColor="@color/gold"
                 android:textSize="20sp"

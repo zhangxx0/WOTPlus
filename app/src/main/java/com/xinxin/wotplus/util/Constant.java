@@ -22,10 +22,14 @@ public class Constant {
     /**
      * 获取战绩页面html
      * 目标样例：
+     * 北区：
      * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
+     * 南区：
+     * http://scw.worldoftanks.cn/zh-cn/community/accounts/1800661743-%E6%8A%98%E8%85%BE5%E5%8F%B7/
      */
     public static String WOTER_URL = "";
-    public static final String WOTER_BASE_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String WOTER_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String WOTER_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
     public static final String WOTER_TARGET = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/";
 
