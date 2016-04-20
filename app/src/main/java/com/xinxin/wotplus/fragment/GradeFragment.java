@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.GradeAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
@@ -61,7 +62,17 @@ public class GradeFragment extends BaseFragment {
         // 拼接等级查询URL
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("woterId", Context.MODE_PRIVATE);
         String woterId = sharedPreferences.getString("woterId", "");
-        String gradeUrl = Constant.GRADE_URL_BASE + woterId + "-/account_ratings/";
+
+        // 区分南北区
+        SharedPreferences sharedPreferences2 = getActivity().getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
+        String region = sharedPreferences2.getString("region", "");
+        String gradeUrl;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            gradeUrl = Constant.GRADE_URL_BASE_NORTH + woterId + "-/account_ratings/";
+        } else {
+            gradeUrl = Constant.GRADE_URL_BASE_SOUTH + woterId + "-/account_ratings/";
+        }
+
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, gradeUrl, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -106,8 +117,7 @@ public class GradeFragment extends BaseFragment {
                 headers.put("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
                 headers.put("Cache-Control", "max-age=0");
                 headers.put("Connection", "keep-alive");
-                headers.put("Host", "ncw.worldoftanks.cn");
-//                headers.put("Referer", "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/");
+//                headers.put("Host", "ncw.worldoftanks.cn");
 //                headers.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36");
 //                // 这个是会变化的；
 //                // headers.put("X-CSRFToken", "LmLnQ3QEldNwXEWZhdg2nC0L8YkGtU7y");

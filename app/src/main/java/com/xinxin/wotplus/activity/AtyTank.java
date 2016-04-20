@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.TankAchievesAdapter;
 import com.xinxin.wotplus.base.BaseActivity;
@@ -74,7 +75,16 @@ public class AtyTank extends BaseActivity {
         // 拼接战车战绩查询URL
         SharedPreferences sharedPreferences = getSharedPreferences("woterId", Context.MODE_PRIVATE);
         String woterId = sharedPreferences.getString("woterId", "");
-        String tankUrl = Constant.TANK_ACHIEVE_URL_BASE + woterId + "/vehicle_details/?vehicle_cd=" + tankId;
+
+        // 区分南北区
+        SharedPreferences sharedPreferences2 = getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
+        String region = sharedPreferences2.getString("region", "");
+        String tankUrl;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            tankUrl = Constant.TANK_ACHIEVE_URL_BASE_NORTH + woterId + "/vehicle_details/?vehicle_cd=" + tankId;
+        } else {
+            tankUrl = Constant.TANK_ACHIEVE_URL_BASE_SOUTH + woterId + "/vehicle_details/?vehicle_cd=" + tankId;
+        }
 
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, tankUrl, null,
                 new Response.Listener<JSONObject>() {
@@ -163,7 +173,6 @@ public class AtyTank extends BaseActivity {
 //                headers.put("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
 //                headers.put("Cache-Control", "max-age=0");
 //                headers.put("Connection", "keep-alive");
-//                headers.put("Host", "ncw.worldoftanks.cn");
                 headers.put("X-Requested-With", "XMLHttpRequest");
 
                 return headers;

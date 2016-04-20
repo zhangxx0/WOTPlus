@@ -54,7 +54,6 @@ public class HttpUtil {
 //                    connection.setRequestProperty("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
 //                    connection.setRequestProperty("Cache-Control", "max-age=0");
 //                    connection.setRequestProperty("Connection", "keep-alive");
-//                    connection.setRequestProperty("Host", "ncw.worldoftanks.cn");
 //                    connection.setRequestProperty("Referer", "http://ncw.worldoftanks.cn/zh-cn/community/accounts/");
 //                    connection.setRequestProperty("Upgrade-Insecure-Requests", "1");
 //                    connection.setRequestProperty("Cookie", "cm.internal.bs_id=5f7d64f7-0667-4060-0fa1-bed7ceae9744; hllang=zh-cn; csrftoken_portal_cn1=Gt7EcsZaX39YoRjofEw3wS5FcGJEul9o; map_visited=visited; session_id_cn2=1his7bgyu1mgssijvdf7qqt4vt4c9525; session_id_cn1=fxtlw64cm9884rxuowr5h9fsfcapgw30; newbie-lifetime=1453518950815-1458658317659; authentication_confirmation_expires_at=1458658318; csrftoken_portal_cn1=Gt7EcsZaX39YoRjofEw3wS5FcGJEul9o; _ga=GA1.3.23560097.1453518953");

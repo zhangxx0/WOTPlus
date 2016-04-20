@@ -1,5 +1,6 @@
 package com.xinxin.wotplus.util;
 
+import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.model.Achieve;
 import com.xinxin.wotplus.model.Achievements;
 import com.xinxin.wotplus.model.BadgeAndRecord;
@@ -30,7 +31,7 @@ public class JsoupHtmlUtil {
      * @param doc
      * @return
      */
-    public static Woter handleWotPage(Document doc) {
+    public static Woter handleWotPage(Document doc,String region) {
         Woter woter = new Woter();
         Elements elements;
         Element element;
@@ -105,8 +106,14 @@ public class JsoupHtmlUtil {
 
                     // （1）from contentLi
                     // ID和图片地址
+                    String img;
                     Element imgContent = contentLi.getElementsByTag("img").first();
-                    String img = "http:" + imgContent.attr("src"); // //ncw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/geniusforwarmedal.png
+                    if (QueryActivity.REGION_NORTH.equals(region)) {
+                        img = "http:" + imgContent.attr("src"); // //ncw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/geniusforwarmedal.png
+                    } else {
+                        img = "http://scw.worldoftanks.cn" + imgContent.attr("src"); // /static/3.35.7/encyclopedia/tankopedia/achievement/victorymarch.png
+                    }
+
                     String id = imgContent.attr("alt");
                     // 获得数量
                     Element numContent = contentLi.select(".b-achivements_num").first();
@@ -208,10 +215,18 @@ public class JsoupHtmlUtil {
             Element badge = doc.select(".b-result-classes").first();
             Elements badgeImgs = badge.getElementsByTag("img");
             // -徽章图片
-            badgeAndRecord.setClassAceImg("http:" + badgeImgs.get(0).attr("src"));
-            badgeAndRecord.setClass1Img("http:" + badgeImgs.get(1).attr("src"));
-            badgeAndRecord.setClass2Img("http:" + badgeImgs.get(2).attr("src"));
-            badgeAndRecord.setClass3Img("http:" + badgeImgs.get(3).attr("src"));
+            if (QueryActivity.REGION_NORTH.equals(region)) {
+                badgeAndRecord.setClassAceImg("http:" + badgeImgs.get(0).attr("src"));
+                badgeAndRecord.setClass1Img("http:" + badgeImgs.get(1).attr("src"));
+                badgeAndRecord.setClass2Img("http:" + badgeImgs.get(2).attr("src"));
+                badgeAndRecord.setClass3Img("http:" + badgeImgs.get(3).attr("src"));
+            } else {
+                badgeAndRecord.setClassAceImg("http://scw.worldoftanks.cn" + badgeImgs.get(0).attr("src"));
+                badgeAndRecord.setClass1Img("http://scw.worldoftanks.cn" + badgeImgs.get(1).attr("src"));
+                badgeAndRecord.setClass2Img("http://scw.worldoftanks.cn" + badgeImgs.get(2).attr("src"));
+                badgeAndRecord.setClass3Img("http://scw.worldoftanks.cn" + badgeImgs.get(3).attr("src"));
+            }
+
             // -徽章数量
             Elements badgeNums = badge.select(".t-dotted_value__middle");
             badgeAndRecord.setClassAceNum(badgeNums.get(0).text());
@@ -353,7 +368,11 @@ public class JsoupHtmlUtil {
                     tank.setTankLevel(tankLevel.text());
                     // -图标
                     Element tankImg = tankBaseInfos.get(j).getElementsByTag("img").first();
-                    tank.setTankIcon("http:" + tankImg.attr("src"));
+                    if (QueryActivity.REGION_NORTH.equals(region)) {
+                        tank.setTankIcon("http:" + tankImg.attr("src"));
+                    } else {
+                        tank.setTankIcon("http://scw.worldoftanks.cn" + tankImg.attr("src"));
+                    }
                     // -名称
                     Element tankName = tankBaseInfos.get(j).select(".b-name-vehicle").first();
                     tank.setTankName(tankName.text());
@@ -365,7 +384,11 @@ public class JsoupHtmlUtil {
                     tank.setTankWinRate(tankWinRate.text());
                     // -徽章
                     Element tankBadge = tankBaseInfos.get(j).getElementsByTag("img").last();
-                    tank.setTankBadge("http:" + tankBadge.attr("src"));
+                    if (QueryActivity.REGION_NORTH.equals(region)) {
+                        tank.setTankBadge("http:" + tankBadge.attr("src"));
+                    } else {
+                        tank.setTankBadge("http://scw.worldoftanks.cn" + tankBadge.attr("src"));
+                    }
 
                     // ID信息
                     Element tankIdInfo = tankIdInfos.get(j);

@@ -43,7 +43,8 @@ public class Constant {
      * 军团信息URL
      * 目标样例：http://ncw.worldoftanks.cn/zh-cn/community/clans/show_clan_block/?spa_id=1509154099&time_token=1459046879981
      */
-    public static final String CLAN_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/clans/show_clan_block/?spa_id=";
+    public static final String CLAN_URL_BASE_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/clans/show_clan_block/?spa_id=";
+    public static final String CLAN_URL_BASE_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/clans/show_clan_block/?spa_id=";
 
     /**
      * 等级
@@ -51,7 +52,8 @@ public class Constant {
      * public static final String GRADE_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/?timerange=28&group=all";
      * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/
      */
-    public static final String GRADE_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String GRADE_URL_BASE_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String GRADE_URL_BASE_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
     /**
      * 战车战绩
      * 目标样例：
@@ -59,7 +61,8 @@ public class Constant {
      * 1503597733/vehicle_details/?vehicle_cd=3649
      */
     public static final String TANK_ACHIEVE_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1503597733/vehicle_details/?vehicle_cd=3649";
-    public static final String TANK_ACHIEVE_URL_BASE = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String TANK_ACHIEVE_URL_BASE_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String TANK_ACHIEVE_URL_BASE_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
     /**
      * FIR_API_TOKEN

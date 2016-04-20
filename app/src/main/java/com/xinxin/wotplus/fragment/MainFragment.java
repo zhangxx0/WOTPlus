@@ -164,15 +164,6 @@ public class MainFragment extends BaseFragment {
         return view;
     }
 
-    // 模拟耗时方法
-    private void spandTimeMethod() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     // 尝试获取页面信息
     private void getData() {
@@ -231,14 +222,7 @@ public class MainFragment extends BaseFragment {
 
                         if (TextUtils.isEmpty(xvmUserInfo.getPlayer().getAid())) {
                             Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
-                            // 跳转回查询页面，延时1s
-                            new Thread(new Runnable() {
-                                public void run() {
-                                    spandTimeMethod();
-                                    Intent intent = new Intent(getActivity(), QueryActivity.class);
-                                    startActivity(intent);
-                                }
-                            }).start();
+                            backToQuery();
                         } else {
                             // 保存woterId
                             SharedPreferences.Editor editor = getActivity().getSharedPreferences("woterId", Context.MODE_PRIVATE).edit();
@@ -260,17 +244,21 @@ public class MainFragment extends BaseFragment {
                                     new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(final String response) {
-                                            Log.d("TAG", String.valueOf(response.length()));
 
                                             new Thread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    jsoupHtml(response);
+
+                                                    jsoupHtml(response, region);
 
                                                     // 第三个请求
                                                     // 获取军团信息的json
-                                                    String clan_url = Constant.CLAN_URL_BASE + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
-                                                    Log.d("clan", clan_url);
+                                                    String clan_url;
+                                                    if (QueryActivity.REGION_NORTH.equals(region)) {
+                                                        clan_url = Constant.CLAN_URL_BASE_NORTH + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
+                                                    } else {
+                                                        clan_url = Constant.CLAN_URL_BASE_SOUTH + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
+                                                    }
                                                     final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clan_url, null,
                                                             new Response.Listener<JSONObject>() {
                                                                 @Override
@@ -290,12 +278,16 @@ public class MainFragment extends BaseFragment {
                                                                     handler.sendEmptyMessage(1);
 
                                                                 }
-                                                            }, new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            Log.e("TAG3", error.getMessage(), error);
-                                                        }
-                                                    });
+                                                            },
+                                                            new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    Log.e("TAG3", error.getMessage(), error);
+                                                                    Snackbar.make(getView(), "获取军团信息出错！", Snackbar.LENGTH_LONG).show();
+                                                                    backToQuery();
+                                                                }
+                                                            });
+
 
                                                     // 此处判断是否要请求军团信息，设置EnterClanFlag
                                                     if ("0".equals(xvmUserInfo.getPlayer().getClanid())) {
@@ -305,31 +297,58 @@ public class MainFragment extends BaseFragment {
                                                         woter.setEnterClanFlag("1");
                                                         mQueue.add(jsonObjectRequest);
                                                     }
-
                                                 }
                                             }).start();
 
-
                                         }
-                                    }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("TAG2", error.getMessage(), error);
-                                }
-                            });
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.e("TAG2", error.getMessage(), error);
+                                            Snackbar.make(getView(), "获取战绩页面出错！", Snackbar.LENGTH_LONG).show();
+                                            backToQuery();
+                                        }
+                                    });
                             mQueue.add(stringRequest);
                         }
 
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG1", error.getMessage(), error);
-            }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG1", error.getMessage(), error);
+                        Snackbar.make(getView(), "获取xvminfo出错！", Snackbar.LENGTH_LONG).show();
+                        backToQuery();
+                    }
 
-        });
+                });
 
         mQueue.add(firstjsonObjectRequest);
+    }
+
+    /**
+     * 返回查询页面
+     */
+    public void backToQuery() {
+        // 跳转回查询页面，延时1s
+        new Thread(new Runnable() {
+            public void run() {
+                spandTimeMethod();
+                Intent intent = new Intent(getActivity(), QueryActivity.class);
+                startActivity(intent);
+            }
+        }).start();
+    }
+
+    // 模拟耗时方法
+    private void spandTimeMethod() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -368,12 +387,12 @@ public class MainFragment extends BaseFragment {
     /**
      * 解析获取到的文件
      */
-    private Woter jsoupHtml(String html) {
+    private Woter jsoupHtml(String html, String region) {
 
         // 使用返回的html字符串
         Document doc = Jsoup.parse(html);
 
-        woter = JsoupHtmlUtil.handleWotPage(doc);
+        woter = JsoupHtmlUtil.handleWotPage(doc, region);
 
         return woter;
 

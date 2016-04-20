@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.util.HttpUtil;
@@ -51,7 +53,17 @@ public class TankAchievesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         // 获取不到勋章的名字和图片；只能获取到标识词，例如：warrior
         // http://ncw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/warrior.png
-        String picUrl = "http://ncw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/" + achieve.getName().toLowerCase() + ".png";
+
+        // 区分南北区
+        SharedPreferences sharedPreferences = context.getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
+        String region = sharedPreferences.getString("region", "");
+        String picUrl = "";
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            picUrl = "http://ncw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/" + achieve.getName().toLowerCase() + ".png";
+        } else {
+            picUrl = "http://scw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/" + achieve.getName().toLowerCase() + ".png";
+        }
+
         new HttpUtil.DownloadImageTask(((TankAchieveViewHolder) holder).tank_achieve_icon).execute(picUrl);
 
 
