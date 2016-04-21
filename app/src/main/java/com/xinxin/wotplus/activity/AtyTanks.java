@@ -144,12 +144,19 @@ public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundV
             public void onItemClick(View view, int position) {
                 Tank tank = finalTanksByTypeList.get(position);
 
+                // 全屏扩散
+                int[] startingLocation = new int[2];
+                view.getLocationOnScreen(startingLocation);
+                startingLocation[0] += view.getWidth() / 2;
+
                 Intent intent = new Intent(AtyTanks.this, AtyTank.class);
+                intent.putExtra(Constant.START_LOCATION, startingLocation);
                 if (tank != null) {
                     intent.putExtra(AtyTank.TANK_TITLE, tank.getTankName());
                     intent.putExtra(AtyTank.TANK_ID, tank.getTankId());
                 }
                 startActivity(intent);
+                overridePendingTransition(0, 0);
             }
 
             @Override

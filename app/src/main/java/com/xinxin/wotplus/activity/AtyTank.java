@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -30,6 +35,7 @@ import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.Achievements;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.Constant;
+import com.xinxin.wotplus.widget.RevealBackgroundView;
 
 import org.json.JSONObject;
 
@@ -41,11 +47,16 @@ import java.util.Map;
  * Created by xinxin on 2016/4/8.
  * 坦克详细战绩页面
  */
-public class AtyTank extends SwipeBackBaseActivity {
+public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundView.OnStateChangeListener {
 
     public static final String TANK_TITLE = "tanktitle";
     public static final String TANK_ID = "tankid";
 
+    private RevealBackgroundView vRevealBackground;
+
+    private CoordinatorLayout tankMainContent;
+    private AppBarLayout tankAppbar;
+    private NestedScrollView tankScroll;
     private RecyclerView recyclerView;
     private TextView tankdestroy, tankexp, tankmaxexp, tankhitrate, tankhitnum, tankdesdeadrate, tankhitrecirate, tankperdestroy, tankperhitnum;
 
@@ -56,6 +67,15 @@ public class AtyTank extends SwipeBackBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tank);
+
+        vRevealBackground = (RevealBackgroundView) findViewById(R.id.revealBackgroundView);
+        tankAppbar = (AppBarLayout) findViewById(R.id.tank_appbar);
+        tankScroll = (NestedScrollView) findViewById(R.id.tank_scroll);
+        tankMainContent = (CoordinatorLayout) findViewById(R.id.tank_main_content);
+        // 使用这个则全屏变白
+        // tankMainContent.setVisibility(View.INVISIBLE);
+        tankAppbar.setVisibility(View.INVISIBLE);
+        tankScroll.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
         String tankTitle = intent.getStringExtra(TANK_TITLE);
@@ -150,6 +170,7 @@ public class AtyTank extends SwipeBackBaseActivity {
                                 recyclerView.setAdapter(adapter);
 
                                 initCard(achieveTank);
+
                             }
 
                         } catch (Exception e) {
@@ -183,6 +204,35 @@ public class AtyTank extends SwipeBackBaseActivity {
         mQueue.add(jsonObjRequest);
         mQueue.start();
 
+        setupRevealBackground(savedInstanceState);
+
+    }
+
+    private void setupRevealBackground(Bundle savedInstanceState) {
+        vRevealBackground.setOnStateChangeListener(this);
+        if (savedInstanceState == null) {
+            final int[] startingLocation = getIntent().getIntArrayExtra(Constant.START_LOCATION);
+            vRevealBackground.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    vRevealBackground.getViewTreeObserver().removeOnPreDrawListener(this);
+                    Log.d("location",startingLocation.toString());
+                    vRevealBackground.startFromLocation(startingLocation);
+                    return true;
+                }
+            });
+        } else {
+            vRevealBackground.setToFinishedFrame();
+        }
+    }
+
+    @Override
+    public void onStateChange(int state) {
+        if (RevealBackgroundView.STATE_FINISHED == state) {
+            // tankMainContent.setVisibility(View.VISIBLE);
+            tankAppbar.setVisibility(View.VISIBLE);
+            tankScroll.setVisibility(View.VISIBLE);
+        }
     }
 
     // card赋值
@@ -221,4 +271,6 @@ public class AtyTank extends SwipeBackBaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
