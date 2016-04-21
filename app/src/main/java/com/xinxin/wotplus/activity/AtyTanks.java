@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.TanksByTypeAdapter;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.Tank;
 import com.xinxin.wotplus.model.Woter;
 
@@ -30,7 +30,7 @@ import java.util.List;
  * 坦克列表Activity
  * 展现各种类型的坦克列表
  */
-public class AtyTanks extends BaseActivity {
+public class AtyTanks extends SwipeBackBaseActivity {
 
     /**
      * tank列表类型

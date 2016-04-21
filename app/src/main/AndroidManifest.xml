@@ -26,13 +26,21 @@
         <activity android:name=".QueryActivity" />
         <activity android:name=".MainActivity" />
 
-        <activity android:name=".activity.AtyTanks" />
-        <activity android:name=".activity.AtyTank" />
-        <activity android:name=".activity.AtySetting" />
-        <activity android:name=".activity.AtyAbout" />
+        <activity
+            android:name=".activity.AtyTanks"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".activity.AtyTank"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".activity.AtySetting"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".activity.AtyAbout"
+            android:theme="@style/AppTheme.TransparentActivity" />
         <activity
             android:name=".activity.AtyQueryDialog"
-            android:theme="@style/DialogQueryTheme"/>
+            android:theme="@style/DialogQueryTheme" />
 
     </application>
 

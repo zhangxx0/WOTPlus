@@ -18,14 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xinxin.wotplus.R;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.util.CommonUtil;
 
 /**
  * Created by xinxin on 2016/4/11.
  * 关于页面
  */
-public class AtyAbout extends BaseActivity {
+public class AtyAbout extends SwipeBackBaseActivity {
 
 
     @Override

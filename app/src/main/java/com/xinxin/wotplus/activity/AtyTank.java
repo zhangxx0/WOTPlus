@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.TankAchievesAdapter;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.Achieve;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.Achievements;
@@ -41,7 +41,7 @@ import java.util.Map;
  * Created by xinxin on 2016/4/8.
  * 坦克详细战绩页面
  */
-public class AtyTank extends BaseActivity {
+public class AtyTank extends SwipeBackBaseActivity {
 
     public static final String TANK_TITLE = "tanktitle";
     public static final String TANK_ID = "tankid";

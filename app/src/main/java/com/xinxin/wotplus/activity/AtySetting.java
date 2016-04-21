@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.xinxin.wotplus.R;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.util.CommonUtil;
 import com.xinxin.wotplus.util.DataClearManager;
 
@@ -18,7 +18,7 @@ import com.xinxin.wotplus.util.DataClearManager;
  * Created by xinxin on 2016/4/10.
  * 设置Activity
  */
-public class AtySetting extends BaseActivity {
+public class AtySetting extends SwipeBackBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
