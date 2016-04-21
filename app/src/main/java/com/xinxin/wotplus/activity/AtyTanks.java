@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
@@ -21,6 +24,8 @@ import com.xinxin.wotplus.adapter.TanksByTypeAdapter;
 import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.Tank;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.util.Constant;
+import com.xinxin.wotplus.widget.RevealBackgroundView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ import java.util.List;
  * 坦克列表Activity
  * 展现各种类型的坦克列表
  */
-public class AtyTanks extends SwipeBackBaseActivity {
+public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundView.OnStateChangeListener {
 
     /**
      * tank列表类型
@@ -39,6 +44,10 @@ public class AtyTanks extends SwipeBackBaseActivity {
     public static final String TANKS_TYPE = "0";
     public static final String[] TANKS_TITLE = {"LT", "MT", "HT", "TD", "SPG"};
 
+    private RevealBackgroundView vRevealBackground;
+
+    private CoordinatorLayout tanksMainContent;
+    private AppBarLayout mAppBarLayout;
     private RecyclerView recyclerView;
     private Woter woter;
     private TanksByTypeAdapter adapter;
@@ -47,6 +56,14 @@ public class AtyTanks extends SwipeBackBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tanks);
+
+        tanksMainContent = (CoordinatorLayout) findViewById(R.id.tanks_main_content);
+//        tanksMainContent.setVisibility(View.INVISIBLE);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.tanks_appbar);
+        mAppBarLayout.setVisibility(View.INVISIBLE);
+
+        vRevealBackground = (RevealBackgroundView) findViewById(R.id.revealBackgroundView);
+
 
         Intent intent = getIntent();
         final String tanksType = intent.getStringExtra(TANKS_TYPE);
@@ -119,6 +136,7 @@ public class AtyTanks extends SwipeBackBaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_tanks_bytype);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TanksByTypeAdapter(tanksByTypeList, this);
+        recyclerView.setVisibility(View.INVISIBLE);
 
         final List<Tank> finalTanksByTypeList = tanksByTypeList;
         adapter.setOnItemClickLitener(new TanksByTypeAdapter.OnItemClickLitener() {
@@ -142,12 +160,42 @@ public class AtyTanks extends SwipeBackBaseActivity {
         recyclerView.setAdapter(adapter);
 
         // loadBackDrop();
+        setupRevealBackground(savedInstanceState);
 
     }
 
     // 加载toobar背景图片
     private void loadBackDrop() {
 
+
+    }
+
+    private void setupRevealBackground(Bundle savedInstanceState) {
+        vRevealBackground.setOnStateChangeListener(this);
+        if (savedInstanceState == null) {
+            final int[] startingLocation = getIntent().getIntArrayExtra(Constant.START_LOCATION);
+            vRevealBackground.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    vRevealBackground.getViewTreeObserver().removeOnPreDrawListener(this);
+                    Log.d("location",startingLocation.toString());
+                    vRevealBackground.startFromLocation(startingLocation);
+                    return true;
+                }
+            });
+        } else {
+            vRevealBackground.setToFinishedFrame();
+        }
+    }
+
+    @Override
+    public void onStateChange(int state) {
+        if (RevealBackgroundView.STATE_FINISHED == state) {
+//            tanksMainContent.setVisibility(View.VISIBLE);
+            mAppBarLayout.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+//            setStatusBarColor(Color.TRANSPARENT);
+        }
 
     }
 
@@ -169,4 +217,6 @@ public class AtyTanks extends SwipeBackBaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

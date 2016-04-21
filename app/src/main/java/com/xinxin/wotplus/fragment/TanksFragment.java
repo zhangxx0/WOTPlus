@@ -20,6 +20,7 @@ import com.xinxin.wotplus.activity.AtyTanks;
 import com.xinxin.wotplus.adapter.TanksAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.util.Constant;
 
 /**
  * Created by xinxin on 2016/4/6.
@@ -61,10 +62,17 @@ public class TanksFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 Context context = view.getContext();
+                // 全屏扩散
+                int[] startingLocation = new int[2];
+                view.getLocationOnScreen(startingLocation);
+                startingLocation[0] += view.getWidth() / 2;
+
                 Intent intent = new Intent(context, AtyTanks.class);
-                intent.putExtra(AtyTanks.TANKS_TYPE,String.valueOf(position));
+                intent.putExtra(Constant.START_LOCATION, startingLocation);
+                intent.putExtra(AtyTanks.TANKS_TYPE, String.valueOf(position));
 
                 context.startActivity(intent);
+                getActivity().overridePendingTransition(0, 0);
             }
 
             @Override

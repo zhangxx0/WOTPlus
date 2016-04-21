@@ -72,4 +72,9 @@ public class Constant {
     public static final String FIR_APP_ID = "570bad9000fc7436da000007";
     public static final String FIR_VERSION_BASE = "http://api.fir.im/apps/latest/";
 
+    /**
+     * 全屏扩散起始位置
+     */
+    public static final String START_LOCATION = "start_location";
+
 }
