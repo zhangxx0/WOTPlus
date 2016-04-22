@@ -1,7 +1,6 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -24,6 +23,7 @@ import com.google.gson.Gson;
 import com.xinxin.wotplus.MyApplication;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.util.PreferenceUtils;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -60,9 +60,7 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         String woterString = gson.toJson(woter);
         // Log.d("woter", woterString);
 
-        SharedPreferences.Editor editor = mContext.getSharedPreferences("woter", Context.MODE_PRIVATE).edit();
-        editor.putString("woterString", woterString);
-        editor.commit();
+        PreferenceUtils.putCustomPrefString(mContext, "woter", "woterString", woterString);
     }
 
     @Override
@@ -194,7 +192,7 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             // 这里使用了省略，若想查看详细，可以设置一个点击的弹出；
             ((ClanViewHolder) holder).clanDescription.setText(mWoter.getClanDescription());
             ((ClanViewHolder) holder).clanPosition.setText(" 职务: " + mWoter.getClanPosition());
-            ((ClanViewHolder) holder).clanDays.setText("在军团中服役天数:" + mWoter.getClanDays()+"天");
+            ((ClanViewHolder) holder).clanDays.setText("在军团中服役天数:" + mWoter.getClanDays() + "天");
         }
 
 

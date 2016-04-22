@@ -1,8 +1,6 @@
 package com.xinxin.wotplus.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -25,6 +23,7 @@ import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.Tank;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.Constant;
+import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.widget.RevealBackgroundView;
 
 import java.util.ArrayList;
@@ -80,8 +79,7 @@ public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundV
         final ImageView imageView = (ImageView) findViewById(R.id.tanks_backdrop);
 
         // 从CharedPreference中获取woter
-        SharedPreferences sharedPreferences = getSharedPreferences("woter", Context.MODE_PRIVATE);
-        String woterString = sharedPreferences.getString("woterString", "");
+        String woterString = PreferenceUtils.getCustomPrefString(this, "woter", "woterString", "");
         Gson gson = new Gson();
         if (!TextUtils.isEmpty(woterString)) {
             woter = gson.fromJson(woterString, Woter.class);

@@ -1,8 +1,6 @@
 package com.xinxin.wotplus.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -35,6 +33,7 @@ import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.Achievements;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.Constant;
+import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.widget.RevealBackgroundView;
 
 import org.json.JSONObject;
@@ -93,12 +92,10 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 
         RequestQueue mQueue = Volley.newRequestQueue(this);
         // 拼接战车战绩查询URL
-        SharedPreferences sharedPreferences = getSharedPreferences("woterId", Context.MODE_PRIVATE);
-        String woterId = sharedPreferences.getString("woterId", "");
+        String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
 
         // 区分南北区
-        SharedPreferences sharedPreferences2 = getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
-        String region = sharedPreferences2.getString("region", "");
+        String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
         String tankUrl;
         if (QueryActivity.REGION_NORTH.equals(region)) {
             tankUrl = Constant.TANK_ACHIEVE_URL_BASE_NORTH + woterId + "/vehicle_details/?vehicle_cd=" + tankId;
@@ -128,8 +125,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 
 
                                 // 从CharedPreference中获取woter
-                                SharedPreferences sharedPreferences = getSharedPreferences("woter", Context.MODE_PRIVATE);
-                                String woterString = sharedPreferences.getString("woterString", "");
+                                String woterString = PreferenceUtils.getCustomPrefString(AtyTank.this, "woter", "woterString", "");
                                 Gson gson2 = new Gson();
                                 Map<String, String> map = new HashMap<String, String>();
                                 if (!TextUtils.isEmpty(woterString)) {

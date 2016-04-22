@@ -1,7 +1,5 @@
 package com.xinxin.wotplus;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
@@ -14,6 +12,7 @@ import android.widget.RadioGroup;
 
 import com.xinxin.wotplus.base.BaseActivity;
 import com.xinxin.wotplus.util.HttpUtil;
+import com.xinxin.wotplus.util.PreferenceUtils;
 
 /**
  * Created by xinxin on 2016/3/19.
@@ -54,9 +53,8 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
         sourth = (RadioButton) findViewById(R.id.sourth);
         query = (Button) findViewById(R.id.query);
         // 缓存上一次查询的玩家昵称
-        SharedPreferences sharedPreferences = getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
-        String sname = sharedPreferences.getString("name", "");
-        String sregion = sharedPreferences.getString("region", "");
+        String sname = PreferenceUtils.getCustomPrefString(QueryActivity.this, "queryinfo", "name", "");
+        String sregion = PreferenceUtils.getCustomPrefString(QueryActivity.this, "queryinfo", "region", "");
 
         if (!TextUtils.isEmpty(sname)) {
             nametext.setText(sname);

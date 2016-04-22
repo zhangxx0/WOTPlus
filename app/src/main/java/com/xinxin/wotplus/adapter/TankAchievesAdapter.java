@@ -1,7 +1,6 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.util.HttpUtil;
+import com.xinxin.wotplus.util.PreferenceUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -55,8 +55,7 @@ public class TankAchievesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         // http://ncw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/warrior.png
 
         // 区分南北区
-        SharedPreferences sharedPreferences = context.getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
-        String region = sharedPreferences.getString("region", "");
+        String region = PreferenceUtils.getCustomPrefString(context, "queryinfo", "region", "");
         String picUrl = "";
         if (QueryActivity.REGION_NORTH.equals(region)) {
             picUrl = "http://ncw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/" + achieve.getName().toLowerCase() + ".png";

@@ -1,7 +1,5 @@
 package com.xinxin.wotplus.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -23,6 +21,7 @@ import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.TypesAndCountry;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.util.PreferenceUtils;
 
 import java.util.ArrayList;
 
@@ -44,8 +43,7 @@ public class TypeCountryFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_type_country, container, false);
 
         // 从CharedPreference中获取woter
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("woter", Context.MODE_PRIVATE);
-        String woterString = sharedPreferences.getString("woterString", "");
+        String woterString = PreferenceUtils.getCustomPrefString(getActivity(), "woter", "woterString", "");
         Gson gson = new Gson();
         if (!TextUtils.isEmpty(woterString)) {
             woter = gson.fromJson(woterString, Woter.class);

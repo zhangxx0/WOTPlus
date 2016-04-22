@@ -1,8 +1,6 @@
 package com.xinxin.wotplus.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,6 +39,7 @@ import com.xinxin.wotplus.util.CommonUtil;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.HttpUtil;
 import com.xinxin.wotplus.util.JsoupHtmlUtil;
+import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import org.json.JSONObject;
@@ -95,11 +94,9 @@ public class MainFragment extends BaseFragment {
         try {
             // 获取queryFlag
             Bundle bundle = getArguments();
-            Log.d("bundle", bundle.toString());
             if (bundle.containsKey(QUERY_FLAG_KEY)) {
                 queryFlag = getArguments().getString(QUERY_FLAG_KEY);
             }
-            Log.d("queryFlag", queryFlag);
 
             // FloatingActionButton
             final FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -107,9 +104,6 @@ public class MainFragment extends BaseFragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Snackbar.make(view, "自定义dialog查找玩家信息", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-
                     // 弹出战绩查询对话框
                     Intent intent = new Intent(getActivity(), AtyQueryDialog.class);
                     startActivity(intent);
@@ -150,14 +144,6 @@ public class MainFragment extends BaseFragment {
             // 获取数据
             getData();
 
-            /**
-             * 这个地方应该用什么来延时呢？
-             * 由于加载和分析html需要一定的时间，所以这个地方应该是加一个延时的；
-             * 至于用什么来实现，则不大清楚；
-             * 应该再加一个加载的动画效果；
-             * 最好是能知道数据获取完毕的时间、标识等以更快的加载页面
-             */
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -172,8 +158,7 @@ public class MainFragment extends BaseFragment {
         // 由查找页面进入需要一个flag，查找页面进入时不管存不存在SharedPreference都需要从网络获取；
         if ("".equals(queryFlag)) {
             // 从CharedPreference中获取woter
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("woter", Context.MODE_PRIVATE);
-            String woterString = sharedPreferences.getString("woterString", "");
+            String woterString = PreferenceUtils.getCustomPrefString(getActivity(), "woter", "woterString", "");
             Gson gson = new Gson();
             if (!TextUtils.isEmpty(woterString)) {
                 woter = gson.fromJson(woterString, Woter.class);
@@ -195,7 +180,7 @@ public class MainFragment extends BaseFragment {
      */
     private void getDataFromWeb() {
 
-        // （1）使用HttpURLConnection 报403错误
+        // （1）使用HttpURLConnection 报403错误，应该是一些请求头的设置错误；
 
         // (2)使用Volley
         //  使用mActivity做参数时报错：修改为getActivity
@@ -204,18 +189,15 @@ public class MainFragment extends BaseFragment {
 
         // 第一个请求 请求XVM
         // 拼接请求串
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
-        String name = sharedPreferences.getString("name", "");
-        final String region = sharedPreferences.getString("region", "");
+        String name = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "name", "");
+        final String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
         Constant.XVM_USER_JSON_URL = Constant.XVM_USER_JSON_BASE_URL + CommonUtil.urlEncodeUTF8(name) +
                 "&area=" + region;
-        Log.d("XVM_USER_JSON_URL", Constant.XVM_USER_JSON_URL);
 
         JsonObjectRequest firstjsonObjectRequest = new JsonObjectRequest(Constant.XVM_USER_JSON_URL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("TAG", response.toString());
 
                         Gson gson = new Gson();
                         final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
@@ -225,9 +207,7 @@ public class MainFragment extends BaseFragment {
                             backToQuery();
                         } else {
                             // 保存woterId
-                            SharedPreferences.Editor editor = getActivity().getSharedPreferences("woterId", Context.MODE_PRIVATE).edit();
-                            editor.putString("woterId", xvmUserInfo.getPlayer().getAid());
-                            editor.commit();
+                            PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", xvmUserInfo.getPlayer().getAid());
 
                             if (QueryActivity.REGION_NORTH.equals(region)) {
                                 Constant.WOTER_URL = Constant.WOTER_BASE_URL_NORTH + xvmUserInfo.getPlayer().getAid() + "-" +

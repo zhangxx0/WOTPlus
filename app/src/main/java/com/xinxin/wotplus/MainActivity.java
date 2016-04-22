@@ -2,7 +2,6 @@ package com.xinxin.wotplus;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +21,7 @@ import com.xinxin.wotplus.fragment.GradeFragment;
 import com.xinxin.wotplus.fragment.MainFragment;
 import com.xinxin.wotplus.fragment.StatisticsFragment;
 import com.xinxin.wotplus.fragment.TanksFragment;
+import com.xinxin.wotplus.util.PreferenceUtils;
 
 /**
  * 2016年3月19日15:50:20 by zhang.xx
@@ -86,10 +86,8 @@ public class MainActivity extends AppCompatActivity {
         String region = getIntent().getStringExtra("region");
 
         // 放入SharePreference
-        SharedPreferences.Editor editor = getSharedPreferences("queryinfo", MODE_PRIVATE).edit();
-        editor.putString("name", name);
-        editor.putString("region", region);
-        editor.commit();
+        PreferenceUtils.putCustomPrefString(this, "queryinfo", "name", name);
+        PreferenceUtils.putCustomPrefString(this, "queryinfo", "region", region);
 
         header_text = (TextView) view.findViewById(R.id.id_header);
         header_text.setText(name);

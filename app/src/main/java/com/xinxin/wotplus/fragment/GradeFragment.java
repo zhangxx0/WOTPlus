@@ -1,7 +1,5 @@
 package com.xinxin.wotplus.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +25,7 @@ import com.xinxin.wotplus.adapter.GradeAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.Grade;
 import com.xinxin.wotplus.util.Constant;
+import com.xinxin.wotplus.util.PreferenceUtils;
 
 import org.json.JSONObject;
 
@@ -60,12 +59,10 @@ public class GradeFragment extends BaseFragment {
         RequestQueue mQueue = Volley.newRequestQueue(getActivity());
 
         // 拼接等级查询URL
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("woterId", Context.MODE_PRIVATE);
-        String woterId = sharedPreferences.getString("woterId", "");
+        String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
 
         // 区分南北区
-        SharedPreferences sharedPreferences2 = getActivity().getSharedPreferences("queryinfo", Context.MODE_PRIVATE);
-        String region = sharedPreferences2.getString("region", "");
+        String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
         String gradeUrl;
         if (QueryActivity.REGION_NORTH.equals(region)) {
             gradeUrl = Constant.GRADE_URL_BASE_NORTH + woterId + "-/account_ratings/";
@@ -78,7 +75,6 @@ public class GradeFragment extends BaseFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("统计", "response=" + response);
                             Gson gson = new Gson();
                             Grade grade = gson.fromJson(response.toString(), Grade.class);
 
