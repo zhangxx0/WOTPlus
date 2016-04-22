@@ -32,7 +32,6 @@ public class PreferenceUtils {
      * @param context
      * @param customPreName
      * @param key
-     * @param defaultVale
      * @return
      */
     public static void putCustomPrefString(Context context, String customPreName, String key, String value) {
