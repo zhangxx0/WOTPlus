@@ -1,12 +1,14 @@
 package com.xinxin.wotplus.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
@@ -138,18 +139,32 @@ public class BadgeRecordFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.class_ace_layout:
-                Toast.makeText(getActivity(),woter.getBadgeAndRecord().getClassAceDes(),Toast.LENGTH_SHORT).show();
+                showDesDialog(woter.getBadgeAndRecord().getClassAceDes());
                 break;
             case R.id.class_1_layout:
-                Toast.makeText(getActivity(),woter.getBadgeAndRecord().getClass1Des(),Toast.LENGTH_SHORT).show();
+                showDesDialog(woter.getBadgeAndRecord().getClass1Des());
                 break;
             case R.id.class_2_layout:
-                Toast.makeText(getActivity(),woter.getBadgeAndRecord().getClass2Des(),Toast.LENGTH_SHORT).show();
+                showDesDialog(woter.getBadgeAndRecord().getClass2Des());
                 break;
             case R.id.class_3_layout:
-                Toast.makeText(getActivity(),woter.getBadgeAndRecord().getClass3Des(),Toast.LENGTH_SHORT).show();
+                showDesDialog(woter.getBadgeAndRecord().getClass3Des());
                 break;
         }
+    }
+
+    private void showDesDialog(String classAceDes) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("徽章描述")
+                .setMessage(classAceDes)
+                .setPositiveButton("了解", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

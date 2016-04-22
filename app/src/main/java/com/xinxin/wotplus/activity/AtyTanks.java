@@ -60,7 +60,7 @@ public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundV
         tanksMainContent = (CoordinatorLayout) findViewById(R.id.tanks_main_content);
 //        tanksMainContent.setVisibility(View.INVISIBLE);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.tanks_appbar);
-        mAppBarLayout.setVisibility(View.INVISIBLE);
+        // mAppBarLayout.setVisibility(View.INVISIBLE);
 
         vRevealBackground = (RevealBackgroundView) findViewById(R.id.revealBackgroundView);
 

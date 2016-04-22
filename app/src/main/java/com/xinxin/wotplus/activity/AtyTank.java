@@ -74,7 +74,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
         tankMainContent = (CoordinatorLayout) findViewById(R.id.tank_main_content);
         // 使用这个则全屏变白
         // tankMainContent.setVisibility(View.INVISIBLE);
-        tankAppbar.setVisibility(View.INVISIBLE);
+        // tankAppbar.setVisibility(View.INVISIBLE);
         tankScroll.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();

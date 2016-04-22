@@ -1,13 +1,14 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Woter;
@@ -81,7 +82,8 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             @Override
             public void onItemClick(View view, int position, String description) {
                 // 成就详细信息的展示用什么呢?待寻找 2016年4月3日15:48:07
-                Toast.makeText(mContext, description, Toast.LENGTH_SHORT).show();
+                showDesDialog(description);
+                // Toast.makeText(mContext, description, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -110,5 +112,19 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             achieve_sub_title = (TextView) itemView.findViewById(R.id.achieve_sub_title);
             recyclerview_achieve_sub = (RecyclerView) itemView.findViewById(R.id.recyclerview_achieve_sub);
         }
+    }
+
+    private void showDesDialog(String classAceDes) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("成就描述")
+                .setMessage(classAceDes)
+                .setPositiveButton("了解", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
