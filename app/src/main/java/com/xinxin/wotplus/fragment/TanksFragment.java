@@ -22,6 +22,8 @@ import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.PreferenceUtils;
 
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
+
 /**
  * Created by xinxin on 2016/4/6.
  * 战车Fragment
@@ -78,7 +80,9 @@ public class TanksFragment extends BaseFragment {
             public void onItemLongClick(View view, int position) {
             }
         });
-        recyclerview_tanks.setAdapter(tanksAdapter);
+        // RecyclerView 动画
+        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(tanksAdapter, recyclerview_tanks);
+        recyclerview_tanks.setAdapter(animatorAdapter);
 
         return view;
     }

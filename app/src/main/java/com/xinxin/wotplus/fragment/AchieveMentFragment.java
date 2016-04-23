@@ -18,6 +18,8 @@ import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.PreferenceUtils;
 
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
+
 /**
  * Created by xinxin on 2016/4/3.
  * 成就Fragment
@@ -53,7 +55,9 @@ public class AchieveMentFragment extends BaseFragment {
         }
 
         adapter = new AchieveMentAdapter(getActivity(),woter);
-        recyclerview_achieve.setAdapter(adapter);
+        // RecyclerView 动画
+        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_achieve);
+        recyclerview_achieve.setAdapter(animatorAdapter);
 
         return view;
     }

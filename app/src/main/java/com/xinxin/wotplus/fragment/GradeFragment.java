@@ -32,6 +32,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
+
 /**
  * Created by xinxin on 2016/4/4.
  * 等级Fragment
@@ -79,7 +81,9 @@ public class GradeFragment extends BaseFragment {
                             Grade grade = gson.fromJson(response.toString(), Grade.class);
 
                             adapter = new GradeAdapter(getActivity(), grade);
-                            recyclerview_grade.setAdapter(adapter);
+                            // RecyclerView 动画
+                            SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_grade);
+                            recyclerview_grade.setAdapter(animatorAdapter);
 
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -42,6 +42,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
+
 /**
  * Created by xinxin on 2016/4/8.
  * 坦克详细战绩页面
@@ -163,7 +165,9 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
                                 }
 
                                 adapter = new TankAchievesAdapter(achieveList, AtyTank.this, map);
-                                recyclerView.setAdapter(adapter);
+                                // RecyclerView 动画
+                                ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
+                                recyclerView.setAdapter(animatorAdapter);
 
                                 initCard(achieveTank);
 

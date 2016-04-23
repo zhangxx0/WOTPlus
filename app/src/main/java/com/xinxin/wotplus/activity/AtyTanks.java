@@ -29,6 +29,8 @@ import com.xinxin.wotplus.widget.RevealBackgroundView;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
+
 /**
  * Created by xinxin on 2016/4/7.
  * 坦克列表Activity
@@ -162,7 +164,9 @@ public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundV
 
             }
         });
-        recyclerView.setAdapter(adapter);
+        // RecyclerView 动画
+        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerView);
+        recyclerView.setAdapter(animatorAdapter);
 
         // loadBackDrop();
         setupRevealBackground(savedInstanceState);

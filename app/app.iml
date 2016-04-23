@@ -79,9 +79,10 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.gabrielemariotti.recyclerview/recyclerview-animators/0.3.0-SNAPSHOT/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.rengwuxian.materialedittext/library/2.1.4/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.imid.swipebacklayout.lib/library/1.0.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/pl.droidsonroids.gif/android-gif-drawable/1.1.7/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/pl.droidsonroids.gif/android-gif-drawable/1.1.16-SNAPSHOT/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
@@ -104,18 +105,19 @@
     <orderEntry type="library" exported="" name="gridlayout-v7-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="design-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.1.4" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-animators-0.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-23.2.0" level="project" />
+    <orderEntry type="library" exported="" name="android-gif-drawable-1.1.16-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.2.0" level="project" />
-    <orderEntry type="library" exported="" name="android-gif-drawable-1.1.7" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.8.3" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
-    <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
     <orderEntry type="library" exported="" name="MPAndroidChart-v2.2.3" level="project" />
+    <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
     <orderEntry type="module" module-name="volley" exported="" />
   </component>
 </module>

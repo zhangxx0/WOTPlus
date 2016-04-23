@@ -35,4 +35,6 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    compile 'com.github.gabrielemariotti.recyclerview:recyclerview-animators:0.3.0-SNAPSHOT@aar'
 }

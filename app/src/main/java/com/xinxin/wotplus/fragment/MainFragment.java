@@ -49,6 +49,8 @@ import org.jsoup.nodes.Element;
 
 import java.util.Date;
 
+import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
+
 /**
  * Created by xinxin on 2016/3/25.
  * <p/>
@@ -74,7 +76,10 @@ public class MainFragment extends BaseFragment {
                 case 1:
                     try {
                         woterAdapter = new WoterAdapter(getActivity(), woter);
-                        mRecyclerView.setAdapter(woterAdapter);
+                        // 添加载入动画
+                        AlphaAnimatorAdapter animatorAdapter = new AlphaAnimatorAdapter(woterAdapter, mRecyclerView);
+
+                        mRecyclerView.setAdapter(animatorAdapter);
                         deathWheelProgressDialog.dismiss();
 
                     } catch (Exception e) {

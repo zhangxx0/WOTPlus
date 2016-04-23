@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Woter;
 
+import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
+
 /**
  * Created by xinxin on 2016/4/3.
  * 成就页面数据适配器
@@ -76,7 +78,9 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         // sub RecyclerView 的处理
         GridLayoutManager gm = new GridLayoutManager(mContext, 4);
         ((BaseViewHolder) holder).recyclerview_achieve_sub.setLayoutManager(gm);
-        ((BaseViewHolder) holder).recyclerview_achieve_sub.setAdapter(subadapter);
+        // RecyclerView 动画
+        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(subadapter, ((BaseViewHolder) holder).recyclerview_achieve_sub);
+        ((BaseViewHolder) holder).recyclerview_achieve_sub.setAdapter(animatorAdapter);
         // 点击事件
         subadapter.setOnItemClickLitener(new AchieveAdapter.OnItemClickLitener() {
             @Override

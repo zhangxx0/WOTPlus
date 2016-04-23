@@ -57,8 +57,6 @@ public class BadgeRecordFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void initData() {
-        // 放在HttpUtil不好用？
-        // new HttpUtil.DownloadImageTask(class_ace_img).execute(woter.getBadgeAndRecord().getClassAceImg());
 
         // 直接使用静态图片 2016年4月17日17:09:13
 //        new DownloadImageTask(class_ace_img).execute(woter.getBadgeAndRecord().getClassAceImg());

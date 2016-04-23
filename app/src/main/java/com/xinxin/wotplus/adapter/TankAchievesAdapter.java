@@ -63,7 +63,6 @@ public class TankAchievesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             picUrl = "http://scw.worldoftanks.cn/static/3.34.7/encyclopedia/tankopedia/achievement/" + achieve.getName().toLowerCase() + ".png";
         }
 
-//        new HttpUtil.DownloadImageTask(((TankAchieveViewHolder) holder).tank_achieve_icon).execute(picUrl);
         Glide.with(context).load(picUrl).into(((TankAchieveViewHolder) holder).tank_achieve_icon);
 
     }
