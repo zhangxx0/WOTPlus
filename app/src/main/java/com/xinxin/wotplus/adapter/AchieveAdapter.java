@@ -1,21 +1,17 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Achieve;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -68,7 +64,8 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         // 效果是实现了，这个地方对图片的处理是否不妥？
         // 有什么缺点?缓存什么的怎么弄？自己写还是使用框架? 2016年4月3日15:20:31
-        new DownloadImageTask(((AchieveViewHolder) holder).achieve_icon).execute(achieve.getAchivementImg());
+//        new DownloadImageTask(((AchieveViewHolder) holder).achieve_icon).execute(achieve.getAchivementImg());
+        Glide.with(mContext).load(achieve.getAchivementImg()).centerCrop().into(((AchieveViewHolder) holder).achieve_icon);
         ((AchieveViewHolder) holder).achieve_name.setText(achieve.getAchivementName());
         ((AchieveViewHolder) holder).achieve_num.setText(achieve.getAchivementNum());
 
@@ -99,34 +96,6 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             });
         }
 
-    }
-
-    /**
-     * 获取图片
-     */
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 
     @Override

@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Tank;
-import com.xinxin.wotplus.util.HttpUtil;
 
 import java.util.List;
 
@@ -80,8 +80,10 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ((TankShortInfo) holder).tankFightNum.setText(tank.getTankFightNum());
         ((TankShortInfo) holder).tankWinRate.setText(tank.getTankWinRate());
 
-        new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankIcon).execute(tank.getTankIcon());
-        new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankBadge).execute(tank.getTankBadge());
+//        new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankIcon).execute(tank.getTankIcon());
+//        new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankBadge).execute(tank.getTankBadge());
+        Glide.with(context).load(tank.getTankIcon()).into(((TankShortInfo) holder).tankIcon);
+        Glide.with(context).load(tank.getTankBadge()).into(((TankShortInfo) holder).tankBadge);
 
         // 如果设置了回调，则设置点击事件
         if (mOnItemClickLitener != null)

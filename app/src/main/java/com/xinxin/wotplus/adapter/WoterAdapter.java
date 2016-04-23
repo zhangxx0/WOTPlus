@@ -1,18 +1,15 @@
 package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -25,7 +22,6 @@ import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.PreferenceUtils;
 
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -187,7 +183,8 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             // 使用AsyncTask实现简单的图片获取；
             // http://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
             // 有空研究下http://blog.csdn.net/guolin_blog/article/details/17482165
-            new DownloadImageTask(((ClanViewHolder) holder).clanFlag).execute(mWoter.getClanImgSrc());
+//            new DownloadImageTask(((ClanViewHolder) holder).clanFlag).execute(mWoter.getClanImgSrc());
+            Glide.with(mContext).load(mWoter.getClanImgSrc()).into(((ClanViewHolder) holder).clanFlag);
 
             // 这里使用了省略，若想查看详细，可以设置一个点击的弹出；
             ((ClanViewHolder) holder).clanDescription.setText(mWoter.getClanDescription());
@@ -196,31 +193,6 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
 
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 
     /**
