@@ -11,7 +11,11 @@ WOTPlus是一款坦克世界（World of Tanks）战绩查询软件，旨在为�
 
 ###截图
 
-
+![](http://7xsvfv.com2.z0.glb.clouddn.com/wotplus_xiaoguo1.jpg)
+![](http://7xsvfv.com2.z0.glb.clouddn.com/wotplus_xiaoguo2.jpg)
+![](http://7xsvfv.com2.z0.glb.clouddn.com/wotplus_xiaoguo3.jpg)
+![](http://7xsvfv.com2.z0.glb.clouddn.com/wotplus_xiaoguo4.jpg)
+![](http://7xsvfv.com2.z0.glb.clouddn.com/wotplus_xiaoguo5.jpg)
 
 
 ###功能简介
