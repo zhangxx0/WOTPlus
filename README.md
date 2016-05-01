@@ -38,13 +38,17 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 
 **数据源**：由于坦克世界官网的战绩查询页面并没有暴露json接口，所以我使用的是获取战绩页面html并使用jsoup解析数据，实属无奈之举，也造成查询时耗时较长；
 
-网络请求：Volley；
+开源库：
 
-图片加载：Glide；
-
-图表展示：MPAndroidChart；
-
-版本更新：Fir；
+* html解析：jsoup；
+* json解析：gson；
+* 网络请求：Volley；  
+* 图片加载：Glide；
+* 图表展示：MPAndroidChart；
+* gif展示：android-gif-drawable；
+* materialedittext -by 扔物线；
+* 左滑回退：swipebacklayout；
+* RecyclerView动画：recyclerview-animators；
 
 第一版并没有使用架构诸如MVP、或者Rxjava等流行技术之类，别问我为什么，还没学会。。。
 因此编写之初就有了重构的计划，初步构想是使用Rxjava+Retrofit进行第二个版本的重构
@@ -73,7 +77,9 @@ _ _ _
 
 然而，作者也是有一颗拯救世界的心的！
 
-熟悉技术：Java、Android
+想深入了解作者的可以戳这个：[ Zhangxx的博客 | 关于 ](http://amx1390.com/about/)  
+
+
 
 
 
