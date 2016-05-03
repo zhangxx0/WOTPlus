@@ -83,7 +83,12 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //        new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankIcon).execute(tank.getTankIcon());
 //        new HttpUtil.DownloadImageTask(((TankShortInfo) holder).tankBadge).execute(tank.getTankBadge());
         Glide.with(context).load(tank.getTankIcon()).into(((TankShortInfo) holder).tankIcon);
-        Glide.with(context).load(tank.getTankBadge()).into(((TankShortInfo) holder).tankBadge);
+        // 去掉无战斗嘉奖的战车的嘉奖图标，现在展示的该车辆的图片 2016年5月3日22:18:16
+        if (tank.getTankBadge().indexOf("vehicle") != -1) {
+            // 包含vehicle则使用占位图
+        } else {
+            Glide.with(context).load(tank.getTankBadge()).into(((TankShortInfo) holder).tankBadge);
+        }
 
         // 如果设置了回调，则设置点击事件
         if (mOnItemClickLitener != null)
