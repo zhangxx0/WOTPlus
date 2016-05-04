@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,8 +35,8 @@ import com.xinxin.wotplus.adapter.WoterAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.listener.HidingScrollListener;
 import com.xinxin.wotplus.model.ClanInfo;
+import com.xinxin.wotplus.model.KongzhongUserInfo;
 import com.xinxin.wotplus.model.Woter;
-import com.xinxin.wotplus.model.XvmUserInfo;
 import com.xinxin.wotplus.util.CommonUtil;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.HttpUtil;
@@ -48,6 +50,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
 
@@ -192,12 +196,148 @@ public class MainFragment extends BaseFragment {
         // java.lang.NullPointerException: Attempt to invoke virtual method 'java.io.File android.content.Context.getCacheDir()' on a null object reference
         final RequestQueue mQueue = Volley.newRequestQueue(getActivity());
 
-        // 第一个请求 请求XVM
+        // 第一个请求 请求官网获取用户信息
         // 拼接请求串
         String name = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "name", "");
         final String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
-        Constant.XVM_USER_JSON_URL = Constant.XVM_USER_JSON_BASE_URL + CommonUtil.urlEncodeUTF8(name) +
-                "&area=" + region;
+
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_NORTH + CommonUtil.urlEncodeUTF8(name) +"&name_gt=";
+        } else {
+            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_SOUTH + CommonUtil.urlEncodeUTF8(name) +"&name_gt=";
+        }
+
+        Log.d("USER_JSON_URL", Constant.USER_JSON_URL);
+
+        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Constant.USER_JSON_URL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+
+                        Gson gson = new Gson();
+                        //final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
+                        final KongzhongUserInfo userInfo = gson.fromJson(response.toString(), KongzhongUserInfo.class);
+
+                        Log.d("111", userInfo.toString());
+
+                        if (userInfo.getResponse().size() == 0) {
+                            Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
+                            backToQuery();
+                        } else {
+                            // 保存woterId
+                            PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", userInfo.getResponse().get(0).getAccount_id());
+
+                            if (QueryActivity.REGION_NORTH.equals(region)) {
+                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_NORTH + userInfo.getResponse().get(0).getAccount_id() + "-" +
+                                        CommonUtil.urlEncodeUTF8(userInfo.getResponse().get(0).getAccount_name()) + "/";
+                            } else if (QueryActivity.REGION_SOUTH.equals(region)) {
+                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_SOUTH + userInfo.getResponse().get(0).getAccount_id() + "-" +
+                                        CommonUtil.urlEncodeUTF8(userInfo.getResponse().get(0).getAccount_name()) + "/";
+                            }
+
+                            // 第二个请求
+                            // 这里的URL需要在第一次请求之后获得，因此初始加载的是空的，会报Bad url错误；
+                            // 还是得级联，但是级联实在是太不美观了；2016年3月31日23:17:15
+                            final StringRequest stringRequest = new StringRequest(Constant.WOTER_URL,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(final String response) {
+
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+
+                                                    jsoupHtml(response, region);
+
+                                                    // 第三个请求
+                                                    // 获取军团信息的json
+                                                    String clan_url;
+                                                    if (QueryActivity.REGION_NORTH.equals(region)) {
+                                                        clan_url = Constant.CLAN_URL_BASE_NORTH + userInfo.getResponse().get(0).getAccount_id() + "&time_token=" + new Date().getTime();
+                                                    } else {
+                                                        clan_url = Constant.CLAN_URL_BASE_SOUTH + userInfo.getResponse().get(0).getAccount_id() + "&time_token=" + new Date().getTime();
+                                                    }
+                                                    Log.d("clan_url", clan_url);
+                                                    final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clan_url, null,
+                                                            new Response.Listener<JSONObject>() {
+                                                                @Override
+                                                                public void onResponse(JSONObject response) {
+                                                                    Gson gson = new Gson();
+                                                                    ClanInfo clanInfo = gson.fromJson(response.toString(), ClanInfo.class);
+
+                                                                    handleClaninfo(clanInfo);
+
+                                                                    // 执行耗时的方法之后发送消给handler
+                                                                    handler.sendEmptyMessage(1);
+
+                                                                }
+                                                            },
+                                                            new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    Log.e("TAG3", error.getMessage(), error);
+                                                                    Snackbar.make(getView(), "获取军团信息出错！", Snackbar.LENGTH_LONG).show();
+                                                                    backToQuery();
+                                                                }
+                                                            });
+
+
+                                                    // 此处判断是否要请求军团信息，设置EnterClanFlag
+                                                    // 从官网获取的userInfo中没有ClanId
+                                                    // 从http://north.warsaga.cn/clans/2083/?utm_campaign=wot-portal&utm_medium=link中截取
+                                                    String clanUrl = userInfo.getResponse().get(0).getClan_url();
+
+                                                    if (TextUtils.isEmpty(clanUrl)) {
+                                                        woter.setEnterClanFlag("0");
+                                                        handler.sendEmptyMessage(1);
+                                                    } else {
+                                                        woter.setEnterClanFlag("1");
+                                                        mQueue.add(jsonObjectRequest);
+                                                    }
+                                                }
+                                            }).start();
+
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.e("TAG2", error.getMessage(), error);
+                                            Snackbar.make(getView(), "获取战绩页面出错！", Snackbar.LENGTH_LONG).show();
+                                            backToQuery();
+                                        }
+                                    });
+                            mQueue.add(stringRequest);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG1", error.getMessage(), error);
+                Snackbar.make(getView(), "获取userinfo出错！", Snackbar.LENGTH_LONG).show();
+                backToQuery();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+
+                headers.put("Accept", "application/json, text/javascript, */*; q=0.01");
+                headers.put("X-Requested-With", "XMLHttpRequest");
+
+                return headers;
+            }
+        };
+
+        mQueue.add(jsonObjRequest);
+        // mQueue.start();
+
+        // 使用XVM获取用户信息
+        /**
+
+         Constant.XVM_USER_JSON_URL = Constant.XVM_USER_JSON_BASE_URL + CommonUtil.urlEncodeUTF8(name) + "&area=" + region;
 
         JsonObjectRequest firstjsonObjectRequest = new JsonObjectRequest(Constant.XVM_USER_JSON_URL, null,
                 new Response.Listener<JSONObject>() {
@@ -252,13 +392,13 @@ public class MainFragment extends BaseFragment {
                                                                     ClanInfo clanInfo = gson.fromJson(response.toString(), ClanInfo.class);
 
                                                                     handleClaninfo(clanInfo);
-                                                                    /**
-                                                                     * 请教一个Android问题：
-                                                                     * 加载页面之前先要获取数据，使用Volley访问网络，返回数据后还要用jsoup处理（比较耗时），这俩方法顺序进行（先获取后解析，最后获得想要的数据），然后更新ui
-                                                                     * 于是使用了 handler.sendEmptyMessage(1); 和 ProgressDialog
-                                                                     * 但是，这个耗时的操作却不耗时，加载框直接一闪而过，从而获取不到更新ui所需要的数据，
-                                                                     * 这个该怎么让他耗时呢？
-                                                                     */
+
+//                                                                     请教一个Android问题：
+//                                                                     加载页面之前先要获取数据，使用Volley访问网络，返回数据后还要用jsoup处理（比较耗时），这俩方法顺序进行（先获取后解析，最后获得想要的数据），然后更新ui
+//                                                                     于是使用了 handler.sendEmptyMessage(1); 和 ProgressDialog
+//                                                                     但是，这个耗时的操作却不耗时，加载框直接一闪而过，从而获取不到更新ui所需要的数据，
+//                                                                     这个该怎么让他耗时呢？
+
                                                                     // 执行耗时的方法之后发送消给handler
                                                                     handler.sendEmptyMessage(1);
 
@@ -311,6 +451,7 @@ public class MainFragment extends BaseFragment {
                 });
 
         mQueue.add(firstjsonObjectRequest);
+         */
     }
 
     /**

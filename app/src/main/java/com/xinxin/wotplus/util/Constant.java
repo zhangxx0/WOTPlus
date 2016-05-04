@@ -18,6 +18,14 @@ public class Constant {
      */
     public static String XVM_USER_JSON_BASE_URL = "http://182.18.61.50/getUserJson?name=";
     public static String XVM_USER_JSON_URL = "";
+    /**
+     * 官网获取用户ID信息等
+     * 目标样例：
+     * http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=%E6%8A%98%E8%85%BE5%E5%8F%B7&name_gt=
+     */
+    public static String USER_JSON_URL = "";
+    public static String USER_JSON_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/search/?name=";
+    public static String USER_JSON_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=";
 
     /**
      * 获取战绩页面html
