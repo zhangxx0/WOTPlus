@@ -207,7 +207,6 @@ public class MainFragment extends BaseFragment {
             Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_SOUTH + CommonUtil.urlEncodeUTF8(name) +"&name_gt=";
         }
 
-        Log.d("USER_JSON_URL", Constant.USER_JSON_URL);
 
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Constant.USER_JSON_URL, null,
                 new Response.Listener<JSONObject>() {
