@@ -163,7 +163,7 @@ public class AtyAbout extends SwipeBackBaseActivity {
                         .show();
             } else if (preference.equals(mEncounrage)) {
                 // 打赏
-                new AlertDialog.Builder(getActivity()).setTitle("请作者冲个高级账号？")
+                new AlertDialog.Builder(getActivity()).setTitle("请作者冲个金币？")
                         .setMessage("点击按钮后，作者支付宝账号将会复制到剪切板，" + "你就可以使用支付宝转账给作者了")
                         .setPositiveButton("打赏", new DialogInterface.OnClickListener() {
                             @Override

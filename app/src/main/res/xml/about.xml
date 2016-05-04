@@ -20,12 +20,12 @@
         <Preference
             android:key="encourage"
             android:title="打赏"
-            android:summary="请我喝杯饮料？"/>
+            android:summary="请我冲个金币？"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="关于作者">
         <Preference
             android:key="blog"
-            android:summary="http://blog.csdn.net/zxx886688"
+            android:summary="http://amx1390.com"
             android:title="个人博客"/>
         <Preference
             android:key="github"
