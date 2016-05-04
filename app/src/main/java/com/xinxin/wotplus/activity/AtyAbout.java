@@ -172,7 +172,12 @@ public class AtyAbout extends SwipeBackBaseActivity {
                             }
                         }).show();
             } else if (preference.equals(mBolg)) {
-                copyToClipboard(getView(), mBolg.getSummary().toString());
+                Uri uri = Uri.parse(mBolg.getSummary().toString());
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(uri);
+                getActivity().startActivity(intent);
+                // (getView(), mBolg.getSummary().toString());
             } else if (preference.equals(mGithub)) {
                 copyToClipboard(getView(), mGithub.getSummary().toString());
             } else if (preference.equals(mEmail)) {
