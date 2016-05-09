@@ -55,11 +55,14 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 
 ## 版本更新
 
-Fir.im（内测）: http://fir.im/wotplus
 
-豌豆荚：待上架；
+* Fir.im：[http://fir.im/WOTPlus](http://fir.im/WOTPlus)
+* 魅族应用中心：[ WOTPlus-魅族应用中心 ](http://app.meizu.com/apps/public/detail?package_name=com.xinxin.wotplus)
+* 应用宝：[ WOTPlus-应用宝](http://android.myapp.com/myapp/detail.htm?apkName=com.xinxin.wotplus)
 
-魅族应用中心：待上架；
+或者直接扫描下面的二维码下载：  
+
+![二维码分发](http://7xsvfv.com2.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%88%86%E5%8F%91.png)
 
 ## TODO
 
@@ -79,7 +82,12 @@ _ _ _
 
 想深入了解作者的可以戳这个：[ Zhangxx的博客 | 关于 ](http://amx1390.com/about/)  
 
+微博：[http://weibo.com/2112920937](http://weibo.com/2112920937)  
+个人博客：[http://amx1390.com](http://amx1390.com)  
 
+
+差点忘了，土豪要是想打赏我的话，可以扫下面的支付宝(不说了，先去搬砖了)：
+![ Zhangxx的支付宝 ](http://7xti0t.com2.z0.glb.clouddn.com/zhifubao)
 
 
 
