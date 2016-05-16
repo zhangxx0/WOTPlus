@@ -218,8 +218,6 @@ public class MainFragment extends BaseFragment {
                         //final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
                         final KongzhongUserInfo userInfo = gson.fromJson(response.toString(), KongzhongUserInfo.class);
 
-                        Log.d("111", userInfo.toString());
-
                         if (userInfo.getResponse().size() == 0) {
                             Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
                             backToQuery();
