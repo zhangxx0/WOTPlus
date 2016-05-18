@@ -26,6 +26,8 @@ public class Constant {
     public static String USER_JSON_URL = "";
     public static String USER_JSON_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/search/?name=";
     public static String USER_JSON_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=";
+    public static String USER_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static String USER_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
     /**
      * 获取战绩页面html
@@ -38,6 +40,8 @@ public class Constant {
     public static String WOTER_URL = "";
     public static final String WOTER_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
     public static final String WOTER_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String BASE_URL_NORTH = "http://ncw.worldoftanks.cn";
+    public static final String BASE_URL_SOUTH = "http://scw.worldoftanks.cn";
 
     public static final String WOTER_TARGET = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/";
 

@@ -37,6 +37,7 @@ import com.xinxin.wotplus.listener.HidingScrollListener;
 import com.xinxin.wotplus.model.ClanInfo;
 import com.xinxin.wotplus.model.KongzhongUserInfo;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.CommonUtil;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.HttpUtil;
@@ -54,6 +55,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
+import okhttp3.ResponseBody;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func0;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by xinxin on 2016/3/25.
@@ -178,9 +186,86 @@ public class MainFragment extends BaseFragment {
             if (!HttpUtil.isNetworkAvailable()) {
                 Snackbar.make(getView(), "网络不可用！", Snackbar.LENGTH_LONG).show();
             } else {
-                getDataFromWeb();
+                getDataFromWeb2();
             }
         }
+
+    }
+
+    Observer<KongzhongUserInfo> userObserver = new Observer<KongzhongUserInfo>() {
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e("TAG1", e.getMessage(), e);
+            Snackbar.make(getView(), "Rx获取userinfo出错！", Snackbar.LENGTH_LONG).show();
+            backToQuery();
+        }
+
+        @Override
+        public void onNext(KongzhongUserInfo kongzhongUserInfo) {
+            deathWheelProgressDialog.dismiss();
+            Log.d("成功", kongzhongUserInfo.toString());
+        }
+    };
+
+    Observer<ResponseBody> observer = new Observer<ResponseBody>() {
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e("TAG1", e.getMessage(), e);
+            Snackbar.make(getView(), "Rx获取userinfo出错！", Snackbar.LENGTH_LONG).show();
+            backToQuery();
+        }
+
+        @Override
+        public void onNext(ResponseBody s) {
+            deathWheelProgressDialog.dismiss();
+            Log.d("成功", s.toString());
+        }
+    };
+
+    /**
+     * 从网络中获取数据，使用Rxjava和Retrofit
+     * 2016年5月17日21:22:28
+     */
+    private void getDataFromWeb2() {
+
+        // （1）请求官网玩家信息
+        String name = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "name", "");
+        final String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
+        String name_gt = "";
+
+        subscription = Network.getUseInfoApi(region)
+                .getUserInfo(name, name_gt)
+                .flatMap(new Func1<KongzhongUserInfo, Observable<ResponseBody>>() {
+                    @Override
+                    public Observable<ResponseBody> call(KongzhongUserInfo kongzhongUserInfo) {
+                        Log.d("11", "11");
+                        return kongzhongUserInfo == null
+                                ? Observable.<ResponseBody>error(new Exception("自定义异常信息！"))
+                                : Network.getRecordApi(region)
+                                .getHtml2(kongzhongUserInfo.getResponse().get(0).getAccount_profile());
+                    }
+                }, new Func1<Throwable, Observable<? extends ResponseBody>>() {
+                    @Override
+                    public Observable<? extends ResponseBody> call(Throwable throwable) {
+                        return Observable.error(new Exception("自定义异常信息2！"));
+                    }
+                }, new Func0<Observable<? extends ResponseBody>>() {
+                    @Override
+                    public Observable<? extends ResponseBody> call() {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
 
     }
 
@@ -202,9 +287,9 @@ public class MainFragment extends BaseFragment {
         final String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
 
         if (QueryActivity.REGION_NORTH.equals(region)) {
-            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_NORTH + CommonUtil.urlEncodeUTF8(name) +"&name_gt=";
+            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_NORTH + CommonUtil.urlEncodeUTF8(name) + "&name_gt=";
         } else {
-            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_SOUTH + CommonUtil.urlEncodeUTF8(name) +"&name_gt=";
+            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_SOUTH + CommonUtil.urlEncodeUTF8(name) + "&name_gt=";
         }
 
 
@@ -336,118 +421,111 @@ public class MainFragment extends BaseFragment {
 
          Constant.XVM_USER_JSON_URL = Constant.XVM_USER_JSON_BASE_URL + CommonUtil.urlEncodeUTF8(name) + "&area=" + region;
 
-        JsonObjectRequest firstjsonObjectRequest = new JsonObjectRequest(Constant.XVM_USER_JSON_URL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+         JsonObjectRequest firstjsonObjectRequest = new JsonObjectRequest(Constant.XVM_USER_JSON_URL, null,
+         new Response.Listener<JSONObject>() {
+        @Override public void onResponse(JSONObject response) {
 
-                        Gson gson = new Gson();
-                        final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
+        Gson gson = new Gson();
+        final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
 
-                        if (TextUtils.isEmpty(xvmUserInfo.getPlayer().getAid())) {
-                            Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
-                            backToQuery();
-                        } else {
-                            // 保存woterId
-                            PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", xvmUserInfo.getPlayer().getAid());
+        if (TextUtils.isEmpty(xvmUserInfo.getPlayer().getAid())) {
+        Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
+        backToQuery();
+        } else {
+        // 保存woterId
+        PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", xvmUserInfo.getPlayer().getAid());
 
-                            if (QueryActivity.REGION_NORTH.equals(region)) {
-                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_NORTH + xvmUserInfo.getPlayer().getAid() + "-" +
-                                        CommonUtil.urlEncodeUTF8(xvmUserInfo.getPlayer().getUsername()) + "/";
-                            } else if (QueryActivity.REGION_SOUTH.equals(region)) {
-                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_SOUTH + xvmUserInfo.getPlayer().getAid() + "-" +
-                                        CommonUtil.urlEncodeUTF8(xvmUserInfo.getPlayer().getUsername()) + "/";
-                            }
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+        Constant.WOTER_URL = Constant.WOTER_BASE_URL_NORTH + xvmUserInfo.getPlayer().getAid() + "-" +
+        CommonUtil.urlEncodeUTF8(xvmUserInfo.getPlayer().getUsername()) + "/";
+        } else if (QueryActivity.REGION_SOUTH.equals(region)) {
+        Constant.WOTER_URL = Constant.WOTER_BASE_URL_SOUTH + xvmUserInfo.getPlayer().getAid() + "-" +
+        CommonUtil.urlEncodeUTF8(xvmUserInfo.getPlayer().getUsername()) + "/";
+        }
 
-                            // 第二个请求
-                            // 这里的URL需要在第一次请求之后获得，因此初始加载的是空的，会报Bad url错误；
-                            // 还是得级联，但是级联实在是太不美观了；2016年3月31日23:17:15
-                            final StringRequest stringRequest = new StringRequest(Constant.WOTER_URL,
-                                    new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(final String response) {
+        // 第二个请求
+        // 这里的URL需要在第一次请求之后获得，因此初始加载的是空的，会报Bad url错误；
+        // 还是得级联，但是级联实在是太不美观了；2016年3月31日23:17:15
+        final StringRequest stringRequest = new StringRequest(Constant.WOTER_URL,
+        new Response.Listener<String>() {
+        @Override public void onResponse(final String response) {
 
-                                            new Thread(new Runnable() {
-                                                @Override
-                                                public void run() {
+        new Thread(new Runnable() {
+        @Override public void run() {
 
-                                                    jsoupHtml(response, region);
+        jsoupHtml(response, region);
 
-                                                    // 第三个请求
-                                                    // 获取军团信息的json
-                                                    String clan_url;
-                                                    if (QueryActivity.REGION_NORTH.equals(region)) {
-                                                        clan_url = Constant.CLAN_URL_BASE_NORTH + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
-                                                    } else {
-                                                        clan_url = Constant.CLAN_URL_BASE_SOUTH + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
-                                                    }
-                                                    final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clan_url, null,
-                                                            new Response.Listener<JSONObject>() {
-                                                                @Override
-                                                                public void onResponse(JSONObject response) {
-                                                                    Gson gson = new Gson();
-                                                                    ClanInfo clanInfo = gson.fromJson(response.toString(), ClanInfo.class);
+        // 第三个请求
+        // 获取军团信息的json
+        String clan_url;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+        clan_url = Constant.CLAN_URL_BASE_NORTH + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
+        } else {
+        clan_url = Constant.CLAN_URL_BASE_SOUTH + xvmUserInfo.getPlayer().getAid() + "&time_token=" + new Date().getTime();
+        }
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clan_url, null,
+        new Response.Listener<JSONObject>() {
+        @Override public void onResponse(JSONObject response) {
+        Gson gson = new Gson();
+        ClanInfo clanInfo = gson.fromJson(response.toString(), ClanInfo.class);
 
-                                                                    handleClaninfo(clanInfo);
+        handleClaninfo(clanInfo);
 
-//                                                                     请教一个Android问题：
-//                                                                     加载页面之前先要获取数据，使用Volley访问网络，返回数据后还要用jsoup处理（比较耗时），这俩方法顺序进行（先获取后解析，最后获得想要的数据），然后更新ui
-//                                                                     于是使用了 handler.sendEmptyMessage(1); 和 ProgressDialog
-//                                                                     但是，这个耗时的操作却不耗时，加载框直接一闪而过，从而获取不到更新ui所需要的数据，
-//                                                                     这个该怎么让他耗时呢？
+        //                                                                     请教一个Android问题：
+        //                                                                     加载页面之前先要获取数据，使用Volley访问网络，返回数据后还要用jsoup处理（比较耗时），这俩方法顺序进行（先获取后解析，最后获得想要的数据），然后更新ui
+        //                                                                     于是使用了 handler.sendEmptyMessage(1); 和 ProgressDialog
+        //                                                                     但是，这个耗时的操作却不耗时，加载框直接一闪而过，从而获取不到更新ui所需要的数据，
+        //                                                                     这个该怎么让他耗时呢？
 
-                                                                    // 执行耗时的方法之后发送消给handler
-                                                                    handler.sendEmptyMessage(1);
+        // 执行耗时的方法之后发送消给handler
+        handler.sendEmptyMessage(1);
 
-                                                                }
-                                                            },
-                                                            new Response.ErrorListener() {
-                                                                @Override
-                                                                public void onErrorResponse(VolleyError error) {
-                                                                    Log.e("TAG3", error.getMessage(), error);
-                                                                    Snackbar.make(getView(), "获取军团信息出错！", Snackbar.LENGTH_LONG).show();
-                                                                    backToQuery();
-                                                                }
-                                                            });
+        }
+        },
+        new Response.ErrorListener() {
+        @Override public void onErrorResponse(VolleyError error) {
+        Log.e("TAG3", error.getMessage(), error);
+        Snackbar.make(getView(), "获取军团信息出错！", Snackbar.LENGTH_LONG).show();
+        backToQuery();
+        }
+        });
 
 
-                                                    // 此处判断是否要请求军团信息，设置EnterClanFlag
-                                                    if ("0".equals(xvmUserInfo.getPlayer().getClanid())) {
-                                                        woter.setEnterClanFlag("0");
-                                                        handler.sendEmptyMessage(1);
-                                                    } else {
-                                                        woter.setEnterClanFlag("1");
-                                                        mQueue.add(jsonObjectRequest);
-                                                    }
-                                                }
-                                            }).start();
+        // 此处判断是否要请求军团信息，设置EnterClanFlag
+        if ("0".equals(xvmUserInfo.getPlayer().getClanid())) {
+        woter.setEnterClanFlag("0");
+        handler.sendEmptyMessage(1);
+        } else {
+        woter.setEnterClanFlag("1");
+        mQueue.add(jsonObjectRequest);
+        }
+        }
+        }).start();
 
-                                        }
-                                    },
-                                    new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            Log.e("TAG2", error.getMessage(), error);
-                                            Snackbar.make(getView(), "获取战绩页面出错！", Snackbar.LENGTH_LONG).show();
-                                            backToQuery();
-                                        }
-                                    });
-                            mQueue.add(stringRequest);
-                        }
+        }
+        },
+        new Response.ErrorListener() {
+        @Override public void onErrorResponse(VolleyError error) {
+        Log.e("TAG2", error.getMessage(), error);
+        Snackbar.make(getView(), "获取战绩页面出错！", Snackbar.LENGTH_LONG).show();
+        backToQuery();
+        }
+        });
+        mQueue.add(stringRequest);
+        }
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("TAG1", error.getMessage(), error);
-                        Snackbar.make(getView(), "获取xvminfo出错！", Snackbar.LENGTH_LONG).show();
-                        backToQuery();
-                    }
+        }
+        },
+         new Response.ErrorListener() {
+        @Override public void onErrorResponse(VolleyError error) {
+        Log.e("TAG1", error.getMessage(), error);
+        Snackbar.make(getView(), "获取xvminfo出错！", Snackbar.LENGTH_LONG).show();
+        backToQuery();
+        }
 
-                });
+        });
 
-        mQueue.add(firstjsonObjectRequest);
+         mQueue.add(firstjsonObjectRequest);
          */
     }
 
