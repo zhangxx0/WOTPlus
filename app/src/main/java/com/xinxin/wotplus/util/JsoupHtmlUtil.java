@@ -4,12 +4,14 @@ import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.model.Achieve;
 import com.xinxin.wotplus.model.Achievements;
 import com.xinxin.wotplus.model.BadgeAndRecord;
+import com.xinxin.wotplus.model.ClanInfoUsed;
 import com.xinxin.wotplus.model.Tank;
 import com.xinxin.wotplus.model.Tanks;
 import com.xinxin.wotplus.model.TanksType;
 import com.xinxin.wotplus.model.TypesAndCountry;
 import com.xinxin.wotplus.model.Woter;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -31,7 +33,7 @@ public class JsoupHtmlUtil {
      * @param doc
      * @return
      */
-    public static Woter handleWotPage(Document doc,String region) {
+    public static Woter handleWotPage(Document doc, String region) {
         Woter woter = new Woter();
         Elements elements;
         Element element;
@@ -433,5 +435,28 @@ public class JsoupHtmlUtil {
 
 
         return woter;
+    }
+
+
+    /**
+     * 处理军团信息
+     *
+     * @return
+     */
+    public static ClanInfoUsed handleClaninfo(String s) {
+
+        Document doc = Jsoup.parse(s);
+        Element link = doc.select("img").first();
+
+        Element clanPosition = doc.select(".number").first();
+        Element clanDays = doc.select(".number").last();
+
+        ClanInfoUsed c = new ClanInfoUsed();
+        c.setClanDescription(link.attr("alt"));
+        c.setClanImgSrc(link.attr("src"));
+        c.setClanPosition(clanPosition.text());
+        c.setClanDays(clanDays.text());
+
+        return c;
     }
 }

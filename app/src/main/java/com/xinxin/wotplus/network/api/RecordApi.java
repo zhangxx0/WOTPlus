@@ -16,7 +16,7 @@ public interface RecordApi {
     Observable<String> getHtml(@Path("accountId") String accountId, @Path("accountName") String accountName);
 
     //
-    // http://ncw.worldoftanks.cn       /zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
+    // http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
     @GET("{lasturl}")
     Observable<ResponseBody> getHtml2(@Path("lasturl") String lasturl);
 }
