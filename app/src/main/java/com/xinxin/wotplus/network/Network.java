@@ -2,8 +2,11 @@ package com.xinxin.wotplus.network;
 
 import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.network.api.ClanInfoApi;
+import com.xinxin.wotplus.network.api.GradeApi;
 import com.xinxin.wotplus.network.api.RecordApi;
+import com.xinxin.wotplus.network.api.TankApi;
 import com.xinxin.wotplus.network.api.UserInfoApi;
+import com.xinxin.wotplus.network.api.UtilApi;
 import com.xinxin.wotplus.util.Constant;
 
 import okhttp3.OkHttpClient;
@@ -21,12 +24,19 @@ public class Network {
     private static UserInfoApi userInfoApi;
     private static RecordApi recordApi;
     private static ClanInfoApi clanInfoApi;
+    private static GradeApi gradeApi;
+    private static TankApi tankApi;
+    private static UtilApi utilApi;
 
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 
-
+    /**
+     * 获取玩家信息
+     * @param region
+     * @return
+     */
     public static UserInfoApi getUseInfoApi(String region) {
 
         // 需根据大区判断baseurl
@@ -50,6 +60,11 @@ public class Network {
         return userInfoApi;
     }
 
+    /**
+     * 获取战绩html页面
+     * @param region
+     * @return
+     */
     public static RecordApi getRecordApi(String region) {
 
         // 需根据大区判断baseurl
@@ -73,6 +88,11 @@ public class Network {
         return recordApi;
     }
 
+    /**
+     * 获取军团信息
+     * @param region
+     * @return
+     */
     public static ClanInfoApi getClanInfoApi(String region) {
 
         // 需根据大区判断baseurl
@@ -94,6 +114,84 @@ public class Network {
 
         return clanInfoApi;
     }
+
+    /**
+     * 获取等级信息
+     * @param region
+     * @return
+     */
+    public static GradeApi getGradeInfo(String region) {
+
+        // 需根据大区判断baseurl
+        String baseUrl;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            baseUrl = Constant.GRADE_URL_BASE_NORTH;
+        } else {
+            baseUrl = Constant.GRADE_URL_BASE_SOUTH;
+        }
+        if (gradeApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            gradeApi = retrofit.create(GradeApi.class);
+        }
+
+        return gradeApi;
+
+    }
+
+    /**
+     * 获取坦克信息
+     * @param region
+     * @return
+     */
+    public static TankApi getTankInfo(String region) {
+
+        // 需根据大区判断baseurl
+        String baseUrl;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            baseUrl = Constant.TANK_ACHIEVE_URL_BASE_NORTH;
+        } else {
+            baseUrl = Constant.TANK_ACHIEVE_URL_BASE_SOUTH;
+        }
+        if (tankApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            tankApi = retrofit.create(TankApi.class);
+        }
+
+        return tankApi;
+
+    }
+
+    /**
+     * 工具
+     * @return
+     */
+    public static UtilApi getUtilApi() {
+
+        if (utilApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(Constant.FIR_VERSION_BASE)
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            utilApi = retrofit.create(UtilApi.class);
+        }
+
+        return utilApi;
+
+    }
+
+
 
 }
 

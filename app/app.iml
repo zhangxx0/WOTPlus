@@ -139,6 +139,5 @@
     <orderEntry type="library" exported="" name="adapter-rxjava-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="jsoup-1.8.3" level="project" />
     <orderEntry type="library" exported="" name="retrofit-2.0.0" level="project" />
-    <orderEntry type="module" module-name="volley" exported="" />
   </component>
 </module>

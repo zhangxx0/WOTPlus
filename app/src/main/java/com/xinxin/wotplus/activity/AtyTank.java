@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,15 +17,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.TankAchievesAdapter;
 import com.xinxin.wotplus.base.SwipeBackBaseActivity;
@@ -32,17 +25,20 @@ import com.xinxin.wotplus.model.Achieve;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.Achievements;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.PreferenceUtils;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 import com.xinxin.wotplus.widget.RevealBackgroundView;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by xinxin on 2016/4/8.
@@ -54,6 +50,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
     public static final String TANK_ID = "tankid";
 
     private RevealBackgroundView vRevealBackground;
+    private DeathWheelProgressDialog deathWheelProgressDialog;
 
     private CoordinatorLayout tankMainContent;
     private AppBarLayout tankAppbar;
@@ -91,121 +88,115 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_tank_achieves);
 
-
-        RequestQueue mQueue = Volley.newRequestQueue(this);
-        // 拼接战车战绩查询URL
-        String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
-
-        // 区分南北区
-        String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
-        String tankUrl;
-        if (QueryActivity.REGION_NORTH.equals(region)) {
-            tankUrl = Constant.TANK_ACHIEVE_URL_BASE_NORTH + woterId + "/vehicle_details/?vehicle_cd=" + tankId;
-        } else {
-            tankUrl = Constant.TANK_ACHIEVE_URL_BASE_SOUTH + woterId + "/vehicle_details/?vehicle_cd=" + tankId;
-        }
-
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, tankUrl, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Gson gson = new Gson();
-                            AchieveTank achieveTank = gson.fromJson(response.toString(), AchieveTank.class);
-
-                            if (achieveTank != null) {
-                                List<AchieveTank.AchievementsEntity> achieveList = achieveTank.getAchievements();
-
-                                // 根据成就的多少，判断展示的行数 <=8 则展示1行，其余展示两行
-                                int spanCount = 1;
-                                if (achieveList.size() >= 8) {
-                                    spanCount = 2;
-                                }
-                                GridLayoutManager gm = new GridLayoutManager(AtyTank.this, spanCount);
-                                gm.setOrientation(LinearLayoutManager.HORIZONTAL);
-                                recyclerView.setLayoutManager(gm);
-
-
-                                // 从CharedPreference中获取woter
-                                String woterString = PreferenceUtils.getCustomPrefString(AtyTank.this, "woter", "woterString", "");
-                                Gson gson2 = new Gson();
-                                Map<String, String> map = new HashMap<String, String>();
-                                if (!TextUtils.isEmpty(woterString)) {
-                                    woter = gson2.fromJson(woterString, Woter.class);
-                                    // 提取勋章的ID与名称对照字段
-                                    Achievements achievements = woter.getAchievements();
-                                    List<Achieve> warheroList = achievements.getWarheroList();
-                                    for (Achieve achieve : warheroList) {
-                                        map.put(achieve.getAchivementId(), achieve.getAchivementName());
-                                    }
-                                    List<Achieve> honorList = achievements.getHonorList();
-                                    for (Achieve achieve : honorList) {
-                                        map.put(achieve.getAchivementId(), achieve.getAchivementName());
-                                    }
-                                    List<Achieve> epicList = achievements.getEpicList();
-                                    for (Achieve achieve : epicList) {
-                                        map.put(achieve.getAchivementId(), achieve.getAchivementName());
-                                    }
-                                    List<Achieve> teamList = achievements.getTeamList();
-                                    for (Achieve achieve : teamList) {
-                                        map.put(achieve.getAchivementId(), achieve.getAchivementName());
-                                    }
-                                    List<Achieve> commemorateList = achievements.getCommemorateList();
-                                    for (Achieve achieve : commemorateList) {
-                                        map.put(achieve.getAchivementId(), achieve.getAchivementName());
-                                    }
-                                    List<Achieve> stageList = achievements.getStageList();
-                                    for (Achieve achieve : stageList) {
-                                        map.put(achieve.getAchivementId(), achieve.getAchivementName());
-                                    }
-                                    List<Achieve> otherList = achievements.getOtherList();
-                                    for (Achieve achieve : otherList) {
-                                        map.put(achieve.getAchivementId(), achieve.getAchivementName());
-                                    }
-                                }
-
-                                adapter = new TankAchievesAdapter(achieveList, AtyTank.this, map);
-                                // RecyclerView 动画
-                                ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
-                                recyclerView.setAdapter(animatorAdapter);
-
-                                initCard(achieveTank);
-
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        Observer<AchieveTank> tankObserver = new Observer<AchieveTank>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("jsonObjRequest", "onErrorResponse, error=" + error);
-            }
-        }) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-
-                // 注释的header中的某一个会导致返回不了json的错误；具体哪一个，，，
-//                headers.put("Accept", "application/json, text/javascript, */*; q=0.01");
-//                headers.put("Accept-Encoding", "gzip, deflate, sdch");
-//                headers.put("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
-//                headers.put("Cache-Control", "max-age=0");
-//                headers.put("Connection", "keep-alive");
-                headers.put("X-Requested-With", "XMLHttpRequest");
-
-                return headers;
+            public void onCompleted() {
             }
 
+            @Override
+            public void onError(Throwable e) {
+                Log.e("tank", e.getMessage(), e);
+                Snackbar.make(tankMainContent, "获取坦克战绩信息出错！", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNext(AchieveTank achieveTank) {
+
+                if (achieveTank != null) {
+                    showTankAchieve(achieveTank);
+                }
+
+                deathWheelProgressDialog.dismiss();
+            }
         };
 
-        mQueue.add(jsonObjRequest);
-        mQueue.start();
+        deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(this);
+        deathWheelProgressDialog.show();
+
+        String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
+        // 区分南北区
+        String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
+
+        Network.getTankInfo(region)
+                .getTankAchieve(woterId, tankId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tankObserver);
 
         setupRevealBackground(savedInstanceState);
 
+    }
+
+    /**
+     *
+     * @param achieveTank
+     */
+    private void showTankAchieve(AchieveTank achieveTank) {
+
+        List<AchieveTank.AchievementsEntity> achieveList = achieveTank.getAchievements();
+
+        // 根据成就的多少，判断展示的行数 <=8 则展示1行，其余展示两行
+        int spanCount = 1;
+        if (achieveList.size() >= 8) {
+            spanCount = 2;
+        }
+        GridLayoutManager gm = new GridLayoutManager(AtyTank.this, spanCount);
+        gm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(gm);
+
+        Map map = tomap();
+
+        adapter = new TankAchievesAdapter(achieveList, AtyTank.this, map);
+        // RecyclerView 动画
+        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
+        recyclerView.setAdapter(animatorAdapter);
+
+        initCard(achieveTank);
+    }
+
+    /**
+     * 提取勋章的ID与名称对照字段
+     * @return
+     */
+    private Map tomap() {
+        // 从CharedPreference中获取woter
+        String woterString = PreferenceUtils.getCustomPrefString(AtyTank.this, "woter", "woterString", "");
+        Gson gson2 = new Gson();
+        Map<String, String> map = new HashMap<String, String>();
+        if (!TextUtils.isEmpty(woterString)) {
+            woter = gson2.fromJson(woterString, Woter.class);
+            // 提取勋章的ID与名称对照字段
+            Achievements achievements = woter.getAchievements();
+            List<Achieve> warheroList = achievements.getWarheroList();
+            for (Achieve achieve : warheroList) {
+                map.put(achieve.getAchivementId(), achieve.getAchivementName());
+            }
+            List<Achieve> honorList = achievements.getHonorList();
+            for (Achieve achieve : honorList) {
+                map.put(achieve.getAchivementId(), achieve.getAchivementName());
+            }
+            List<Achieve> epicList = achievements.getEpicList();
+            for (Achieve achieve : epicList) {
+                map.put(achieve.getAchivementId(), achieve.getAchivementName());
+            }
+            List<Achieve> teamList = achievements.getTeamList();
+            for (Achieve achieve : teamList) {
+                map.put(achieve.getAchivementId(), achieve.getAchivementName());
+            }
+            List<Achieve> commemorateList = achievements.getCommemorateList();
+            for (Achieve achieve : commemorateList) {
+                map.put(achieve.getAchivementId(), achieve.getAchivementName());
+            }
+            List<Achieve> stageList = achievements.getStageList();
+            for (Achieve achieve : stageList) {
+                map.put(achieve.getAchivementId(), achieve.getAchivementName());
+            }
+            List<Achieve> otherList = achievements.getOtherList();
+            for (Achieve achieve : otherList) {
+                map.put(achieve.getAchivementId(), achieve.getAchivementName());
+            }
+        }
+        return map;
     }
 
     private void setupRevealBackground(Bundle savedInstanceState) {
@@ -216,7 +207,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
                 @Override
                 public boolean onPreDraw() {
                     vRevealBackground.getViewTreeObserver().removeOnPreDrawListener(this);
-                    Log.d("location",startingLocation.toString());
+                    Log.d("location", startingLocation.toString());
                     vRevealBackground.startFromLocation(startingLocation);
                     return true;
                 }

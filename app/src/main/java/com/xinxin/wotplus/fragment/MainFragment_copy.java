@@ -19,14 +19,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.R;
@@ -39,8 +31,6 @@ import com.xinxin.wotplus.model.ClanInfoUsed;
 import com.xinxin.wotplus.model.KongzhongUserInfo;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.network.Network;
-import com.xinxin.wotplus.util.CommonUtil;
-import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.HttpUtil;
 import com.xinxin.wotplus.util.JsoupHtmlUtil;
 import com.xinxin.wotplus.util.PreferenceUtils;
@@ -48,14 +38,11 @@ import com.xinxin.wotplus.util.mapper.ClanInfoToWoterMapper;
 import com.xinxin.wotplus.util.mapper.HtmlToWoterMapper;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
 import okhttp3.ResponseBody;
@@ -69,6 +56,7 @@ import rx.schedulers.Schedulers;
  * Created by xinxin on 2016/3/25.
  * <p/>
  * 主页面Fragment
+ * 保留第一版的代码，无实际作用
  */
 public class MainFragment_copy extends BaseFragment {
 
@@ -330,142 +318,141 @@ public class MainFragment_copy extends BaseFragment {
         // (2)使用Volley
         //  使用mActivity做参数时报错：修改为getActivity
         // java.lang.NullPointerException: Attempt to invoke virtual method 'java.io.File android.content.Context.getCacheDir()' on a null object reference
-        final RequestQueue mQueue = Volley.newRequestQueue(getActivity());
-
-        // 第一个请求 请求官网获取用户信息
-        // 拼接请求串
-        String name = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "name", "");
-        final String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
-
-        if (QueryActivity.REGION_NORTH.equals(region)) {
-            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_NORTH + CommonUtil.urlEncodeUTF8(name) + "&name_gt=";
-        } else {
-            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_SOUTH + CommonUtil.urlEncodeUTF8(name) + "&name_gt=";
-        }
-
-
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Constant.USER_JSON_URL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-
-                        Gson gson = new Gson();
-                        //final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
-                        final KongzhongUserInfo userInfo = gson.fromJson(response.toString(), KongzhongUserInfo.class);
-
-                        if (userInfo.getResponse().size() == 0) {
-                            Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
-                            backToQuery();
-                        } else {
-                            // 保存woterId
-                            PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", userInfo.getResponse().get(0).getAccount_id());
-
-                            if (QueryActivity.REGION_NORTH.equals(region)) {
-                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_NORTH + userInfo.getResponse().get(0).getAccount_id() + "-" +
-                                        CommonUtil.urlEncodeUTF8(userInfo.getResponse().get(0).getAccount_name()) + "/";
-                            } else if (QueryActivity.REGION_SOUTH.equals(region)) {
-                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_SOUTH + userInfo.getResponse().get(0).getAccount_id() + "-" +
-                                        CommonUtil.urlEncodeUTF8(userInfo.getResponse().get(0).getAccount_name()) + "/";
-                            }
-
-                            // 第二个请求
-                            // 这里的URL需要在第一次请求之后获得，因此初始加载的是空的，会报Bad url错误；
-                            // 还是得级联，但是级联实在是太不美观了；2016年3月31日23:17:15
-                            final StringRequest stringRequest = new StringRequest(Constant.WOTER_URL,
-                                    new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(final String response) {
-
-                                            new Thread(new Runnable() {
-                                                @Override
-                                                public void run() {
-
-                                                    jsoupHtml(response, region);
-
-                                                    // 第三个请求
-                                                    // 获取军团信息的json
-                                                    String clan_url;
-                                                    if (QueryActivity.REGION_NORTH.equals(region)) {
-                                                        clan_url = Constant.CLAN_URL_BASE_NORTH + userInfo.getResponse().get(0).getAccount_id() + "&time_token=" + new Date().getTime();
-                                                    } else {
-                                                        clan_url = Constant.CLAN_URL_BASE_SOUTH + userInfo.getResponse().get(0).getAccount_id() + "&time_token=" + new Date().getTime();
-                                                    }
-                                                    Log.d("clan_url", clan_url);
-                                                    final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clan_url, null,
-                                                            new Response.Listener<JSONObject>() {
-                                                                @Override
-                                                                public void onResponse(JSONObject response) {
-                                                                    Gson gson = new Gson();
-                                                                    ClanInfo clanInfo = gson.fromJson(response.toString(), ClanInfo.class);
-
-                                                                    handleClaninfo(clanInfo);
-
-                                                                    // 执行耗时的方法之后发送消给handler
-                                                                    handler.sendEmptyMessage(1);
-
-                                                                }
-                                                            },
-                                                            new Response.ErrorListener() {
-                                                                @Override
-                                                                public void onErrorResponse(VolleyError error) {
-                                                                    Log.e("TAG3", error.getMessage(), error);
-                                                                    Snackbar.make(getView(), "获取军团信息出错！", Snackbar.LENGTH_LONG).show();
-                                                                    backToQuery();
-                                                                }
-                                                            });
-
-
-                                                    // 此处判断是否要请求军团信息，设置EnterClanFlag
-                                                    // 从官网获取的userInfo中没有ClanId
-                                                    // 从http://north.warsaga.cn/clans/2083/?utm_campaign=wot-portal&utm_medium=link中截取
-                                                    String clanUrl = userInfo.getResponse().get(0).getClan_url();
-
-                                                    if (TextUtils.isEmpty(clanUrl)) {
-                                                        woter.setEnterClanFlag("0");
-                                                        handler.sendEmptyMessage(1);
-                                                    } else {
-                                                        woter.setEnterClanFlag("1");
-                                                        mQueue.add(jsonObjectRequest);
-                                                    }
-                                                }
-                                            }).start();
-
-                                        }
-                                    },
-                                    new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            Log.e("TAG2", error.getMessage(), error);
-                                            Snackbar.make(getView(), "获取战绩页面出错！", Snackbar.LENGTH_LONG).show();
-                                            backToQuery();
-                                        }
-                                    });
-                            mQueue.add(stringRequest);
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG1", error.getMessage(), error);
-                Snackbar.make(getView(), "获取userinfo出错！", Snackbar.LENGTH_LONG).show();
-                backToQuery();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-
-                headers.put("Accept", "application/json, text/javascript, */*; q=0.01");
-                headers.put("X-Requested-With", "XMLHttpRequest");
-
-                return headers;
-            }
-        };
-
-        mQueue.add(jsonObjRequest);
-        // mQueue.start();
+//        final RequestQueue mQueue = Volley.newRequestQueue(getActivity());
+//
+//        // 第一个请求 请求官网获取用户信息
+//        // 拼接请求串
+//        String name = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "name", "");
+//        final String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
+//
+//        if (QueryActivity.REGION_NORTH.equals(region)) {
+//            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_NORTH + CommonUtil.urlEncodeUTF8(name) + "&name_gt=";
+//        } else {
+//            Constant.USER_JSON_URL = Constant.USER_JSON_BASE_URL_SOUTH + CommonUtil.urlEncodeUTF8(name) + "&name_gt=";
+//        }
+//
+//
+//        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, Constant.USER_JSON_URL, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//
+//
+//                        Gson gson = new Gson();
+//                        //final XvmUserInfo xvmUserInfo = gson.fromJson(response.toString(), XvmUserInfo.class);
+//                        final KongzhongUserInfo userInfo = gson.fromJson(response.toString(), KongzhongUserInfo.class);
+//
+//                        if (userInfo.getResponse().size() == 0) {
+//                            Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
+//                            backToQuery();
+//                        } else {
+//                            // 保存woterId
+//                            PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", userInfo.getResponse().get(0).getAccount_id());
+//
+//                            if (QueryActivity.REGION_NORTH.equals(region)) {
+//                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_NORTH + userInfo.getResponse().get(0).getAccount_id() + "-" +
+//                                        CommonUtil.urlEncodeUTF8(userInfo.getResponse().get(0).getAccount_name()) + "/";
+//                            } else if (QueryActivity.REGION_SOUTH.equals(region)) {
+//                                Constant.WOTER_URL = Constant.WOTER_BASE_URL_SOUTH + userInfo.getResponse().get(0).getAccount_id() + "-" +
+//                                        CommonUtil.urlEncodeUTF8(userInfo.getResponse().get(0).getAccount_name()) + "/";
+//                            }
+//
+//                            // 第二个请求
+//                            // 这里的URL需要在第一次请求之后获得，因此初始加载的是空的，会报Bad url错误；
+//                            // 还是得级联，但是级联实在是太不美观了；2016年3月31日23:17:15
+//                            final StringRequest stringRequest = new StringRequest(Constant.WOTER_URL,
+//                                    new Response.Listener<String>() {
+//                                        @Override
+//                                        public void onResponse(final String response) {
+//
+//                                            new Thread(new Runnable() {
+//                                                @Override
+//                                                public void run() {
+//
+//                                                    jsoupHtml(response, region);
+//
+//                                                    // 第三个请求
+//                                                    // 获取军团信息的json
+//                                                    String clan_url;
+//                                                    if (QueryActivity.REGION_NORTH.equals(region)) {
+//                                                        clan_url = Constant.CLAN_URL_BASE_NORTH + userInfo.getResponse().get(0).getAccount_id() + "&time_token=" + new Date().getTime();
+//                                                    } else {
+//                                                        clan_url = Constant.CLAN_URL_BASE_SOUTH + userInfo.getResponse().get(0).getAccount_id() + "&time_token=" + new Date().getTime();
+//                                                    }
+//                                                    Log.d("clan_url", clan_url);
+//                                                    final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(clan_url, null,
+//                                                            new Response.Listener<JSONObject>() {
+//                                                                @Override
+//                                                                public void onResponse(JSONObject response) {
+//                                                                    Gson gson = new Gson();
+//                                                                    ClanInfo clanInfo = gson.fromJson(response.toString(), ClanInfo.class);
+//
+//                                                                    handleClaninfo(clanInfo);
+//
+//                                                                    // 执行耗时的方法之后发送消给handler
+//                                                                    handler.sendEmptyMessage(1);
+//
+//                                                                }
+//                                                            },
+//                                                            new Response.ErrorListener() {
+//                                                                @Override
+//                                                                public void onErrorResponse(VolleyError error) {
+//                                                                    Log.e("TAG3", error.getMessage(), error);
+//                                                                    Snackbar.make(getView(), "获取军团信息出错！", Snackbar.LENGTH_LONG).show();
+//                                                                    backToQuery();
+//                                                                }
+//                                                            });
+//
+//
+//                                                    // 此处判断是否要请求军团信息，设置EnterClanFlag
+//                                                    // 从官网获取的userInfo中没有ClanId
+//                                                    // 从http://north.warsaga.cn/clans/2083/?utm_campaign=wot-portal&utm_medium=link中截取
+//                                                    String clanUrl = userInfo.getResponse().get(0).getClan_url();
+//
+//                                                    if (TextUtils.isEmpty(clanUrl)) {
+//                                                        woter.setEnterClanFlag("0");
+//                                                        handler.sendEmptyMessage(1);
+//                                                    } else {
+//                                                        woter.setEnterClanFlag("1");
+//                                                        mQueue.add(jsonObjectRequest);
+//                                                    }
+//                                                }
+//                                            }).start();
+//
+//                                        }
+//                                    },
+//                                    new Response.ErrorListener() {
+//                                        @Override
+//                                        public void onErrorResponse(VolleyError error) {
+//                                            Log.e("TAG2", error.getMessage(), error);
+//                                            Snackbar.make(getView(), "获取战绩页面出错！", Snackbar.LENGTH_LONG).show();
+//                                            backToQuery();
+//                                        }
+//                                    });
+//                            mQueue.add(stringRequest);
+//                        }
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("TAG1", error.getMessage(), error);
+//                Snackbar.make(getView(), "获取userinfo出错！", Snackbar.LENGTH_LONG).show();
+//                backToQuery();
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> headers = new HashMap<String, String>();
+//
+//                headers.put("Accept", "application/json, text/javascript, */*; q=0.01");
+//                headers.put("X-Requested-With", "XMLHttpRequest");
+//
+//                return headers;
+//            }
+//        };
+//
+//        mQueue.add(jsonObjRequest);
 
         // 使用XVM获取用户信息
         /**

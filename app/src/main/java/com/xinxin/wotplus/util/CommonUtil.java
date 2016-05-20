@@ -8,21 +8,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.VersionVo;
-
-import org.json.JSONObject;
+import com.xinxin.wotplus.network.Network;
 
 import java.io.UnsupportedEncodingException;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by xinxin on 2016/3/31.
@@ -87,55 +83,61 @@ public class CommonUtil {
      */
     public static void checkVersion(final Context context, final View view) {
 
-        String versionUrl = Constant.FIR_VERSION_BASE + Constant.FIR_APP_ID + "?api_token=" + Constant.FIR_API_TOKEN;
-
-        RequestQueue mQueue = Volley.newRequestQueue(context);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(versionUrl, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Gson gson = new Gson();
-                        VersionVo versionVo = gson.fromJson(response.toString(), VersionVo.class);
-
-                        // 进行版本的比较
-                        //FIR上当前的versionCode
-                        int firVersionCode = Integer.parseInt(versionVo.getVersion());
-                        //FIR上当前的versionName
-                        String firVersionName = versionVo.getVersionShort();
-
-                        // 本地版本Code和name
-                        int currentVersionCode = getVersionCode(context);
-                        String currentVersionName = getVersion(context);
-
-                        Log.d("Version", "当前版本:" + currentVersionCode + "FIR上版本：" + firVersionCode);
-                        Log.d("Version", "当前版本:" + currentVersionName + "FIR上版本：" + firVersionName);
-
-                        if (firVersionCode > currentVersionCode) {
-
-                            //需要更新
-                            showUpdateDialog(versionVo, context);
-                        } else if (firVersionCode == currentVersionCode) {
-
-                            //如果本地app的versionCode与FIR上的app的versionCode一致，则需要判断versionName.
-                            if (!currentVersionName.equals(firVersionName)) {
-                                showUpdateDialog(versionVo, context);
-                            } else {
-                                Snackbar.make(view, "已经是最新版本", Snackbar.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Snackbar.make(view, "已经是最新版本", Snackbar.LENGTH_SHORT).show();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
+        Observer<VersionVo> versionVoObserver = new Observer<VersionVo>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG", error.getMessage(), error);
+            public void onCompleted() {
             }
-        });
-        mQueue.add(jsonObjectRequest);
 
+            @Override
+            public void onError(Throwable e) {
+                Snackbar.make(view, "检查版本出错！", Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(VersionVo versionVo) {
+                doCheck(context,versionVo,view);
+            }
+
+        };
+
+        Network.getUtilApi()
+                .checkVersion(Constant.FIR_APP_ID, Constant.FIR_API_TOKEN)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(versionVoObserver);
+
+    }
+
+    private static void doCheck(Context context,VersionVo versionVo,View view) {
+
+        // 进行版本的比较
+        //FIR上当前的versionCode
+        int firVersionCode = Integer.parseInt(versionVo.getVersion());
+        //FIR上当前的versionName
+        String firVersionName = versionVo.getVersionShort();
+
+        // 本地版本Code和name
+        int currentVersionCode = getVersionCode(context);
+        String currentVersionName = getVersion(context);
+
+        // Log.d("Version", "当前版本:" + currentVersionCode + "FIR上版本：" + firVersionCode);
+        // Log.d("Version", "当前版本:" + currentVersionName + "FIR上版本：" + firVersionName);
+
+        if (firVersionCode > currentVersionCode) {
+
+            //需要更新
+            showUpdateDialog(versionVo, context);
+        } else if (firVersionCode == currentVersionCode) {
+
+            //如果本地app的versionCode与FIR上的app的versionCode一致，则需要判断versionName.
+            if (!currentVersionName.equals(firVersionName)) {
+                showUpdateDialog(versionVo, context);
+            } else {
+                Snackbar.make(view, "已经是最新版本", Snackbar.LENGTH_SHORT).show();
+            }
+        } else {
+            Snackbar.make(view, "已经是最新版本", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     public static void showUpdateDialog(final VersionVo versionVo, final Context context) {
