@@ -66,8 +66,9 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 
 ## TODO
 
-- [ ] 代码重构：RxJava+Retrofit；
+- [x] 代码重构：RxJava + Retrofit；2016年5月21日03:31:21 完成基础的重构；
 - [ ] fresco 替代 glide；
+- [ ] butter knife 使用；
 
 
 ## 关于作者
