@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.VersionVo;
+import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.network.Network;
 
 import java.io.UnsupportedEncodingException;
@@ -156,6 +157,20 @@ public class CommonUtil {
                     }
                 }).show();
 
+    }
+
+    // 日期的格式化
+    public static String formatDate(XvmMainInfo.DaylistEntity.InsertDateEntity dateEntity) {
+        return (1900 + dateEntity.getYear()) + "-" + fillZero(dateEntity.getMonth() + 1) + "-"
+                + fillZero(dateEntity.getDate());
+    }
+    // 日期格式填充0
+    public static String fillZero(int i) {
+        if (i < 10) {
+            return "0" + i;
+        } else {
+            return i + "";
+        }
     }
 
 }

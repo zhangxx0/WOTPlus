@@ -7,6 +7,8 @@ import com.xinxin.wotplus.network.api.RecordApi;
 import com.xinxin.wotplus.network.api.TankApi;
 import com.xinxin.wotplus.network.api.UserInfoApi;
 import com.xinxin.wotplus.network.api.UtilApi;
+import com.xinxin.wotplus.network.api.XvmInfoApi;
+import com.xinxin.wotplus.network.api.XvmJsApi;
 import com.xinxin.wotplus.util.Constant;
 
 import okhttp3.OkHttpClient;
@@ -26,7 +28,11 @@ public class Network {
     private static ClanInfoApi clanInfoApi;
     private static GradeApi gradeApi;
     private static TankApi tankApi;
+
     private static UtilApi utilApi;
+
+    private static XvmInfoApi xvmInfoApi;
+    private static XvmJsApi xvmJsApi;
 
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
@@ -34,6 +40,7 @@ public class Network {
 
     /**
      * 获取玩家信息
+     *
      * @param region
      * @return
      */
@@ -62,6 +69,7 @@ public class Network {
 
     /**
      * 获取战绩html页面
+     *
      * @param region
      * @return
      */
@@ -90,6 +98,7 @@ public class Network {
 
     /**
      * 获取军团信息
+     *
      * @param region
      * @return
      */
@@ -117,6 +126,7 @@ public class Network {
 
     /**
      * 获取等级信息
+     *
      * @param region
      * @return
      */
@@ -145,6 +155,7 @@ public class Network {
 
     /**
      * 获取坦克信息
+     *
      * @param region
      * @return
      */
@@ -173,6 +184,7 @@ public class Network {
 
     /**
      * 工具
+     *
      * @return
      */
     public static UtilApi getUtilApi() {
@@ -191,8 +203,43 @@ public class Network {
 
     }
 
+    /**
+     * 获取XVM信息
+     * @return
+     */
+    public static XvmInfoApi getXvmInfo() {
+
+        if (xvmInfoApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(Constant.XVM_BASE_URL)
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            xvmInfoApi = retrofit.create(XvmInfoApi.class);
+        }
+
+        return xvmInfoApi;
+    }
 
 
+    /**
+     * 获取js
+     * @return
+     */
+    public static XvmJsApi getXvmjsApi() {
+
+        if (xvmJsApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(Constant.XVM_JS_BASE_URL)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            xvmJsApi = retrofit.create(XvmJsApi.class);
+        }
+
+        return xvmJsApi;
+    }
 }
 
 

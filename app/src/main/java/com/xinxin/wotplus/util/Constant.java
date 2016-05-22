@@ -64,6 +64,12 @@ public class Constant {
     public static final String TANK_ACHIEVE_URL_BASE_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
     /**
+     * XVM
+     */
+    public static final String XVM_BASE_URL = "http://182.18.61.50/Data/action/WotAction/";
+    public static final String XVM_JS_BASE_URL = "http://182.18.61.50/Data/";
+
+    /**
      * FIR_API_TOKEN
      * http://api.fir.im/apps/latest/xxx?api_token=xxx #使用 `id` 请求
      */

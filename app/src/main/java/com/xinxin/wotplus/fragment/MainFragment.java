@@ -183,6 +183,7 @@ public class MainFragment extends BaseFragment {
 
         @Override
         public void onError(Throwable e) {
+            Log.e("666", e.getMessage(), e);
             Snackbar.make(getView(), "获取军团信息出错！", Snackbar.LENGTH_LONG).show();
             backToQuery();
         }

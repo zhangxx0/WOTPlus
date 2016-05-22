@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--活跃信息card-->
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,8 +18,377 @@
         card_view:cardCornerRadius="3dp"
         card_view:cardElevation="2dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/linearlayout_margin"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/xvm_battls_img"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/xvm_battles4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="场次"
+                        android:textColor="@color/bg_blue"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/xvm_battls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/linearlayout_margin_less_more"
+                        android:gravity="center"
+                        android:text="47203"
+                        android:textColor="@color/default_edgeeffect_color" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/xvm_wins_img"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/xvm_wins4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="胜率"
+                        android:textColor="@color/bg_blue"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/xvm_wins"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/linearlayout_margin_less_more"
+                        android:gravity="center"
+                        android:text="70.5%"
+                        android:textColor="@color/default_edgeeffect_color" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--活跃等级-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/xvm_power_img"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/xvm_power4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="活跃战力"
+                        android:textColor="@color/bg_blue"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/xvm_power"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/linearlayout_margin_less"
+                        android:gravity="center"
+                        android:text="17906"
+                        android:textColor="@color/gold"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/xvm_level_img"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/xvm_level4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="活跃等级"
+                        android:textColor="@color/bg_blue"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/xvm_level"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/linearlayout_margin_less_more"
+                        android:gravity="center"
+                        android:text="9.8"
+                        android:textColor="@color/default_edgeeffect_color" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/xvm_counts_img"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/xvm_count4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="活跃车数"
+                        android:textColor="@color/bg_blue"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/xvm_counts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/linearlayout_margin_less_more"
+                        android:gravity="center"
+                        android:text="16"
+                        android:textColor="@color/default_edgeeffect_color" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
+
+    <!--按钮-->
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/cardview_margin"
+        android:layout_marginLeft="@dimen/cardview_margin"
+        android:layout_marginRight="@dimen/cardview_margin"
+        android:layout_marginTop="0dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/linearlayout_margin_less">
+
+            <LinearLayout
+                android:id="@+id/xvm_thirty_record"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/linearlayout_margin_less"
+                android:layout_weight="1"
+                android:background="@color/design_textinput_error_color"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/xvm_calendar" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:gravity="center"
+                    android:text="30日战绩"
+                    android:textColor="@color/bg_blue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/xvm_tank_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/linearlayout_margin_less"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/xvm_tankdata" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:gravity="center"
+                    android:text="单车数据"
+                    android:textColor="@color/bg_blue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/xvm_tank_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/linearlayout_margin_less"
+                android:layout_weight="1"
+                android:background="@color/text_shadow"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/xvm_tanklist" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:gravity="center"
+                    android:text="坦克榜单"
+                    android:textColor="@color/bg_blue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/xvm_factory"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/linearlayout_margin_less"
+                android:layout_weight="1"
+                android:background="@color/default_edgeeffect_color"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/xvm_factory" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:gravity="center"
+                    android:text="军工中心"
+                    android:textColor="@color/bg_blue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/xvm_lottery"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/linearlayout_margin_less"
+                android:layout_weight="1"
+                android:background="@color/mark_master"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/xvm_lottery" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:gravity="center"
+                    android:text="每日抽奖"
+                    android:textColor="@color/bg_blue" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/linearlayout_margin"
+        android:gravity="center"
+        android:textColor="@color/bg_blue"
+        android:textSize="16sp"
+        android:text="近日数据"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="@dimen/linearlayout_margin"
+        android:layout_marginLeft="@dimen/linearlayout_margin"
+        android:layout_marginRight="@dimen/linearlayout_margin"
+        android:background="@color/state_item_pressed_2" />
+
+    <!--近日战绩列表-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_xvm_recentdays"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
