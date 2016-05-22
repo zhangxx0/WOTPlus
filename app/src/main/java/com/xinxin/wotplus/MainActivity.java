@@ -20,6 +20,7 @@ import com.xinxin.wotplus.fragment.GradeFragment;
 import com.xinxin.wotplus.fragment.MainFragment;
 import com.xinxin.wotplus.fragment.StatisticsFragment;
 import com.xinxin.wotplus.fragment.TanksFragment;
+import com.xinxin.wotplus.fragment.XvmFragment;
 import com.xinxin.wotplus.util.PreferenceUtils;
 
 /**
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-
     }
 
     // 侧滑菜单点击事件
@@ -159,6 +159,13 @@ public class MainActivity extends AppCompatActivity {
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new TanksFragment(), "tanks").
+                                        commit();
+                                break;
+                            case R.id.nav_xvm:
+                                setTitle(menuItem.getTitle());
+                                getSupportFragmentManager().beginTransaction().
+                                        setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
+                                        replace(R.id.fl_content, new XvmFragment(), "xvm").
                                         commit();
                                 break;
 

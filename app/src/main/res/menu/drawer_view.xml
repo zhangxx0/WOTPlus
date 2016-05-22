@@ -36,6 +36,10 @@
             android:id="@+id/nav_vehicle"
             android:icon="@drawable/ic_vehivle"
             android:title="@string/nav_vehicle" />
+        <item
+            android:id="@+id/nav_xvm"
+            android:icon="@drawable/ic_timeline_white_24dp"
+            android:title="@string/nav_xvm" />
     </group>
 
     <item android:title="@string/app_name">

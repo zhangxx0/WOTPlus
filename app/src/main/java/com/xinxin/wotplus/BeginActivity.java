@@ -42,7 +42,7 @@ public class BeginActivity extends BaseActivity {
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
                 0.5f);
         scaleAnim.setFillAfter(true);
-        scaleAnim.setDuration(3000);
+        scaleAnim.setDuration(2000);
         scaleAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

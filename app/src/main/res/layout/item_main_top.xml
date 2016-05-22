@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textSize="14sp"
-                    android:text="个人排名" />
+                    android:text="个人等级" />
 
                 <TextView
                     android:id="@+id/personRanking"
