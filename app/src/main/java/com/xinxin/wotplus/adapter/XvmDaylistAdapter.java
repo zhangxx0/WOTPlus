@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xinxin.wotplus.R;
-import com.xinxin.wotplus.model.XvmMainInfo;
+import com.xinxin.wotplus.model.DaylistEntityForRecent;
+import com.xinxin.wotplus.util.CommonUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +29,7 @@ public class XvmDaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Context mContext;
     private LayoutInflater layoutInflater;
 
-    List<XvmMainInfo.DaylistEntity> daylist = new ArrayList();
+    List<DaylistEntityForRecent> daylist = new ArrayList();
     List<String> daylistdate = new ArrayList();
 
     public XvmDaylistAdapter(Context mContext, Map map) {
@@ -41,7 +43,7 @@ public class XvmDaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         while (it.hasNext()) {
             String key = it.next().toString();
             daylistdate.add(key);
-            daylist.add((XvmMainInfo.DaylistEntity) map.get(key));
+            daylist.add((DaylistEntityForRecent) map.get(key));
         }
     }
 
@@ -55,14 +57,24 @@ public class XvmDaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ((DayListViewHolder) holder).xvm_daylist_date.setText(daylistdate.get(position));
-
-        XvmMainInfo.DaylistEntity day = daylist.get(position);
-        ((DayListViewHolder) holder).xvm_daylist_battles.setText(day.getBattles()+"");
-        String winrate = String.valueOf(day.getWins()*100/day.getBattles());
-        ((DayListViewHolder) holder).xvm_daylist_wins.setText(winrate);
-
-
+        DecimalFormat df = new DecimalFormat("0.0");
+        // 时间
+        ((DayListViewHolder) holder).xvm_daylist_date.setText(daylistdate.get(position).substring(5));
+        // 场次
+        DaylistEntityForRecent day = daylist.get(position);
+        ((DayListViewHolder) holder).xvm_daylist_battles.setText(day.getBattles() + "");
+        // 胜率
+        float winrate = day.getWins() * 100 / day.getBattles();
+        ((DayListViewHolder) holder).xvm_daylist_wins.setText(df.format(winrate) + "%");
+        // 效率
+//        ((DayListViewHolder) holder).xvm_daylist_effect.setText((day.getDaypower() + day.getWinpower()) * 100 / day.getWeight());
+        ((DayListViewHolder) holder).xvm_daylist_effect.setText((int) (CommonUtil.addDouble(day.getDaypower(), day.getWinpower()) * 100 / day.getWeight()) + "%");
+        // 击杀
+        ((DayListViewHolder) holder).xvm_daylist_kill.setText(df.format((float) day.getFrags() / day.getBattles()));
+        // 伤害
+        ((DayListViewHolder) holder).xvm_daylist_hit.setText(day.getDamage() / day.getBattles() + "");
+        // 助攻
+        ((DayListViewHolder) holder).xvm_daylist_assist.setText(day.getAssist() / day.getBattles() + "");
 
     }
 

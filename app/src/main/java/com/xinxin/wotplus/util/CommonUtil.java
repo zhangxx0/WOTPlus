@@ -11,11 +11,13 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.model.TankInfo;
 import com.xinxin.wotplus.model.VersionVo;
 import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.network.Network;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -96,7 +98,7 @@ public class CommonUtil {
 
             @Override
             public void onNext(VersionVo versionVo) {
-                doCheck(context,versionVo,view);
+                doCheck(context, versionVo, view);
             }
 
         };
@@ -109,7 +111,7 @@ public class CommonUtil {
 
     }
 
-    private static void doCheck(Context context,VersionVo versionVo,View view) {
+    private static void doCheck(Context context, VersionVo versionVo, View view) {
 
         // 进行版本的比较
         //FIR上当前的versionCode
@@ -164,6 +166,7 @@ public class CommonUtil {
         return (1900 + dateEntity.getYear()) + "-" + fillZero(dateEntity.getMonth() + 1) + "-"
                 + fillZero(dateEntity.getDate());
     }
+
     // 日期格式填充0
     public static String fillZero(int i) {
         if (i < 10) {
@@ -171,6 +174,60 @@ public class CommonUtil {
         } else {
             return i + "";
         }
+    }
+
+    // 获取权重
+    public static double getTankWeight(TankInfo tankInfo) {
+        int[] weightlist= new int[]{0,20,30,50,80,120,180,270,400,600,900};
+        double weight = weightlist[tankInfo.getLevel()];
+        weight*=getTankModify(tankInfo);
+        return weight;
+    }
+
+    /**
+     * 排序时使用的一个方法
+     *
+     * @param ti
+     */
+    public static double getTankModify(TankInfo ti) {
+
+        if (ti.getEntype().toLowerCase() == "spg") {
+            return 0.8;
+        } else if (ti.getEntype().toLowerCase() == "lighttank") {
+            if (ti.getLevel() == 7) {
+                return 1.15;
+            } else if (ti.getLevel() == 8) {
+                return 1.15;
+            }
+        } else if (ti.getEntype().toLowerCase() == "heavytank") {
+            if (ti.getLevel() == 8 || ti.getLevel() == 9) {
+                return 1.05;
+            } else if (ti.getLevel() == 10) {
+                return 1.05;
+            }
+        } else if (ti.getEntype().toLowerCase() == "at-spg") {
+            if (ti.getLevel() >= 8) {
+                return 1.1;
+            }
+        } else if (ti.getEntype().toLowerCase() == "mediumtank") {
+            if (ti.getLevel() >= 9) {
+                return 1.05;
+            }
+        }
+        return 1;
+    }
+
+    /**
+     * * 两个Double数相加 *
+     *
+     * @param v1 *
+     * @param v2 *
+     * @return Double
+     */
+    public static Double addDouble(Double v1, Double v2) {
+        BigDecimal b1 = new BigDecimal(v1.toString());
+        BigDecimal b2 = new BigDecimal(v2.toString());
+        return new Double(b1.add(b2).doubleValue());
     }
 
 }
