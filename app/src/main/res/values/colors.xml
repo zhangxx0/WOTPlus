@@ -24,6 +24,16 @@
     <color name="mark_second">#6D507C</color>
     <color name="mark_third">#47352B</color>
 
+    <!--xvm 比率字符颜色-->
+    <color name="wrclass_ss">#ffaa33</color>
+    <color name="wrclass_s">#ddcc00</color>
+    <color name="wrclass_a">#cc44ff</color>
+    <color name="wrclass_b">#88bbff</color>
+    <color name="wrclass_c">#55ff55</color>
+    <color name="wrclass_d">#ff3333</color>
+    <color name="wrclass_e">#bb0022</color>
+
+
     <color name="default_edgeeffect_color">#ff33b5e5</color>
     <color name="abc_input_method_navigation_guard">@android:color/black</color>
     <color name="abc_search_url_text_normal">#ff7fa87f</color>

@@ -24,10 +24,8 @@ import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmAllInfoToDayMap;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -70,6 +68,7 @@ public class XvmFragment extends BaseFragment {
     @BindView(R.id.recyclerview_xvm_recentdays)
     RecyclerView xvm_recentdays;
 
+    private DeathWheelProgressDialog deathWheelProgressDialog;
     private XvmDaylistAdapter adapter;
 
 
@@ -124,7 +123,7 @@ public class XvmFragment extends BaseFragment {
         };
 
         // 汇总信息的Observer
-        Observer<Map> xvmAllObserver = new Observer<Map>() {
+        Observer<XvmAllInfo> xvmAllObserver = new Observer<XvmAllInfo>() {
             @Override
             public void onCompleted() {
             }
@@ -135,31 +134,15 @@ public class XvmFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(Map map) {
-                Log.d("xvm", map.toString());
+            public void onNext(XvmAllInfo xvmAllInfo) {
+                Log.d("xvm", xvmAllInfo.toString());
 
-//                Iterator entries = map.entrySet().iterator();
-//                while (entries.hasNext()) {
-//                    Map.Entry entry = (Map.Entry) entries.next();
-//                    String key = (String)entry.getKey();
-//                    TankInfo value = (TankInfo)entry.getValue();
-//                    System.out.println("Key = " + key + ", Value = " + value);
-//                }
+                Map daymap = xvmAllInfo.getDaymap();
 
-                List<String> daylistdate = new ArrayList();
-                List<XvmMainInfo.DaylistEntity> daylist = new ArrayList();
-                Iterator it = map.keySet().iterator();
-                while (it.hasNext()) {
-                    String key = it.next().toString();
-                    daylistdate.add(key);
-                    daylist.add((XvmMainInfo.DaylistEntity) map.get(key));
-                    Log.d("key", key);
-                    Log.d("value", map.get(key).toString());
-                }
-
-                adapter = new XvmDaylistAdapter(getActivity(), daylist, daylistdate);
+                adapter = new XvmDaylistAdapter(getActivity(), daymap);
 
                 xvm_recentdays.setAdapter(adapter);
+                deathWheelProgressDialog.dismiss();
             }
         };
 
@@ -184,6 +167,8 @@ public class XvmFragment extends BaseFragment {
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(tanksObserver);
 
+        deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
+        deathWheelProgressDialog.show();
         /**
          * 将主信息和tanks.js信息结合
          */

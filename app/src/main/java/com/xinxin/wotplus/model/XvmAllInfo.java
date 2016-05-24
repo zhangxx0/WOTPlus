@@ -9,7 +9,23 @@ import java.util.Map;
 public class XvmAllInfo {
 
     private XvmMainInfo xvmMainInfo;
+    /**
+     * tanks.js 坦克信息
+     */
     private Map tanks;
+    /**
+     * 近日数据map
+     */
+    private Map daymap;
+
+    public Map getDaymap() {
+        return daymap;
+    }
+
+    public void setDaymap(Map daymap) {
+        this.daymap = daymap;
+    }
+
 
     public XvmMainInfo getXvmMainInfo() {
         return xvmMainInfo;

@@ -2,7 +2,6 @@ package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,10 @@ import android.widget.TextView;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.XvmMainInfo;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,26 +26,43 @@ public class XvmDaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Context mContext;
     private LayoutInflater layoutInflater;
-    List<XvmMainInfo.DaylistEntity> daylist;
-    List<String> daylistdate;
 
-    public XvmDaylistAdapter(Context mContext, List<XvmMainInfo.DaylistEntity> daylist,List<String> daylistdate) {
+    List<XvmMainInfo.DaylistEntity> daylist = new ArrayList();
+    List<String> daylistdate = new ArrayList();
+
+    public XvmDaylistAdapter(Context mContext, Map map) {
         layoutInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
-        this.daylist = daylist;
-        this.daylistdate =daylistdate;
+
+        // daylistdate.add(0,"日期");
+
+        // 将map数据分解到两个list中
+        Iterator it = map.keySet().iterator();
+        while (it.hasNext()) {
+            String key = it.next().toString();
+            daylistdate.add(key);
+            daylist.add((XvmMainInfo.DaylistEntity) map.get(key));
+        }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.item_xvm_daylist, parent, false);
-        Log.d("daylist", String.valueOf(daylist.size()));
+
         return new DayListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
         ((DayListViewHolder) holder).xvm_daylist_date.setText(daylistdate.get(position));
+
+        XvmMainInfo.DaylistEntity day = daylist.get(position);
+        ((DayListViewHolder) holder).xvm_daylist_battles.setText(day.getBattles()+"");
+        String winrate = String.valueOf(day.getWins()*100/day.getBattles());
+        ((DayListViewHolder) holder).xvm_daylist_wins.setText(winrate);
+
+
 
     }
 
