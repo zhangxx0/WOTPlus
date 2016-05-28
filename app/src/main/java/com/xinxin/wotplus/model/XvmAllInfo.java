@@ -21,10 +21,20 @@ public class XvmAllInfo {
      */
     private Map daymap;
 
+    /**
+     * XVM 主页信息展示
+     */
+    private XvmMainPageVO xvmMainPageVO;
 
 
 
+    public XvmMainPageVO getXvmMainPageVO() {
+        return xvmMainPageVO;
+    }
 
+    public void setXvmMainPageVO(XvmMainPageVO xvmMainPageVO) {
+        this.xvmMainPageVO = xvmMainPageVO;
+    }
 
     public Map getDaymap() {
         return daymap;

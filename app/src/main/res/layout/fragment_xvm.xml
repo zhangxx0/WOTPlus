@@ -3,7 +3,31 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/cardview_margin"
+        android:layout_marginRight="@dimen/cardview_margin"
+        android:layout_marginTop="@dimen/linearlayout_margin_more"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="2dp">
+        <TextView
+            android:id="@+id/xvm_lable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/gold"
+            android:background="@drawable/xvm_label"
+            />
+    </android.support.v7.widget.CardView>
 
     <!--活跃信息card-->
     <android.support.v7.widget.CardView
@@ -12,7 +36,7 @@
         android:layout_marginBottom="@dimen/cardview_margin"
         android:layout_marginLeft="@dimen/cardview_margin"
         android:layout_marginRight="@dimen/cardview_margin"
-        android:layout_marginTop="@dimen/linearlayout_margin_more"
+        android:layout_marginTop="@dimen/linearlayout_margin"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="3dp"
@@ -41,7 +65,7 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/xvm_battles4" />
+                        android:src="@drawable/xvm_battles1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -57,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/linearlayout_margin_less_more"
                         android:gravity="center"
-                        android:text="47203"
+                        android:text="-"
                         android:textColor="@color/default_edgeeffect_color" />
 
                 </LinearLayout>
@@ -81,7 +105,7 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/xvm_wins4" />
+                        android:src="@drawable/xvm_wins1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -97,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/linearlayout_margin_less_more"
                         android:gravity="center"
-                        android:text="70.5%"
+                        android:text="-%"
                         android:textColor="@color/default_edgeeffect_color" />
 
                 </LinearLayout>
@@ -122,7 +146,7 @@
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/xvm_power4" />
+                        android:src="@drawable/xvm_power1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -138,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/linearlayout_margin_less"
                         android:gravity="center"
-                        android:text="17906"
+                        android:text="-"
                         android:textColor="@color/gold"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -162,7 +186,7 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/xvm_level4" />
+                        android:src="@drawable/xvm_level1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -178,7 +202,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/linearlayout_margin_less_more"
                         android:gravity="center"
-                        android:text="9.8"
+                        android:text="-"
                         android:textColor="@color/default_edgeeffect_color" />
 
                 </LinearLayout>
@@ -202,7 +226,7 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/xvm_count4" />
+                        android:src="@drawable/xvm_count1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -218,7 +242,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/linearlayout_margin_less_more"
                         android:gravity="center"
-                        android:text="16"
+                        android:text="-"
                         android:textColor="@color/default_edgeeffect_color" />
                 </LinearLayout>
 
@@ -374,7 +398,7 @@
         android:layout_margin="@dimen/linearlayout_margin"
         android:gravity="center"
         android:textColor="@color/bg_blue"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:text="近日数据"/>
 
     <View

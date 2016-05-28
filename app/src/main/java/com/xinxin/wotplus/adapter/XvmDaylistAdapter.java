@@ -36,7 +36,8 @@ public class XvmDaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         layoutInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
 
-        // daylistdate.add(0,"日期");
+        daylistdate.add(0,"日期1");
+        daylist.add(new DaylistEntityForRecent());
 
         // 将map数据分解到两个list中
         Iterator it = map.keySet().iterator();
@@ -56,25 +57,30 @@ public class XvmDaylistAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         DecimalFormat df = new DecimalFormat("0.0");
-        // 时间
-        ((DayListViewHolder) holder).xvm_daylist_date.setText(daylistdate.get(position).substring(5));
-        // 场次
-        DaylistEntityForRecent day = daylist.get(position);
-        ((DayListViewHolder) holder).xvm_daylist_battles.setText(day.getBattles() + "");
-        // 胜率
-        float winrate = day.getWins() * 100 / day.getBattles();
-        ((DayListViewHolder) holder).xvm_daylist_wins.setText(df.format(winrate) + "%");
-        // 效率
-//        ((DayListViewHolder) holder).xvm_daylist_effect.setText((day.getDaypower() + day.getWinpower()) * 100 / day.getWeight());
-        ((DayListViewHolder) holder).xvm_daylist_effect.setText((int) (CommonUtil.addDouble(day.getDaypower(), day.getWinpower()) * 100 / day.getWeight()) + "%");
-        // 击杀
-        ((DayListViewHolder) holder).xvm_daylist_kill.setText(df.format((float) day.getFrags() / day.getBattles()));
-        // 伤害
-        ((DayListViewHolder) holder).xvm_daylist_hit.setText(day.getDamage() / day.getBattles() + "");
-        // 助攻
-        ((DayListViewHolder) holder).xvm_daylist_assist.setText(day.getAssist() / day.getBattles() + "");
+
+        if (position > 0) {
+            // 时间
+            ((DayListViewHolder) holder).xvm_daylist_date.setText(daylistdate.get(position).substring(5));
+            // 场次
+            DaylistEntityForRecent day = daylist.get(position);
+            ((DayListViewHolder) holder).xvm_daylist_battles.setText(day.getBattles() + "");
+            // 胜率
+            float winrate = (float) day.getWins() * 100 / day.getBattles();
+            ((DayListViewHolder) holder).xvm_daylist_wins.setText(df.format(winrate) + "%");
+            // 胜率的颜色设置
+            ((DayListViewHolder) holder).xvm_daylist_wins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(winrate)));
+
+            // 效率
+            // ((DayListViewHolder) holder).xvm_daylist_effect.setText((day.getDaypower() + day.getWinpower()) * 100 / day.getWeight());
+            ((DayListViewHolder) holder).xvm_daylist_effect.setText((int) (CommonUtil.addDouble(day.getDaypower(), day.getWinpower()) * 100 / day.getWeight()) + "%");
+            // 击杀
+            ((DayListViewHolder) holder).xvm_daylist_kill.setText(df.format((float) day.getFrags() / day.getBattles()));
+            // 伤害
+            ((DayListViewHolder) holder).xvm_daylist_hit.setText(day.getDamage() / day.getBattles() + "");
+            // 助攻
+            ((DayListViewHolder) holder).xvm_daylist_assist.setText(day.getAssist() / day.getBattles() + "");
+        }
 
     }
 

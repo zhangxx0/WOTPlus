@@ -1,5 +1,6 @@
 package com.xinxin.wotplus.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,16 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.activity.AtyXvmThirtyRecord;
 import com.xinxin.wotplus.adapter.XvmDaylistAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.XvmAllInfo;
 import com.xinxin.wotplus.model.XvmMainInfo;
+import com.xinxin.wotplus.model.XvmMainPageVO;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmAllInfoToDayMap;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -42,6 +46,9 @@ import rx.schedulers.Schedulers;
  * XVM Fragment
  */
 public class XvmFragment extends BaseFragment {
+
+    @BindView(R.id.xvm_lable)
+    TextView xvm_lable;
 
     @BindView(R.id.xvm_battls_img)
     ImageView xvm_battls_img;
@@ -137,8 +144,14 @@ public class XvmFragment extends BaseFragment {
             public void onNext(XvmAllInfo xvmAllInfo) {
                 Log.d("xvm", xvmAllInfo.toString());
 
-                Map daymap = xvmAllInfo.getDaymap();
+                // 五个图标的数据初始化
+                XvmMainPageVO xvmMainPageVO = xvmAllInfo.getXvmMainPageVO();
+                if (xvmMainPageVO != null) {
+                    xvmMainPageHeadData(xvmMainPageVO);
+                }
 
+                // 近日数据列表初始化
+                Map daymap = xvmAllInfo.getDaymap();
                 adapter = new XvmDaylistAdapter(getActivity(), daymap);
 
                 xvm_recentdays.setAdapter(adapter);
@@ -191,14 +204,96 @@ public class XvmFragment extends BaseFragment {
         return view;
     }
 
+    /**
+     * 五个图标的数据初始化
+     *
+     * @param xvmMainPageVO
+     */
+    private void xvmMainPageHeadData(XvmMainPageVO xvmMainPageVO) {
+
+        DecimalFormat df = new DecimalFormat("0.0");//格式化小数
+
+        // 数据设置
+        xvm_lable.setText(xvmMainPageVO.getLable());
+        xvm_battls.setText(xvmMainPageVO.getBattals() + "");
+        xvm_wins.setText(df.format(xvmMainPageVO.getWinrate()) + "%");
+        xvm_power.setText(Math.round(xvmMainPageVO.getActivepower()) + "");
+        xvm_level.setText((float) Math.round(xvmMainPageVO.getLevel() * 10) / 10 + "");
+        xvm_counts.setText(Math.round(xvmMainPageVO.getActivecount()) + "");
+
+        // 图片设置
+        // （1）场次
+        if (xvmMainPageVO.getBattals() > 10000) {
+            xvm_battls_img.setImageResource(R.drawable.xvm_battles4);
+        } else if (xvmMainPageVO.getBattals() > 3000) {
+            xvm_battls_img.setImageResource(R.drawable.xvm_battles3);
+        } else if (xvmMainPageVO.getBattals() > 100) {
+            xvm_battls_img.setImageResource(R.drawable.xvm_battles2);
+        } else {
+            xvm_battls_img.setImageResource(R.drawable.xvm_battles1);
+        }
+
+        // （2）胜率
+        if (xvmMainPageVO.getWinrate() > 56) {
+            xvm_wins_img.setImageResource(R.drawable.xvm_wins4);
+        } else if (xvmMainPageVO.getWinrate() > 52) {
+            xvm_wins_img.setImageResource(R.drawable.xvm_wins3);
+        } else if (xvmMainPageVO.getWinrate() > 48) {
+            xvm_wins_img.setImageResource(R.drawable.xvm_wins2);
+        } else {
+            xvm_wins_img.setImageResource(R.drawable.xvm_wins1);
+        }
+
+        // （3）战力
+        if (xvmMainPageVO.getActivepower() > 5000) {
+            xvm_power_img.setImageResource(R.drawable.xvm_power4);
+        } else if (xvmMainPageVO.getActivepower() > 1000) {
+            xvm_power_img.setImageResource(R.drawable.xvm_power3);
+        } else if (xvmMainPageVO.getActivepower() > 100) {
+            xvm_power_img.setImageResource(R.drawable.xvm_power2);
+        } else {
+            xvm_power_img.setImageResource(R.drawable.xvm_power1);
+        }
+
+        // （4）等级
+        if (xvmMainPageVO.getLevel() > 9) {
+            xvm_level_img.setImageResource(R.drawable.xvm_level4);
+        } else if (xvmMainPageVO.getLevel() > 7) {
+            xvm_level_img.setImageResource(R.drawable.xvm_level3);
+        } else if (xvmMainPageVO.getLevel() > 5) {
+            xvm_level_img.setImageResource(R.drawable.xvm_level2);
+        } else {
+            xvm_level_img.setImageResource(R.drawable.xvm_level1);
+        }
+
+        // （5）车数
+        if (xvmMainPageVO.getActivecount() >= 10) {
+            xvm_counts_img.setImageResource(R.drawable.xvm_count4);
+        } else if (xvmMainPageVO.getActivecount() >= 5) {
+            xvm_counts_img.setImageResource(R.drawable.xvm_count3);
+        } else if (xvmMainPageVO.getActivecount() >= 3) {
+            xvm_counts_img.setImageResource(R.drawable.xvm_count2);
+        } else {
+            xvm_counts_img.setImageResource(R.drawable.xvm_count1);
+        }
+
+
+    }
+
+
+    /**
+     * 五个功能按钮的点击事件
+     */
+
     @OnClick(R.id.xvm_thirty_record)
     void xvm_thirty_record_click() {
-        Toast.makeText(getActivity(), "30rizhanji", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), AtyXvmThirtyRecord.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.xvm_tank_data)
     void xvm_tank_data_click() {
-
+        Toast.makeText(getActivity(), "单车数据", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.xvm_tank_list)

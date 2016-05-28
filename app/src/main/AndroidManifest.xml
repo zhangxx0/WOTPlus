@@ -42,6 +42,9 @@
             android:name=".activity.AtyQueryDialog"
             android:theme="@style/DialogQueryTheme" />
 
+        <activity android:name=".activity.AtyXvmThirtyRecord" />
+
+
     </application>
 
 </manifest>

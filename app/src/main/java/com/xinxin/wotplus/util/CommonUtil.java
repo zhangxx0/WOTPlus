@@ -178,9 +178,9 @@ public class CommonUtil {
 
     // 获取权重
     public static double getTankWeight(TankInfo tankInfo) {
-        int[] weightlist= new int[]{0,20,30,50,80,120,180,270,400,600,900};
+        int[] weightlist = new int[]{0, 20, 30, 50, 80, 120, 180, 270, 400, 600, 900};
         double weight = weightlist[tankInfo.getLevel()];
-        weight*=getTankModify(tankInfo);
+        weight *= getTankModify(tankInfo);
         return weight;
     }
 
@@ -228,6 +228,30 @@ public class CommonUtil {
         BigDecimal b1 = new BigDecimal(v1.toString());
         BigDecimal b2 = new BigDecimal(v2.toString());
         return new Double(b1.add(b2).doubleValue());
+    }
+
+    /**
+     * 根据不同的比率返回不同的字体颜色
+     *
+     * @param wr
+     * @return
+     */
+    public static int getWRClass(float wr) {
+        if (wr >= 60)
+            return R.color.wrclass_ss;
+        if (wr >= 56)
+            return R.color.wrclass_s;
+        if (wr >= 54)
+            return R.color.wrclass_a;
+        if (wr >= 51)
+            return R.color.wrclass_b;
+        if (wr >= 48)
+            return R.color.wrclass_c;
+        if (wr >= 46)
+            return R.color.wrclass_d;
+
+        return R.color.wrclass_e;
+
     }
 
 }
