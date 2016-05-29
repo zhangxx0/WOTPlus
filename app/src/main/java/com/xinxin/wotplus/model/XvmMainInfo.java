@@ -100,7 +100,7 @@ public class XvmMainInfo implements Serializable {
         this.daylist = daylist;
     }
 
-    public static class PlayerEntity {
+    public static class PlayerEntity implements Serializable {
         /**
          * nanos : 0
          * time : 1460987535000
@@ -254,7 +254,7 @@ public class XvmMainInfo implements Serializable {
         }
     }
 
-    public static class TanklistEntity {
+    public static class TanklistEntity implements Serializable {
         private int mark4;
         private int mark3;
         private int teambattles;
@@ -540,7 +540,7 @@ public class XvmMainInfo implements Serializable {
             this.wins = wins;
         }
 
-        public static class IdEntity {
+        public static class IdEntity implements Serializable{
             private int vehicleTypeCd;
             private int accountDbId;
             private int battleTypeId;
@@ -570,7 +570,7 @@ public class XvmMainInfo implements Serializable {
             }
         }
 
-        public static class UpdateTimeEntity {
+        public static class UpdateTimeEntity implements Serializable{
             private int nanos;
             private long time;
             private int minutes;
@@ -663,7 +663,7 @@ public class XvmMainInfo implements Serializable {
             }
         }
 
-        public static class ActiveTimeEntity {
+        public static class ActiveTimeEntity implements Serializable{
             private int nanos;
             private long time;
             private int minutes;
@@ -757,7 +757,7 @@ public class XvmMainInfo implements Serializable {
         }
     }
 
-    public static class DaylistEntity {
+    public static class DaylistEntity implements Serializable {
         private int mark4;
         private int defense;
         private int mark3;
@@ -958,7 +958,7 @@ public class XvmMainInfo implements Serializable {
             this.wins = wins;
         }
 
-        public static class IdEntity {
+        public static class IdEntity implements Serializable{
             private int vehicleTypeCd;
             private int accountDbId;
             private int battleTypeId;
@@ -988,7 +988,7 @@ public class XvmMainInfo implements Serializable {
             }
         }
 
-        public static class InsertDateEntity {
+        public static class InsertDateEntity implements Serializable{
             private int nanos;
             private long time;
             private int minutes;

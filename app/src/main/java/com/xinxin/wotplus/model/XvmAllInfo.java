@@ -1,12 +1,13 @@
 package com.xinxin.wotplus.model;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by xinxin on 2016/5/22.
  * XVM信息汇总
  */
-public class XvmAllInfo {
+public class XvmAllInfo implements Serializable {
 
 
     private XvmMainInfo xvmMainInfo;

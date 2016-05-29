@@ -78,6 +78,8 @@ public class XvmFragment extends BaseFragment {
     private DeathWheelProgressDialog deathWheelProgressDialog;
     private XvmDaylistAdapter adapter;
 
+    private XvmAllInfo xvmAllInfoForOtherPage;
+    private XvmMainInfo xvmMainInfoForOtherPage;
 
     @Nullable
     @Override
@@ -138,11 +140,14 @@ public class XvmFragment extends BaseFragment {
             @Override
             public void onError(Throwable e) {
                 Snackbar.make(xvm_recentdays, "获取XVMALL信息出错！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
             }
 
             @Override
             public void onNext(XvmAllInfo xvmAllInfo) {
                 Log.d("xvm", xvmAllInfo.toString());
+                xvmAllInfoForOtherPage = xvmAllInfo;
+                xvmMainInfoForOtherPage = xvmAllInfo.getXvmMainInfo();
 
                 // 五个图标的数据初始化
                 XvmMainPageVO xvmMainPageVO = xvmAllInfo.getXvmMainPageVO();
@@ -288,6 +293,12 @@ public class XvmFragment extends BaseFragment {
     @OnClick(R.id.xvm_thirty_record)
     void xvm_thirty_record_click() {
         Intent intent = new Intent(getActivity(), AtyXvmThirtyRecord.class);
+        Bundle bundle = new Bundle();
+        // 传递xvmAllInfo报错：
+        // Caused by: java.io.NotSerializableException: com.xinxin.wotplus.util.mapper.XvmAllInfoToDayMap$2
+        // bundle.putSerializable("xvmAllInfoForOtherPage",xvmAllInfoForOtherPage);
+        bundle.putSerializable("xvmMainInfoForOtherPage", xvmMainInfoForOtherPage);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
