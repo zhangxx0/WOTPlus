@@ -20,6 +20,7 @@ import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmThirtyInfoToDayMap;
+import com.xinxin.wotplus.widget.FireWotProgressDialog;
 
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class AtyXvmThirtyRecord extends BaseActivity {
 
     private XvmAllInfo xvmAllInfoForOtherPage;
     private XvmThirtyDaylistAdapter adapter;
+    private FireWotProgressDialog firWotProgressDialog;
 
     Observer<XvmAllInfo> thirtyDayObserver = new Observer<XvmAllInfo>() {
         @Override
@@ -58,6 +60,7 @@ public class AtyXvmThirtyRecord extends BaseActivity {
         public void onError(Throwable e) {
             Log.e("tank", e.getMessage(), e);
             Snackbar.make(recyclerview_xvm_thirtydays, "获取30日数据出错！", Snackbar.LENGTH_LONG).show();
+            firWotProgressDialog.dismiss();
         }
 
         @Override
@@ -72,7 +75,7 @@ public class AtyXvmThirtyRecord extends BaseActivity {
             adapter = new XvmThirtyDaylistAdapter(AtyXvmThirtyRecord.this, daymap);
             recyclerview_xvm_thirtydays.setAdapter(adapter);
 
-
+            firWotProgressDialog.dismiss();
         }
     };
 
@@ -98,6 +101,9 @@ public class AtyXvmThirtyRecord extends BaseActivity {
 
         String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
         // String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
+
+        firWotProgressDialog = FireWotProgressDialog.createDialog(this);
+        firWotProgressDialog.show();
 
         Observable.zip(Network.getXvmInfo().getXvmThirtyDay(woterId),
                 Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
