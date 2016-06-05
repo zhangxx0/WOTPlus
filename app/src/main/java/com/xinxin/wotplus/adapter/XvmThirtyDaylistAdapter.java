@@ -2,7 +2,6 @@ package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +97,6 @@ public class XvmThirtyDaylistAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        Log.d("size", String.valueOf(daylist.size()));
         return daylist.size();
     }
 

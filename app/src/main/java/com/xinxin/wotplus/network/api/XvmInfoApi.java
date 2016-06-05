@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.network.api;
 
 import com.xinxin.wotplus.model.XvmMainInfo;
+import com.xinxin.wotplus.model.XvmTankTable;
 
 import java.util.List;
 
@@ -28,4 +29,10 @@ public interface XvmInfoApi {
     @GET("getDay")
     Observable<List<XvmMainInfo.DaylistEntity>> getXvmThirtyDay(@Query("aid") String aid);
 
+    /**
+     * xvm 单车数据
+     * http://182.18.61.50/Data/action/WotAction/getTank?aid=1510511742
+     */
+    @GET("getTank")
+    Observable<List<XvmTankTable>> getXvmTankTable(@Query("aid") String aid);
 }

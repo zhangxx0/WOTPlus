@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +28,19 @@ public class XvmAllInfo implements Serializable {
      */
     private XvmMainPageVO xvmMainPageVO;
 
+    /**
+     * 单车数据列表
+     */
+    private List<XvmTankTable> tankTables;
+
+
+    public List<XvmTankTable> getTankTables() {
+        return tankTables;
+    }
+
+    public void setTankTables(List<XvmTankTable> tankTables) {
+        this.tankTables = tankTables;
+    }
 
 
     public XvmMainPageVO getXvmMainPageVO() {

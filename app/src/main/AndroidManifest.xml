@@ -43,6 +43,7 @@
             android:theme="@style/DialogQueryTheme" />
 
         <activity android:name=".activity.AtyXvmThirtyRecord" />
+        <activity android:name=".activity.AtyXvmTankTable" />
 
 
     </application>

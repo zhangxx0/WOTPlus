@@ -96,8 +96,8 @@ public class AtyXvmThirtyRecord extends BaseActivity {
         setTitle("30日数据");
 
         Intent intent = this.getIntent();
+        // 未使用
         Map tanks = (Map) intent.getSerializableExtra(AtyXvmThirtyRecord.TANKS_JS_MAP);
-        Log.d("TANKS_JS_MAP", tanks.toString());
 
         String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
         // String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.activity.AtyXvmTankTable;
 import com.xinxin.wotplus.activity.AtyXvmThirtyRecord;
 import com.xinxin.wotplus.adapter.XvmDaylistAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
@@ -306,12 +307,13 @@ public class XvmFragment extends BaseFragment {
 
     @OnClick(R.id.xvm_tank_data)
     void xvm_tank_data_click() {
-        Toast.makeText(getActivity(), "单车数据", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), AtyXvmTankTable.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.xvm_tank_list)
     void xvm_tank_list_click() {
-
+        Toast.makeText(getActivity(), "坦克榜单", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.xvm_factory)
