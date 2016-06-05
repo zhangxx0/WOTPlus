@@ -29,6 +29,7 @@ import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmAllInfoToDayMap;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Map;
 
@@ -296,8 +297,9 @@ public class XvmFragment extends BaseFragment {
         Bundle bundle = new Bundle();
         // 传递xvmAllInfo报错：
         // Caused by: java.io.NotSerializableException: com.xinxin.wotplus.util.mapper.XvmAllInfoToDayMap$2
-        // bundle.putSerializable("xvmAllInfoForOtherPage",xvmAllInfoForOtherPage);
-        bundle.putSerializable("xvmMainInfoForOtherPage", xvmMainInfoForOtherPage);
+
+        // 直接传递tanks map
+        bundle.putSerializable(AtyXvmThirtyRecord.TANKS_JS_MAP, (Serializable) xvmAllInfoForOtherPage.getTanks());
         intent.putExtras(bundle);
         startActivity(intent);
     }

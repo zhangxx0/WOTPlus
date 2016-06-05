@@ -1,8 +1,7 @@
 package com.xinxin.wotplus.util.mapper;
 
-import android.util.Log;
-
 import com.xinxin.wotplus.model.DaylistEntityForRecent;
+import com.xinxin.wotplus.model.TankInfo;
 import com.xinxin.wotplus.model.XvmAllInfo;
 import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.util.CommonUtil;
@@ -22,7 +21,7 @@ import rx.functions.Func1;
 /**
  * Created by xinxin on 2016/5/29.
  */
-public class XvmThirtyInfoToDayMap implements Func1<List<XvmMainInfo.DaylistEntity>,XvmAllInfo> {
+public class XvmThirtyInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
 
     private static XvmThirtyInfoToDayMap INSTANCE = new XvmThirtyInfoToDayMap();
 
@@ -35,7 +34,11 @@ public class XvmThirtyInfoToDayMap implements Func1<List<XvmMainInfo.DaylistEnti
 
 
     @Override
-    public XvmAllInfo call(List<XvmMainInfo.DaylistEntity> daylist) {
+    public XvmAllInfo call(XvmAllInfo xvmAllInfo) {
+
+        XvmAllInfo reXvmAllInfo = new XvmAllInfo();
+        List<XvmMainInfo.DaylistEntity> daylist = xvmAllInfo.getXvmMainInfo().getDaylist();
+        Map tankmap = xvmAllInfo.getTanks();
 
         // 先取出去重的时间（日期）list,
         List daydate = new ArrayList();
@@ -81,7 +84,7 @@ public class XvmThirtyInfoToDayMap implements Func1<List<XvmMainInfo.DaylistEnti
             }
         });
         for (int i = 0; i < daydate.size(); i++) {
-            Log.d("daydate", daydate.get(i).toString());
+            //Log.d("daydate", daydate.get(i).toString());
             String daydates = daydate.get(i).toString();
 
             // 使用的一个新的类，因为要加一个新的属性weight，而原先的类不能破坏
@@ -114,8 +117,8 @@ public class XvmThirtyInfoToDayMap implements Func1<List<XvmMainInfo.DaylistEnti
                     dt.setWins(dt.getWins() + de.getWins());
                     dt.setXp(dt.getXp() + de.getXp());
 
-//                    TankInfo tank = (TankInfo) tankmap.get(de.getId().getVehicleTypeCd() + "");
-//                    dt.setWeight(CommonUtil.addDouble(dt.getWeight(), CommonUtil.getTankWeight(tank) * de.getBattles()));
+                    TankInfo tank = (TankInfo) tankmap.get(de.getId().getVehicleTypeCd() + "");
+                    dt.setWeight(CommonUtil.addDouble(dt.getWeight(), CommonUtil.getTankWeight(tank) * de.getBattles()));
                 }
 
             }
@@ -124,7 +127,9 @@ public class XvmThirtyInfoToDayMap implements Func1<List<XvmMainInfo.DaylistEnti
 
         }
 
+        reXvmAllInfo.setDaymap(daymaps);
+        System.out.println("30日战绩map：" + daymaps);
 
-        return null;
+        return reXvmAllInfo;
     }
 }

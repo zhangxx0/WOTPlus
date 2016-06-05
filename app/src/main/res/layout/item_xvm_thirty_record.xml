@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/linearlayout_margin_less"
+    >
 
     <TextView
         android:id="@+id/xvm_30_daylist_date"
@@ -13,7 +15,7 @@
         android:text="时间"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_battles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -21,7 +23,7 @@
         android:text="场次"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_comp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -29,7 +31,7 @@
         android:text="组队"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_compwins"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -37,7 +39,7 @@
         android:text="组胜率"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_wins"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -45,7 +47,7 @@
         android:text="胜率"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_effect"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -53,7 +55,7 @@
         android:text="效率"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_kill"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -61,7 +63,7 @@
         android:text="击杀"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_damg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -69,7 +71,7 @@
         android:text="伤害"
         />
     <TextView
-        android:id="@+id/xvm_30_daylist_date"
+        android:id="@+id/xvm_30_daylist_assist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
