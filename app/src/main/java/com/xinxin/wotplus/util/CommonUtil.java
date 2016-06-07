@@ -18,6 +18,9 @@ import com.xinxin.wotplus.network.Network;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -252,6 +255,38 @@ public class CommonUtil {
 
         return R.color.wrclass_e;
 
+    }
+
+    /**
+     * 活跃坦克排序方法 由js方法转换
+     *
+     * 使用的是js的sort方法，需要转换为java方法
+     *
+     * tankinfo['list'].sort(tanksort);
+     *
+     * function tanksort(a,b)
+     *
+     * getTankModify(tank)
+     */
+    public static List<XvmMainInfo.TanklistEntity> tanksort(List<XvmMainInfo.TanklistEntity> tanklist, final Map map) {
+
+        // 做一个排序算法，在这里，或者在之后生成的map中按照 “场次"由多到少排序
+        // 并不是按照场次这么简单，有个比较复杂的算法；
+        java.util.Collections.sort(tanklist, new Comparator<XvmMainInfo.TanklistEntity>() {
+
+            @Override
+            public int compare(XvmMainInfo.TanklistEntity t1, XvmMainInfo.TanklistEntity t2) {
+                // var tanka=tankDict[a['id']['vehicleTypeCd']];
+                TankInfo ti1 = (TankInfo) map.get(t1.getId().getVehicleTypeCd() + "");
+                TankInfo ti2 = (TankInfo) map.get(t2.getId().getVehicleTypeCd() + "");
+
+                return (int) (t2.getTotalpower() / CommonUtil.getTankModify(ti2) - t1.getTotalpower() / CommonUtil.getTankModify(ti1));
+            }
+
+        });
+        ;
+
+        return tanklist;
     }
 
 }

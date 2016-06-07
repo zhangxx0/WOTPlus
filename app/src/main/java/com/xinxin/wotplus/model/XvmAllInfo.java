@@ -32,7 +32,20 @@ public class XvmAllInfo implements Serializable {
      * 单车数据列表
      */
     private List<XvmTankTable> tankTables;
+    /**
+     * 单车数据列表2
+     * 直接使用 TanklistEntity
+     */
+    private List<XvmMainInfo.TanklistEntity> tankTables2;
 
+
+    public List<XvmMainInfo.TanklistEntity> getTankTables2() {
+        return tankTables2;
+    }
+
+    public void setTankTables2(List<XvmMainInfo.TanklistEntity> tankTables2) {
+        this.tankTables2 = tankTables2;
+    }
 
     public List<XvmTankTable> getTankTables() {
         return tankTables;

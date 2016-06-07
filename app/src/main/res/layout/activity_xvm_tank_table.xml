@@ -23,7 +23,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--近日战绩列表-->
+    <!--列表-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_xvm_tanktable"
         android:layout_width="match_parent"

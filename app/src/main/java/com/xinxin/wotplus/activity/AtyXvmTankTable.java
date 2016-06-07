@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.adapter.XvmTankTableAdapter;
 import com.xinxin.wotplus.base.BaseActivity;
 import com.xinxin.wotplus.model.XvmAllInfo;
+import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.model.XvmTankTable;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
@@ -42,6 +44,8 @@ public class AtyXvmTankTable extends BaseActivity {
     Toolbar xvm_tanktable_toolbar;
     @BindView(R.id.recyclerview_xvm_tanktable)
     RecyclerView recyclerview_xvm_tanktable;
+
+    private XvmTankTableAdapter adapter;
 
     Observer<List<XvmTankTable>> tanktableObserver = new Observer<List<XvmTankTable>>() {
         @Override
@@ -75,6 +79,11 @@ public class AtyXvmTankTable extends BaseActivity {
         @Override
         public void onNext(XvmAllInfo xvmAllInfo) {
             Log.d("列表数据源", String.valueOf(xvmAllInfo));
+
+            adapter = new XvmTankTableAdapter(AtyXvmTankTable.this, xvmAllInfo);
+
+            recyclerview_xvm_tanktable.setAdapter(adapter);
+
         }
     };
 
@@ -100,12 +109,12 @@ public class AtyXvmTankTable extends BaseActivity {
         // 获取单车数据
         Observable.zip(Network.getXvmInfo().getXvmTankTable(woterId),
                 Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
-                new Func2<List<XvmTankTable>, Map, XvmAllInfo>() {
+                new Func2<List<XvmMainInfo.TanklistEntity>, Map, XvmAllInfo>() {
                     @Override
-                    public XvmAllInfo call(List<XvmTankTable> xvmTankTables, Map map) {
+                    public XvmAllInfo call(List<XvmMainInfo.TanklistEntity> xvmTankTables, Map map) {
                         // 合并成ALLINFO
                         XvmAllInfo all = new XvmAllInfo();
-                        all.setTankTables(xvmTankTables);
+                        all.setTankTables2(xvmTankTables);
                         all.setTanks(map);
                         return all;
                     }
