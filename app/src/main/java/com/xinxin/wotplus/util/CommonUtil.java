@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 import com.xinxin.wotplus.R;
@@ -280,11 +281,16 @@ public class CommonUtil {
                 TankInfo ti1 = (TankInfo) map.get(t1.getId().getVehicleTypeCd() + "");
                 TankInfo ti2 = (TankInfo) map.get(t2.getId().getVehicleTypeCd() + "");
 
+                Log.d("flag", String.valueOf((int) (t2.getTotalpower() / CommonUtil.getTankModify(ti2) - t1.getTotalpower() / CommonUtil.getTankModify(ti1))));
                 return (int) (t2.getTotalpower() / CommonUtil.getTankModify(ti2) - t1.getTotalpower() / CommonUtil.getTankModify(ti1));
             }
 
         });
-        ;
+
+//        for (XvmMainInfo.TanklistEntity entity : tanklist) {
+//            Log.d("inner", String.valueOf(entity.getId().getVehicleTypeCd()));
+//        }
+
 
         return tanklist;
     }

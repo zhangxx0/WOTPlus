@@ -20,6 +20,7 @@ import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmTankTableMap;
+import com.xinxin.wotplus.widget.FireWotProgressDialog;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
+import rx.functions.Func3;
 import rx.schedulers.Schedulers;
 
 /**
@@ -45,6 +46,7 @@ public class AtyXvmTankTable extends BaseActivity {
     @BindView(R.id.recyclerview_xvm_tanktable)
     RecyclerView recyclerview_xvm_tanktable;
 
+    private FireWotProgressDialog firWotProgressDialog;
     private XvmTankTableAdapter adapter;
 
     Observer<List<XvmTankTable>> tanktableObserver = new Observer<List<XvmTankTable>>() {
@@ -74,6 +76,7 @@ public class AtyXvmTankTable extends BaseActivity {
         public void onError(Throwable e) {
             Log.e("tank", e.getMessage(), e);
             Snackbar.make(recyclerview_xvm_tanktable, "获取单车数据出错！", Snackbar.LENGTH_LONG).show();
+            firWotProgressDialog.dismiss();
         }
 
         @Override
@@ -83,6 +86,7 @@ public class AtyXvmTankTable extends BaseActivity {
             adapter = new XvmTankTableAdapter(AtyXvmTankTable.this, xvmAllInfo);
 
             recyclerview_xvm_tanktable.setAdapter(adapter);
+            firWotProgressDialog.dismiss();
 
         }
     };
@@ -104,18 +108,25 @@ public class AtyXvmTankTable extends BaseActivity {
         setTitle("单车数据");
 
         String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
-        // String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
+        String name = PreferenceUtils.getCustomPrefString(this, "queryinfo", "name", "");
+        String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
+
+        firWotProgressDialog = FireWotProgressDialog.createDialog(this);
+        firWotProgressDialog.show();
 
         // 获取单车数据
         Observable.zip(Network.getXvmInfo().getXvmTankTable(woterId),
+                Network.getXvmInfo().getXvmMainInfo(name, region),
                 Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
-                new Func2<List<XvmMainInfo.TanklistEntity>, Map, XvmAllInfo>() {
+                new Func3<List<XvmMainInfo.TanklistEntity>, XvmMainInfo, Map, XvmAllInfo>() {
+
                     @Override
-                    public XvmAllInfo call(List<XvmMainInfo.TanklistEntity> xvmTankTables, Map map) {
+                    public XvmAllInfo call(List<XvmMainInfo.TanklistEntity> xvmTankTables, XvmMainInfo xvmMainInfo, Map map) {
                         // 合并成ALLINFO
                         XvmAllInfo all = new XvmAllInfo();
                         all.setTankTables2(xvmTankTables);
                         all.setTanks(map);
+                        all.setXvmMainInfo(xvmMainInfo);
                         return all;
                     }
                 })

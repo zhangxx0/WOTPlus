@@ -2,13 +2,13 @@ package com.xinxin.wotplus.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.model.TankInfo;
 import com.xinxin.wotplus.model.XvmAllInfo;
 import com.xinxin.wotplus.model.XvmMainInfo;
 
@@ -46,12 +46,15 @@ public class XvmTankTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        XvmMainInfo.TanklistEntity tanklistEntity = sortedTankTables.get(position);
+        TankInfo tankInfo = (TankInfo) tanksmap.get(tanklistEntity.getId().getVehicleTypeCd()+"");
 
+        ((TankTableViewHolder)holder).xvm_tanktabke_vehicle_name.setText(tankInfo.getAlias());
+        ((TankTableViewHolder)holder).xvm_tanktabke_level.setText(tankInfo.getLevel()+"");
     }
 
     @Override
     public int getItemCount() {
-        Log.d("size", String.valueOf(sortedTankTables.size()));
         return sortedTankTables.size();
     }
 
@@ -59,7 +62,7 @@ public class XvmTankTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.xvm_tanktabke_vehicle_name)
         TextView xvm_tanktabke_vehicle_name;
         @BindView(R.id.xvm_tanktabke_level)
-        TextView TextViewxvm_tanktabke_level;
+        TextView xvm_tanktabke_level;
 
         public TankTableViewHolder(View itemView) {
             super(itemView);
