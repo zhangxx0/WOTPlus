@@ -31,30 +31,38 @@ public class XvmAllInfo implements Serializable {
     /**
      * 单车数据列表
      */
-    private List<XvmTankTable> tankTables;
+//    private List<XvmTankTable> tankTables;
     /**
-     * 单车数据列表2
+     * 单车数据列表
+     *
      * 直接使用 TanklistEntity
      */
-    private List<XvmMainInfo.TanklistEntity> tankTables2;
+    private List<XvmMainInfo.TanklistEntity> tankTables;
+    /**
+     * 活跃坦克列表数据源
+     *
+     */
+    private List<XvmMainInfo.TanklistEntity> tankTablesForActive;
 
 
-    public List<XvmMainInfo.TanklistEntity> getTankTables2() {
-        return tankTables2;
-    }
 
-    public void setTankTables2(List<XvmMainInfo.TanklistEntity> tankTables2) {
-        this.tankTables2 = tankTables2;
-    }
 
-    public List<XvmTankTable> getTankTables() {
+
+    public List<XvmMainInfo.TanklistEntity> getTankTables() {
         return tankTables;
     }
 
-    public void setTankTables(List<XvmTankTable> tankTables) {
+    public void setTankTables(List<XvmMainInfo.TanklistEntity> tankTables) {
         this.tankTables = tankTables;
     }
 
+    public List<XvmMainInfo.TanklistEntity> getTankTablesForActive() {
+        return tankTablesForActive;
+    }
+
+    public void setTankTablesForActive(List<XvmMainInfo.TanklistEntity> tankTablesForActive) {
+        this.tankTablesForActive = tankTablesForActive;
+    }
 
     public XvmMainPageVO getXvmMainPageVO() {
         return xvmMainPageVO;

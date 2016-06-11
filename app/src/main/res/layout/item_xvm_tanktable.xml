@@ -7,13 +7,24 @@
     >
 
     <TextView
-        android:id="@+id/xvm_tanktabke_vehicle_name"
-        android:layout_width="0dp"
+        android:id="@+id/xvm_tanktabke_vehicle_"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:gravity="center"
+        android:text="名次"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+    <TextView
+        android:id="@+id/xvm_tanktabke_vehicle_name"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="车名"
+        android:singleLine="true"
+        android:ellipsize="end"
         />
+
     <TextView
         android:id="@+id/xvm_tanktabke_level"
         android:layout_width="0dp"

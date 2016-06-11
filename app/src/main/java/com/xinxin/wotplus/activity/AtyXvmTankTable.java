@@ -124,7 +124,7 @@ public class AtyXvmTankTable extends BaseActivity {
                     public XvmAllInfo call(List<XvmMainInfo.TanklistEntity> xvmTankTables, XvmMainInfo xvmMainInfo, Map map) {
                         // 合并成ALLINFO
                         XvmAllInfo all = new XvmAllInfo();
-                        all.setTankTables2(xvmTankTables);
+                        all.setTankTables(xvmTankTables);
                         all.setTanks(map);
                         all.setXvmMainInfo(xvmMainInfo);
                         return all;

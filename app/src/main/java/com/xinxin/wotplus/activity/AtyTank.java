@@ -97,6 +97,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
             public void onError(Throwable e) {
                 Log.e("tank", e.getMessage(), e);
                 Snackbar.make(tankMainContent, "获取坦克战绩信息出错！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
             }
 
             @Override

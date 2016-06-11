@@ -33,7 +33,7 @@ public class XvmTankTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mContext = mContext;
         layoutInflater = LayoutInflater.from(mContext);
 
-        sortedTankTables = xvmAllInfo.getTankTables2();
+        sortedTankTables = xvmAllInfo.getTankTables();
         tanksmap = xvmAllInfo.getTanks();
     }
 

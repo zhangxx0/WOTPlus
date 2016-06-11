@@ -1,8 +1,6 @@
 package com.xinxin.wotplus.util;
 
 import com.xinxin.wotplus.QueryActivity;
-import com.xinxin.wotplus.model.Achieve;
-import com.xinxin.wotplus.model.Achievements;
 import com.xinxin.wotplus.model.BadgeAndRecord;
 import com.xinxin.wotplus.model.ClanInfoUsed;
 import com.xinxin.wotplus.model.Tank;
@@ -82,7 +80,9 @@ public class JsoupHtmlUtil {
             Element root = doc.select(".js-full-achievements").first();
 
             // 成就分类数量
-            Elements subroots = root.getElementsByTag("h4");
+            // 2016年6月11日21:30:29 这行代码报错，应该是官网战绩页面源码做了改动；
+
+            /*Elements subroots = root.getElementsByTag("h4");
 
             // （1）七个分类的名称及数量，在下面赋值
 //            String subNum1 = subroots.get(0).text();
@@ -207,7 +207,14 @@ public class JsoupHtmlUtil {
 
             }
 
-            woter.setAchievements(achievements);
+            woter.setAchievements(achievements);*/
+
+            /**
+             * （2）成就信息(NEW)
+             * 2016年6月11日22:59:21
+             */
+
+
 
             /**
              * （3）统计信息

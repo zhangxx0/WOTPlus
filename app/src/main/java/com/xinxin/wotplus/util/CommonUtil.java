@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 
 import com.xinxin.wotplus.R;
@@ -19,6 +18,7 @@ import com.xinxin.wotplus.network.Network;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -170,6 +170,10 @@ public class CommonUtil {
         return (1900 + dateEntity.getYear()) + "-" + fillZero(dateEntity.getMonth() + 1) + "-"
                 + fillZero(dateEntity.getDate());
     }
+    public static String formatDate2(XvmMainInfo.TanklistEntity.UpdateTimeEntity dateEntity) {
+        return (1900 + dateEntity.getYear()) + "-" + fillZero(dateEntity.getMonth() + 1) + "-"
+                + fillZero(dateEntity.getDate());
+    }
 
     // 日期格式填充0
     public static String fillZero(int i) {
@@ -281,16 +285,59 @@ public class CommonUtil {
                 TankInfo ti1 = (TankInfo) map.get(t1.getId().getVehicleTypeCd() + "");
                 TankInfo ti2 = (TankInfo) map.get(t2.getId().getVehicleTypeCd() + "");
 
-                Log.d("flag", String.valueOf((int) (t2.getTotalpower() / CommonUtil.getTankModify(ti2) - t1.getTotalpower() / CommonUtil.getTankModify(ti1))));
                 return (int) (t2.getTotalpower() / CommonUtil.getTankModify(ti2) - t1.getTotalpower() / CommonUtil.getTankModify(ti1));
             }
 
         });
 
-//        for (XvmMainInfo.TanklistEntity entity : tanklist) {
-//            Log.d("inner", String.valueOf(entity.getId().getVehicleTypeCd()));
-//        }
+        return tanklist;
+    }
 
+    /**
+     * 按照场次和更新日期排序
+     *
+     * 暂时只按照场次
+     * 2016年6月11日15:18:55
+     */
+    public static List<XvmMainInfo.TanklistEntity> tanksortByBattles(List<XvmMainInfo.TanklistEntity> tanklist) {
+
+        Collections.sort(tanklist, new Comparator<XvmMainInfo.TanklistEntity>() {
+            @Override
+            public int compare(XvmMainInfo.TanklistEntity t1, XvmMainInfo.TanklistEntity t2) {
+
+                int i = t2.getBattles() - t1.getBattles();
+                // 下面的这个没吊用；
+//                if (i==0) {
+//                    int j = (int) (t2.getUpdateTime().getTime() - t1.getUpdateTime().getTime());
+//                    return  j;
+//                }
+
+                return i;
+            }
+        });
+
+        return tanklist;
+    }
+
+    /**
+     * 按照更新日期来排序
+     * @param tanklist
+     * @return
+     */
+    public static List<XvmMainInfo.TanklistEntity> tanksortByDate(List<XvmMainInfo.TanklistEntity> tanklist) {
+
+        Collections.sort(tanklist, new Comparator<XvmMainInfo.TanklistEntity>() {
+            @Override
+            public int compare(XvmMainInfo.TanklistEntity t1, XvmMainInfo.TanklistEntity t2) {
+
+                String date1 = formatDate2(t1.getUpdateTime());
+                String date2 = formatDate2(t2.getUpdateTime());
+
+                int j = date2.compareTo(date1);
+
+                return j;
+            }
+        });
 
         return tanklist;
     }
