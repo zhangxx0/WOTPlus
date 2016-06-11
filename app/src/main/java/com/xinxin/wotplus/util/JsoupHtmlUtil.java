@@ -1,6 +1,11 @@
 package com.xinxin.wotplus.util;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.xinxin.wotplus.QueryActivity;
+import com.xinxin.wotplus.model.AchieveNew;
 import com.xinxin.wotplus.model.BadgeAndRecord;
 import com.xinxin.wotplus.model.ClanInfoUsed;
 import com.xinxin.wotplus.model.Tank;
@@ -213,8 +218,27 @@ public class JsoupHtmlUtil {
              * （2）成就信息(NEW)
              * 2016年6月11日22:59:21
              */
+            Elements achievejsons = doc.select("script[type=application/javascript]");
 
+            Element achievejson = achievejsons.first();
+            String achievejsonString = achievejson.toString();
 
+            // 这个地方和eclipse中的截取长度还不一样!
+            String formatAchieveJson = achievejsonString.substring(75,achievejsonString.length()-355);
+
+//            Log.d("111", ""+formatAchieveJson.substring(0,10));
+//            Log.d("111", ""+formatAchieveJson.substring(formatAchieveJson.length()-10));
+
+            Gson gson = new Gson();
+            List<AchieveNew> achieveNews = null;
+            try {
+                achieveNews = gson.fromJson(formatAchieveJson, new TypeToken<List<AchieveNew>>() {}.getType());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Log.d("111", String.valueOf(achieveNews.size()));
+            Log.d("111", String.valueOf(achieveNews.toString()));
 
             /**
              * （3）统计信息
