@@ -69,7 +69,9 @@ public class AchieveMentFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable e) {
+                Log.d("XXX", "111");
                 Log.d("XXX", e.getMessage());
+
                 Snackbar.make(getView(), "Rx错误！", Snackbar.LENGTH_LONG).show();
             }
 
@@ -91,9 +93,9 @@ public class AchieveMentFragment extends BaseFragment {
         };
 
         String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
-
+        Log.d("XXX",woterId);
         Network.getAchieveApi()
-                .getAchievesNums()
+                .getAchievesNums(woterId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(achieveObserver);
