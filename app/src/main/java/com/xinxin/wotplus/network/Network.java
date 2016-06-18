@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.network;
 
 import com.xinxin.wotplus.QueryActivity;
+import com.xinxin.wotplus.network.api.AchieveApi;
 import com.xinxin.wotplus.network.api.ClanInfoApi;
 import com.xinxin.wotplus.network.api.GradeApi;
 import com.xinxin.wotplus.network.api.RecordApi;
@@ -28,6 +29,7 @@ public class Network {
     private static ClanInfoApi clanInfoApi;
     private static GradeApi gradeApi;
     private static TankApi tankApi;
+    private static AchieveApi achieveApi;
 
     private static UtilApi utilApi;
 
@@ -239,6 +241,27 @@ public class Network {
         }
 
         return xvmJsApi;
+    }
+
+
+    /**
+     * 获取成就信息
+     *
+     * @return
+     */
+    public static AchieveApi getAchieveApi() {
+
+        if (achieveApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(Constant.ACHIEVE_NUMS_BASE)
+                    //.addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            achieveApi = retrofit.create(AchieveApi.class);
+        }
+
+        return achieveApi;
     }
 }
 
