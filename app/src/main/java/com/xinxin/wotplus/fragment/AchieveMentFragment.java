@@ -22,8 +22,8 @@ import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.AchieveJsonToMapMapper;
 
 import java.util.List;
-import java.util.Map;
 
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -36,7 +36,7 @@ public class AchieveMentFragment extends BaseFragment {
 
     private RecyclerView recyclerview_achieve;
     private AchieveMentAdapter adapter;
-    private Woter woter;
+    Woter woter = new Woter();
 
     @Nullable
     @Override
@@ -61,20 +61,19 @@ public class AchieveMentFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("XXX", "111");
-
-                Snackbar.make(getView(), "Rx错误！", Snackbar.LENGTH_LONG).show();
+                Log.d("XXX", e.getMessage());
+                Snackbar.make(getView(), "获取成就信息错误！", Snackbar.LENGTH_LONG).show();
             }
 
             @Override
             public void onNext(List<AchieveNew> achieveNews) {
-                if (achieveNews != null) {
-                    Snackbar.make(getView(), "转换成功！", Snackbar.LENGTH_LONG).show();
-                } else {
-                    Snackbar.make(getView(), "ResponseBody 为空！！", Snackbar.LENGTH_LONG).show();
-                }
 
+                woter.setNewAchievements(achieveNews);
 
+                adapter = new AchieveMentAdapter(getActivity(), woter);
+                // RecyclerView 动画
+                SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_achieve);
+                recyclerview_achieve.setAdapter(animatorAdapter);
             }
         };
 
@@ -86,11 +85,6 @@ public class AchieveMentFragment extends BaseFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(achieveObserver);
-
-        /*adapter = new AchieveMentAdapter(getActivity(),woter);
-        // RecyclerView 动画
-        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_achieve);
-        recyclerview_achieve.setAdapter(animatorAdapter);*/
 
         return view;
     }

@@ -1,7 +1,6 @@
 package com.xinxin.wotplus.util.mapper;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.xinxin.wotplus.MyApplication;
@@ -69,7 +68,6 @@ public class AchieveJsonToMapMapper implements Func1<ResponseBody, List<AchieveN
             }
 
         }
-        Log.d("map", map.toString());
 
         // 将勋章数量对应到相对应的勋章信息上
         if (newAchievements.size() > 0) {

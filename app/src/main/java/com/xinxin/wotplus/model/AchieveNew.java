@@ -245,6 +245,15 @@ public class AchieveNew {
             private String value80x80;
             @SerializedName("default")
             private String defaultX;
+            private String big;
+
+            public String getBig() {
+                return big;
+            }
+
+            public void setBig(String big) {
+                this.big = big;
+            }
 
             public String getValue100x100() {
                 return value100x100;

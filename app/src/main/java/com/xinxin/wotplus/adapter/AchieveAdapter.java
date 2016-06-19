@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xinxin.wotplus.R;
-import com.xinxin.wotplus.model.Achieve;
-
-import java.util.List;
+import com.xinxin.wotplus.model.AchieveNew;
 
 /**
  * Created by xinxin on 2016/4/3.
@@ -23,7 +21,8 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context mContext;
     private LayoutInflater layoutInflater;
 
-    private List<Achieve> achieveList;
+    // private List<Achieve> achieveList;
+    private AchieveNew achieveNew;
 
     // 通过adapter中自己去提供回调
     public interface OnItemClickLitener {
@@ -38,8 +37,9 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
-    public AchieveAdapter(List<Achieve> achieveList, Context mContext) {
-        this.achieveList = achieveList;
+
+    public AchieveAdapter(AchieveNew achieveNew, Context mContext) {
+        this.achieveNew = achieveNew;
         this.mContext = mContext;
         layoutInflater = LayoutInflater.from(mContext);
     }
@@ -60,35 +60,37 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
-        final Achieve achieve = achieveList.get(position);
+        // final Achieve achieve = achieveList.get(position);
+        final AchieveNew.AchievementsEntity achieve = achieveNew.getAchievements().get(position);
 
         // 效果是实现了，这个地方对图片的处理是否不妥？
         // 有什么缺点?缓存什么的怎么弄？自己写还是使用框架? 2016年4月3日15:20:31
 //        new DownloadImageTask(((AchieveViewHolder) holder).achieve_icon).execute(achieve.getAchivementImg());
-        Glide.with(mContext).load(achieve.getAchivementImg()).centerCrop().into(((AchieveViewHolder) holder).achieve_icon);
-        ((AchieveViewHolder) holder).achieve_name.setText(achieve.getAchivementName());
-        ((AchieveViewHolder) holder).achieve_num.setText(achieve.getAchivementNum());
+        String icon = achieve.getIcons().getBig();
+        if ("".equals(icon) || icon == null) {
+            icon = achieve.getIcons().getDefaultX();
+        }
+        icon = "http:" + icon;
+
+        Glide.with(mContext).load(icon).centerCrop().into(((AchieveViewHolder) holder).achieve_icon);
+        ((AchieveViewHolder) holder).achieve_name.setText(achieve.getLocalization().getMark());
+        ((AchieveViewHolder) holder).achieve_num.setText(achieve.getNums());
 
         // 如果设置了回调，则设置点击事件
-        if (mOnItemClickLitener != null)
-        {
-            holder.itemView.setOnClickListener(new View.OnClickListener()
-            {
+        if (mOnItemClickLitener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
                     // 成就的描述信息
-                    String description = achieve.getAchivementDes();
+                    String description = achieve.getLocalization().getDescription();
                     mOnItemClickLitener.onItemClick(holder.itemView, pos, description);
                 }
             });
 
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
-            {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v)
-                {
+                public boolean onLongClick(View v) {
                     int pos = holder.getLayoutPosition();
                     mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
                     return false;
@@ -100,7 +102,7 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return achieveList.size();
+        return achieveNew.getAchievements().size();
     }
 
     /**

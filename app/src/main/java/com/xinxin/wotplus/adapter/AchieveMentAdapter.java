@@ -44,36 +44,18 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        switch (position) {
-            case 0:
-                ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getAchievements().getWarHeroNum());
-                subadapter = new AchieveAdapter(mWoter.getAchievements().getWarheroList(), mContext);
-                break;
-            case 1:
-                ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getAchievements().getHonorNum());
-                subadapter = new AchieveAdapter(mWoter.getAchievements().getHonorList(), mContext);
-                break;
-            case 2:
-                ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getAchievements().getEpicNum());
-                subadapter = new AchieveAdapter(mWoter.getAchievements().getEpicList(), mContext);
-                break;
-            case 3:
-                ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getAchievements().getTeamNum());
-                subadapter = new AchieveAdapter(mWoter.getAchievements().getTeamList(), mContext);
-                break;
-            case 4:
-                ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getAchievements().getCommemorateNum());
-                subadapter = new AchieveAdapter(mWoter.getAchievements().getCommemorateList(), mContext);
-                break;
-            case 5:
-                ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getAchievements().getStageNum());
-                subadapter = new AchieveAdapter(mWoter.getAchievements().getStageList(), mContext);
-                break;
-            case 6:
-                ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getAchievements().getOtherNum());
-                subadapter = new AchieveAdapter(mWoter.getAchievements().getOtherList(), mContext);
-                break;
+        ((BaseViewHolder) holder).achieve_sub_title.setText(mWoter.getNewAchievements().get(position).getLocalization().getMark());
+
+
+        if (position == 5) {
+            // 处理战斗嘉奖
+            mWoter.getNewAchievements().get(position).getAchievements().get(0).getIcons().setBig("");
+            mWoter.getNewAchievements().get(position).getAchievements().get(1).getIcons().setBig("");
+            mWoter.getNewAchievements().get(position).getAchievements().get(2).getIcons().setBig("");
+            mWoter.getNewAchievements().get(position).getAchievements().get(3).getIcons().setBig("");
         }
+
+        subadapter = new AchieveAdapter(mWoter.getNewAchievements().get(position), mContext);
 
         // sub RecyclerView 的处理
         GridLayoutManager gm = new GridLayoutManager(mContext, 4);
@@ -81,13 +63,14 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         // RecyclerView 动画
         ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(subadapter, ((BaseViewHolder) holder).recyclerview_achieve_sub);
         ((BaseViewHolder) holder).recyclerview_achieve_sub.setAdapter(animatorAdapter);
+
+
         // 点击事件
         subadapter.setOnItemClickLitener(new AchieveAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position, String description) {
                 // 成就详细信息的展示用什么呢?待寻找 2016年4月3日15:48:07
                 showDesDialog(description);
-                // Toast.makeText(mContext, description, Toast.LENGTH_SHORT).show();
             }
 
             @Override
