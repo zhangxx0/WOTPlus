@@ -86,6 +86,13 @@ public class AchieveNew {
     }
 
     public static class AchievementsEntity {
+
+        /**
+         * 手动添加，勋章数量
+         * 2016年6月19日21:57:02
+         */
+        private String nums;
+
         private String block;
         /**
          * 100x100 : //ncw.worldoftanks.cn//wotpcnn/wot/current/rare_achievement/100x100/1156.png
@@ -120,6 +127,14 @@ public class AchieveNew {
         private String type;
         private double weight;
         private List<?> tags;
+
+        public String getNums() {
+            return nums;
+        }
+
+        public void setNums(String nums) {
+            this.nums = nums;
+        }
 
         public String getBlock() {
             return block;

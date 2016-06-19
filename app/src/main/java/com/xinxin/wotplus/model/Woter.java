@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by xinxin on 2016/3/24.
@@ -68,6 +69,12 @@ public class Woter implements Serializable {
     private Achievements achievements;
 
     /**
+     * 新版的成就信息
+     * 2016年6月19日21:54:05
+     */
+    private List<AchieveNew> newAchievements;
+
+    /**
      * 徽章与战绩
      */
     private BadgeAndRecord badgeAndRecord;
@@ -82,6 +89,14 @@ public class Woter implements Serializable {
      */
     private Tanks tanks;
 
+
+    public List<AchieveNew> getNewAchievements() {
+        return newAchievements;
+    }
+
+    public void setNewAchievements(List<AchieveNew> newAchievements) {
+        this.newAchievements = newAchievements;
+    }
 
     public Tanks getTanks() {
         return tanks;

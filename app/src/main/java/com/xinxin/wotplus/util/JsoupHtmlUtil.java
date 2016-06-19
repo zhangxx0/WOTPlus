@@ -1,7 +1,5 @@
 package com.xinxin.wotplus.util;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xinxin.wotplus.QueryActivity;
@@ -237,8 +235,10 @@ public class JsoupHtmlUtil {
                 e.printStackTrace();
             }
 
-            Log.d("111", String.valueOf(achieveNews.size()));
-            Log.d("111", String.valueOf(achieveNews.toString()));
+            woter.setNewAchievements(achieveNews);
+
+//            Log.d("111", String.valueOf(achieveNews.size()));
+//            Log.d("111", String.valueOf(achieveNews.toString()));
 
             /**
              * （3）统计信息
