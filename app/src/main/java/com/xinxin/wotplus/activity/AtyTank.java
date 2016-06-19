@@ -31,11 +31,13 @@ import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 import com.xinxin.wotplus.widget.RevealBackgroundView;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
+import okhttp3.ResponseBody;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -111,6 +113,30 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
             }
         };
 
+        Observer<ResponseBody> tankObserverNew = new Observer<ResponseBody>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("tank", e.getMessage(), e);
+                Snackbar.make(tankMainContent, "获取坦克战绩信息出错！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    Log.d("XXX", responseBody.string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Snackbar.make(tankMainContent, "获取坦克战绩信息成功！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
+            }
+        };
+
         deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(this);
         deathWheelProgressDialog.show();
 
@@ -118,18 +144,26 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
         // 区分南北区
         String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
 
-        Network.getTankInfo(region)
+        // abandon 方法
+//        Network.getTankInfo(region)
+//                .getTankAchieve(woterId, tankId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(tankObserver);
+
+        Log.d("XXX", woterId);
+        Log.d("XXX", tankId);
+        Network.getAchieveApi()
                 .getTankAchieve(woterId, tankId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tankObserver);
+                .subscribe(tankObserverNew);
 
         setupRevealBackground(savedInstanceState);
 
     }
 
     /**
-     *
      * @param achieveTank
      */
     private void showTankAchieve(AchieveTank achieveTank) {
@@ -157,6 +191,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 
     /**
      * 提取勋章的ID与名称对照字段
+     *
      * @return
      */
     private Map tomap() {

@@ -79,6 +79,7 @@ public class Constant {
 
     /**
      * 成就数量
+     * 基础的URL，单车战绩也使用这个
      * http://wotpbe-cnn.worldoftanks.cn/accounts/api/statistics/achievements/?filter%5Baccount_ids%5D=1509154099
      */
     public static final String ACHIEVE_NUMS_BASE ="http://wotpbe-cnn.worldoftanks.cn/accounts/api/statistics/";

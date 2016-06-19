@@ -16,4 +16,7 @@ public interface AchieveApi {
     // @GET("?filter[account_ids]={accountId}")
     Observable<ResponseBody> getAchievesNums(@Query("filter[account_ids]") String accountId);
 
+    @GET("vehicles/")
+    Observable<ResponseBody> getTankAchieve(@Query("filter[account_ids]") String accountId, @Query("filter[vehicle_cds]") String vehicleCds);
+
 }
