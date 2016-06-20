@@ -19,25 +19,28 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
-import com.xinxin.wotplus.adapter.TankAchievesAdapter;
+import com.xinxin.wotplus.adapter.TankAchievesNewAdapter;
 import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.Achieve;
+import com.xinxin.wotplus.model.AchieveNew;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.Achievements;
+import com.xinxin.wotplus.model.TankAchieveNew;
+import com.xinxin.wotplus.model.TankAchieveSummary;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.PreferenceUtils;
+import com.xinxin.wotplus.util.mapper.TankJsonToMapMapper;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 import com.xinxin.wotplus.widget.RevealBackgroundView;
 
-import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
-import okhttp3.ResponseBody;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -60,7 +63,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
     private RecyclerView recyclerView;
     private TextView tankdestroy, tankexp, tankmaxexp, tankhitrate, tankhitnum, tankdesdeadrate, tankhitrecirate, tankperdestroy, tankperhitnum;
 
-    private TankAchievesAdapter adapter;
+    private TankAchievesNewAdapter adapter;
     private Woter woter;
 
     @Override
@@ -113,7 +116,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
             }
         };
 
-        Observer<ResponseBody> tankObserverNew = new Observer<ResponseBody>() {
+        Observer<TankAchieveNew> tankObserverNew = new Observer<TankAchieveNew>() {
             @Override
             public void onCompleted() {
             }
@@ -126,15 +129,37 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
             }
 
             @Override
-            public void onNext(ResponseBody responseBody) {
-                try {
-                    Log.d("XXX", responseBody.string());
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public void onNext(TankAchieveNew tankAchieveNew) {
+                if (tankAchieveNew != null) {
+                    showTankAchieveNew(tankAchieveNew);
                 }
-                Snackbar.make(tankMainContent, "获取坦克战绩信息成功！", Snackbar.LENGTH_LONG).show();
+
                 deathWheelProgressDialog.dismiss();
             }
+        };
+
+        Observer<TankAchieveNew> tankObserverAll = new Observer<TankAchieveNew>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("tank", e.getMessage(), e);
+                Snackbar.make(tankMainContent, "获取坦克战绩信息出错！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onNext(TankAchieveNew tankAchieveNew) {
+                if (tankAchieveNew != null) {
+                    showTankAchieveNew(tankAchieveNew);
+                }
+
+                deathWheelProgressDialog.dismiss();
+            }
+
+
         };
 
         deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(this);
@@ -151,19 +176,92 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(tankObserver);
 
-        Log.d("XXX", woterId);
-        Log.d("XXX", tankId);
         Network.getAchieveApi()
                 .getTankAchieve(woterId, tankId)
+                .map(TankJsonToMapMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tankObserverNew);
+
+        // 下面这个是想多了，不用这么复杂，而且zip的第一个请求获取的数据也没啥用
+        /*Observable.zip(Network.getAchieveApi().getTankAchieve(woterId, tankId).map(TankJsonToMapMapper.getInstance()),
+                Network.getAchieveApi().getAchievesNums(woterId).map(AchieveJsonToMapMapper.getInstance()),
+                new Func2<TankAchieveNew, List<AchieveNew>, TankAchieveNew>() {
+                    @Override
+                    public TankAchieveNew call(TankAchieveNew tankAchieveNew, List<AchieveNew> achieveNews) {
+                        tankAchieveNew.setAchieveNews(achieveNews);
+                        return tankAchieveNew;
+                    }
+                })
+                .map(TankAchieveAllMapper.getInstance())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tankObserverAll);*/
+
 
         setupRevealBackground(savedInstanceState);
 
     }
 
     /**
+     * 新版设置成就信息
+     *
+     * @param tankAchieveNew
+     */
+    private void showTankAchieveNew(TankAchieveNew tankAchieveNew) {
+
+        List<AchieveNew.AchievementsEntity> achieveList = tankAchieveNew.getRebuildTankAchieveList();
+
+        // 根据成就的多少，判断展示的行数 <=8 则展示1行，其余展示两行
+        int spanCount = 1;
+        if (achieveList.size() >= 8) {
+            spanCount = 2;
+        }
+        GridLayoutManager gm = new GridLayoutManager(AtyTank.this, spanCount);
+        gm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(gm);
+
+        // new
+        adapter = new TankAchievesNewAdapter(achieveList, AtyTank.this);
+        // RecyclerView 动画
+        ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
+        recyclerView.setAdapter(animatorAdapter);
+
+        initCardNew(tankAchieveNew.getTankAchieveSummary());
+    }
+
+    /**
+     * 汇总成就信息赋值New
+     *
+     * @param summary
+     */
+    private void initCardNew(TankAchieveSummary summary) {
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        tankdestroy = (TextView) findViewById(R.id.tankdestroy);
+        tankexp = (TextView) findViewById(R.id.tankexp);
+        tankmaxexp = (TextView) findViewById(R.id.tankmaxexp);
+        tankhitrate = (TextView) findViewById(R.id.tankhitrate);
+        tankhitnum = (TextView) findViewById(R.id.tankhitnum);
+        tankdesdeadrate = (TextView) findViewById(R.id.tankdesdeadrate);
+        tankhitrecirate = (TextView) findViewById(R.id.tankhitrecirate);
+        tankperdestroy = (TextView) findViewById(R.id.tankperdestroy);
+        tankperhitnum = (TextView) findViewById(R.id.tankperhitnum);
+
+        tankdestroy.setText(summary.getSummary().getFrags_count() + "");
+        tankexp.setText(summary.getSummary().getXp_amount() + "");
+        tankmaxexp.setText(summary.getSummary().getXp_max() + "");
+        tankhitrate.setText(df.format(summary.getSummary().getHits_percent()) + "%");
+        tankhitnum.setText(summary.getSummary().getDamage_dealt() + "");
+        tankdesdeadrate.setText(df.format(summary.getSummary().getFrags_killed_ratio()) + "");
+        tankhitrecirate.setText(df.format(summary.getSummary().getDamage_dealt_received_ratio()) + "");
+        tankperdestroy.setText(df.format(summary.getSummary().getFrags_per_battle()) + "");
+        tankperhitnum.setText(summary.getSummary().getDamage_per_battle() + "");
+    }
+
+    /**
+     * 旧版设置成就信息
+     *
      * @param achieveTank
      */
     private void showTankAchieve(AchieveTank achieveTank) {
@@ -181,7 +279,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 
         Map map = tomap();
 
-        adapter = new TankAchievesAdapter(achieveList, AtyTank.this, map);
+        //adapter = new TankAchievesAdapter(achieveList, AtyTank.this, map);
         // RecyclerView 动画
         ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
         recyclerView.setAdapter(animatorAdapter);
