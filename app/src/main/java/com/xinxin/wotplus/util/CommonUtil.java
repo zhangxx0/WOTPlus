@@ -14,6 +14,7 @@ import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.TankInfo;
 import com.xinxin.wotplus.model.VersionVo;
 import com.xinxin.wotplus.model.XvmMainInfo;
+import com.xinxin.wotplus.model.XvmTankTopVO;
 import com.xinxin.wotplus.network.Network;
 
 import java.io.UnsupportedEncodingException;
@@ -170,6 +171,7 @@ public class CommonUtil {
         return (1900 + dateEntity.getYear()) + "-" + fillZero(dateEntity.getMonth() + 1) + "-"
                 + fillZero(dateEntity.getDate());
     }
+
     public static String formatDate2(XvmMainInfo.TanklistEntity.UpdateTimeEntity dateEntity) {
         return (1900 + dateEntity.getYear()) + "-" + fillZero(dateEntity.getMonth() + 1) + "-"
                 + fillZero(dateEntity.getDate());
@@ -263,14 +265,64 @@ public class CommonUtil {
     }
 
     /**
+     * 坦克类型
+     * @param type
+     * @return
+     */
+    public static String getTankType(String type) {
+        switch(type){
+            case "lightTank":
+                return "LT";
+            case "mediumTank":
+                return "MT";
+            case "heavyTank":
+                return "HT";
+            case "AT-SPG":
+                return "TD";
+            case "SPG":
+                return "SPG";
+            default:
+                return type;
+        }
+    }
+
+    /**
+     * 坦克国家
+     * @param country
+     * @return
+     */
+    public static String getTankCountry(String country) {
+        switch(country){
+            case "ussr":
+                return "苏联";
+            case "usa":
+                return "美国";
+            case "germany":
+                return "德国";
+            case "uk":
+                return "英国";
+            case "china":
+                return "中国";
+            case "japan":
+                return "日本";
+            case "czech":
+                return "捷克";
+            case "france":
+                return "法国";
+            default:
+                return country;
+        }
+    }
+
+    /**
      * 活跃坦克排序方法 由js方法转换
-     *
+     * <p/>
      * 使用的是js的sort方法，需要转换为java方法
-     *
+     * <p/>
      * tankinfo['list'].sort(tanksort);
-     *
+     * <p/>
      * function tanksort(a,b)
-     *
+     * <p/>
      * getTankModify(tank)
      */
     public static List<XvmMainInfo.TanklistEntity> tanksort(List<XvmMainInfo.TanklistEntity> tanklist, final Map map) {
@@ -295,7 +347,7 @@ public class CommonUtil {
 
     /**
      * 按照场次和更新日期排序
-     *
+     * <p/>
      * 暂时只按照场次
      * 2016年6月11日15:18:55
      */
@@ -321,6 +373,7 @@ public class CommonUtil {
 
     /**
      * 按照更新日期来排序
+     *
      * @param tanklist
      * @return
      */
@@ -340,6 +393,28 @@ public class CommonUtil {
         });
 
         return tanklist;
+    }
+
+    /**
+     * 坦克榜单排序
+     *
+     * @param tankTopVOs
+     * @return
+     */
+    public static List<XvmTankTopVO> tankTopSortBy(List<XvmTankTopVO> tankTopVOs, final Map map) {
+
+        Collections.sort(tankTopVOs, new Comparator<XvmTankTopVO>() {
+            @Override
+            public int compare(XvmTankTopVO lhs, XvmTankTopVO rhs) {
+
+                TankInfo ti1 = (TankInfo) map.get(lhs.getTankid() + "");
+                TankInfo ti2 = (TankInfo) map.get(rhs.getTankid() + "");
+
+                return ti2.getLevel() - ti1.getLevel();
+            }
+        });
+
+        return tankTopVOs;
     }
 
 }

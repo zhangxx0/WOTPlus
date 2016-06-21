@@ -1,0 +1,126 @@
+package com.xinxin.wotplus.activity;
+
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+
+import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.adapter.XvmTankTopAdapter;
+import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.model.XvmTankTopAll;
+import com.xinxin.wotplus.model.XvmTankTopVO;
+import com.xinxin.wotplus.network.Network;
+import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
+import com.xinxin.wotplus.util.mapper.XvmTankTopSortMapper;
+import com.xinxin.wotplus.util.mapper.XvmTankTopToVoMapper;
+import com.xinxin.wotplus.widget.FireWotProgressDialog;
+
+import java.util.List;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
+import rx.schedulers.Schedulers;
+
+/**
+ * Created by xinxin on 2016/6/21.
+ * 坦克榜单Activity
+ */
+public class AtyXvmTankTop extends BaseActivity {
+
+    @BindView(R.id.xvm_tanktop_appbar)
+    AppBarLayout xvm_tanktop_appbar;
+    @BindView(R.id.xvm_tanktop_toolbar)
+    Toolbar xvm_tanktop_toolbar;
+    @BindView(R.id.recyclerview_xvm_tanktop)
+    RecyclerView recyclerview_xvm_tanktop;
+
+    private FireWotProgressDialog firWotProgressDialog;
+    private XvmTankTopAdapter adapter;
+
+
+    Observer<XvmTankTopAll> tankTopObserver = new Observer<XvmTankTopAll>() {
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e("tank", e.getMessage(), e);
+            Snackbar.make(recyclerview_xvm_tanktop, "获取坦克榜单出错！", Snackbar.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onNext(XvmTankTopAll all) {
+
+            adapter = new XvmTankTopAdapter(AtyXvmTankTop.this, all);
+
+            recyclerview_xvm_tanktop.setAdapter(adapter);
+            firWotProgressDialog.dismiss();
+
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_xvm_tank_top);
+        ButterKnife.bind(this);
+
+        setSupportActionBar(xvm_tanktop_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerview_xvm_tanktop.setLayoutManager(lm);
+        recyclerview_xvm_tanktop.setItemAnimator(new DefaultItemAnimator());
+
+        setTitle("坦克榜单");
+
+//        Network.getXvmjsApi()
+//                .getTankTop()
+//                .map(XvmTankTopToVoMapper.getInstance())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(tankTopObserver);
+        firWotProgressDialog = FireWotProgressDialog.createDialog(this);
+        firWotProgressDialog.show();
+
+        Observable.zip(Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
+                Network.getXvmjsApi().getTankTop().map(XvmTankTopToVoMapper.getInstance()),
+                new Func2<Map, List<XvmTankTopVO>, XvmTankTopAll>() {
+                    @Override
+                    public XvmTankTopAll call(Map map, List<XvmTankTopVO> tankTopVOs) {
+                        XvmTankTopAll all = new XvmTankTopAll();
+                        all.setTankjsmap(map);
+                        all.setTankTopVOs(tankTopVOs);
+                        return all;
+                    }
+                })
+                .map(XvmTankTopSortMapper.getInstance())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tankTopObserver);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

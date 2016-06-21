@@ -44,6 +44,7 @@
 
         <activity android:name=".activity.AtyXvmThirtyRecord" />
         <activity android:name=".activity.AtyXvmTankTable" />
+        <activity android:name=".activity.AtyXvmTankTop" />
 
 
     </application>

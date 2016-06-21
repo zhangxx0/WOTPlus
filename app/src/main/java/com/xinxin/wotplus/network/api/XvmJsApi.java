@@ -16,4 +16,7 @@ public interface XvmJsApi {
      */
     @GET("tanks.js")
     Observable<ResponseBody> getTanksjs();
+
+    @GET("tankdata/data.json")
+    Observable<ResponseBody> getTankTop();
 }
