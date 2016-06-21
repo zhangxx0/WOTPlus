@@ -30,7 +30,7 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!--<include layout="@layout/activity_xvm_tank_top_header" />-->
+        <include layout="@layout/activity_xvm_tank_top_header" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_xvm_tanktop"
