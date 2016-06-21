@@ -130,7 +130,6 @@ public class AtyXvmThirtyRecord extends BaseActivity {
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(thirtyDayObserver);
 
-
     }
 
 
