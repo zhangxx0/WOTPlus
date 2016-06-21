@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.activity.AtyXvmTankTable;
@@ -320,13 +320,22 @@ public class XvmFragment extends BaseFragment {
 
     @OnClick(R.id.xvm_factory)
     void xvm_factory_click() {
-        Toast.makeText(getActivity(), "军工中心", Toast.LENGTH_SHORT).show();
-
+        // 军功中心
+        Uri uri = Uri.parse(getString(R.string.wotjungong));
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        getActivity().startActivity(intent);
     }
 
     @OnClick(R.id.xvm_lottery)
     void xvm_lottery_click() {
-
+        // 百宝箱
+        Uri uri = Uri.parse(getString(R.string.wotbaibaoxiang));
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        getActivity().startActivity(intent);
     }
 
 
