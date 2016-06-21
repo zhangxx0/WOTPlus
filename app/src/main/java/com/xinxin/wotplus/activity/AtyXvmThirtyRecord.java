@@ -3,6 +3,8 @@ package com.xinxin.wotplus.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,10 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmThirtyDaylistAdapter;
 import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.listener.HidingScrollListener;
 import com.xinxin.wotplus.model.XvmAllInfo;
 import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.network.Network;
@@ -27,6 +33,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,6 +53,9 @@ public class AtyXvmThirtyRecord extends BaseActivity {
     Toolbar xvm_thirtydays_toolbar;
     @BindView(R.id.recyclerview_xvm_thirtydays)
     RecyclerView recyclerview_xvm_thirtydays;
+
+    @BindView(R.id.fab_tank)
+    FloatingActionButton fab_tank;
 
     private XvmAllInfo xvmAllInfoForOtherPage;
     private XvmThirtyDaylistAdapter adapter;
@@ -89,9 +99,28 @@ public class AtyXvmThirtyRecord extends BaseActivity {
         setSupportActionBar(xvm_thirtydays_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab_tank.getLayoutParams();
+        final int fabBottomMargin = lp.bottomMargin;
+
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerview_xvm_thirtydays.setLayoutManager(lm);
         recyclerview_xvm_thirtydays.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerview_xvm_thirtydays.setHasFixedSize(true);
+        recyclerview_xvm_thirtydays.addOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                fab_tank.animate()
+                        .translationY(fab_tank.getHeight() + fabBottomMargin)
+                        .setInterpolator(new AccelerateInterpolator(2))
+                        .start();
+            }
+
+            @Override
+            public void onShow() {
+                fab_tank.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            }
+        });
 
         setTitle("30日数据");
 
@@ -130,6 +159,17 @@ public class AtyXvmThirtyRecord extends BaseActivity {
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(thirtyDayObserver);
 
+    }
+
+
+    /**
+     * fab 进入坦克列表页面
+     */
+    @OnClick(R.id.fab_tank)
+    void fab_tank_click() {
+        Toast.makeText(this, "fab", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, AtyXvmActiveTank.class);
+        startActivity(intent);
     }
 
 

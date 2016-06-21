@@ -37,6 +37,7 @@ public class XvmThirtyInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
     public XvmAllInfo call(XvmAllInfo xvmAllInfo) {
 
         XvmAllInfo reXvmAllInfo = new XvmAllInfo();
+
         List<XvmMainInfo.DaylistEntity> daylist = xvmAllInfo.getXvmMainInfo().getDaylist();
         Map tankmap = xvmAllInfo.getTanks();
 
@@ -88,6 +89,7 @@ public class XvmThirtyInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
             String daydates = daydate.get(i).toString();
 
             // 使用的一个新的类，因为要加一个新的属性weight，而原先的类不能破坏
+            // 好像破坏了也没什么关系，，，2016年6月22日02:13:47
             DaylistEntityForRecent dt = new DaylistEntityForRecent();
 
             // 内循环遍历今日数据list
