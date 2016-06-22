@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Toast;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmThirtyDaylistAdapter;
@@ -167,7 +166,6 @@ public class AtyXvmThirtyRecord extends BaseActivity {
      */
     @OnClick(R.id.fab_tank)
     void fab_tank_click() {
-        Toast.makeText(this, "fab", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AtyXvmActiveTank.class);
         startActivity(intent);
     }
