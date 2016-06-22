@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.base.BaseActivity;
@@ -45,8 +44,8 @@ public class AtyXvmTankDetail extends BaseActivity {
 //    @BindView(R.id.recyclerview_xvm_tank_detail)
 //    RecyclerView recyclerview_xvm_tank_detail;
 
-    @BindView(R.id.tank_detail_battle)
-    TextView tank_detail_battle;
+//    @BindView(R.id.tank_detail_battle)
+//    TextView tank_detail_battle;
 
     String tankId = "";
     XvmActiveTanks xvmActiveTanks;
@@ -75,7 +74,7 @@ public class AtyXvmTankDetail extends BaseActivity {
             TankInfo tank = (TankInfo) tankDetail.getTankDict().get(tankId);
             XvmMainInfo.TanklistEntity tankInfo = (XvmMainInfo.TanklistEntity) tankDetail.getTankmap().get(tankId);
 
-            tank_detail_battle.setText("战斗场次："+tankInfo.getBattles()+"");
+//            tank_detail_battle.setText("战斗场次："+tankInfo.getBattles()+"");
 
             firWotProgressDialog.dismiss();
         }

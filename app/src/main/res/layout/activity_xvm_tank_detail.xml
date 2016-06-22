@@ -23,34 +23,516 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/cardview_margin_top"
-        android:layout_marginLeft="@dimen/cardview_margin_edge"
-        android:layout_marginRight="@dimen/cardview_margin_edge"
-        android:layout_marginTop="@dimen/cardview_margin"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardCornerRadius="3dp"
-        card_view:cardElevation="2dp"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/tank_detail_battle"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="战斗明细"
-            android:gravity="center"
-            android:textColor="@color/bg_blue"/>
-        
-    </android.support.v7.widget.CardView>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/cardview_margin_top"
+            android:layout_marginLeft="@dimen/cardview_margin_edge"
+            android:layout_marginRight="@dimen/cardview_margin_edge"
+            android:layout_marginTop="@dimen/cardview_margin"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="2dp">
 
-    <!--战绩列表-->
-    <!--<android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_xvm_tank_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/linearlayout_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/linearlayout_margin"
+                    android:gravity="center"
+                    android:text="数据统计"
+                    android:textColor="@color/bg_blue"
+                    android:textSize="24sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginBottom="@dimen/linearlayout_margin"
+                    android:layout_marginLeft="@dimen/linearlayout_margin"
+                    android:layout_marginRight="@dimen/linearlayout_margin"
+                    android:background="@color/state_item_pressed_2" />
+
+                <!--1-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:id="@+id/tank_detail_battle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="单野场次:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="389"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="单野胜率:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="50.4%"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--2-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="组队场次:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="171"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="组队胜率"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="57.3%"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--3-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="场均战力:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1062"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="近期战力:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1101"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--4-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="场均伤害:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2311"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="场均击杀"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1.38"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--5-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="场均点亮:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1.93"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="场均助攻"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="761"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--6-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="场均占领:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0.61"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="场均护旗:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0.96"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--战斗嘉奖1-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/linearlayout_margin_less"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
+                            android:layout_marginRight="@dimen/linearlayout_margin_more"
+                            android:src="@drawable/ic_mark_master_big" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/linearlayout_margin_large"
+                            android:text="@string/class_ace"
+                            android:textColor="@color/mark_master"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="100"
+                            android:textColor="@color/mark_master" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
+                            android:layout_marginRight="@dimen/linearlayout_margin_more"
+                            android:src="@drawable/ic_mark_first_big" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/linearlayout_margin_large"
+                            android:text="@string/class_1"
+                            android:textColor="@color/mark_first"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="100"
+                            android:textColor="@color/mark_first" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--战斗嘉奖2-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/linearlayout_margin_less"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
+                            android:layout_marginRight="@dimen/linearlayout_margin_more"
+                            android:src="@drawable/ic_mark_second_big" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/linearlayout_margin_large"
+                            android:text="@string/class_2"
+                            android:textColor="@color/mark_second"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="100"
+                            android:textColor="@color/mark_second" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
+                            android:layout_marginRight="@dimen/linearlayout_margin_more"
+                            android:src="@drawable/ic_mark_third_big" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/linearlayout_margin_large"
+                            android:text="@string/class_3"
+                            android:textColor="@color/mark_third"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="100"
+                            android:textColor="@color/mark_third" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/linearlayout_margin"
+                    android:gravity="center"
+                    android:text="最高纪录"
+                    android:textColor="@color/bg_blue"
+                    android:textSize="24sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginBottom="@dimen/linearlayout_margin"
+                    android:layout_marginLeft="@dimen/linearlayout_margin"
+                    android:layout_marginRight="@dimen/linearlayout_margin"
+                    android:background="@color/state_item_pressed_2" />
+
+                <!--1-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="最高伤害:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="6920"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="最高击杀:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="6"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+                <!--2-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+                    android:layout_marginLeft="@dimen/linearlayout_margin_less">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/linearlayout_margin"
+                        android:layout_weight="1"
+                        android:text="最高助攻:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="4528"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="最高经验:"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1228"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <!--战绩列表-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_xvm_tank_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
