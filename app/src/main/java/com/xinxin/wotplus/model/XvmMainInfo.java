@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -255,6 +256,17 @@ public class XvmMainInfo implements Serializable {
     }
 
     public static class TanklistEntity implements Serializable {
+
+        private List<DaylistEntity> tankdaylist = new ArrayList<>();
+
+        public List<DaylistEntity> getTankdaylist() {
+            return tankdaylist;
+        }
+
+        public void setTankdaylist(List<DaylistEntity> tankdaylist) {
+            this.tankdaylist = tankdaylist;
+        }
+
         private int mark4;
         private int mark3;
         private int teambattles;
