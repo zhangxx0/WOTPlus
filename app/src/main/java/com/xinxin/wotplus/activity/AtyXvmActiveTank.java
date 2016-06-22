@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.xinxin.wotplus.R;
+import com.xinxin.wotplus.adapter.XvmActiveTanksAdapter;
 import com.xinxin.wotplus.base.BaseActivity;
 import com.xinxin.wotplus.model.XvmActiveTanks;
 import com.xinxin.wotplus.model.XvmMainInfo;
@@ -43,7 +44,7 @@ public class AtyXvmActiveTank extends BaseActivity {
     RecyclerView recyclerview_xvm_active_tank;
 
     private FireWotProgressDialog firWotProgressDialog;
-
+    private XvmActiveTanksAdapter adapter;
 
     Observer<XvmActiveTanks> activeTankObserver = new Observer<XvmActiveTanks>() {
         @Override
@@ -60,6 +61,10 @@ public class AtyXvmActiveTank extends BaseActivity {
         @Override
         public void onNext(XvmActiveTanks activetanks) {
             Log.d("zzz", activetanks.toString());
+
+            adapter = new XvmActiveTanksAdapter(AtyXvmActiveTank.this, activetanks);
+            recyclerview_xvm_active_tank.setAdapter(adapter);
+
             firWotProgressDialog.dismiss();
         }
     };
