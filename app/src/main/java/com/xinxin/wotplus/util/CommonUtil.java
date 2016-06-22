@@ -266,11 +266,12 @@ public class CommonUtil {
 
     /**
      * 坦克类型
+     *
      * @param type
      * @return
      */
     public static String getTankType(String type) {
-        switch(type){
+        switch (type) {
             case "lightTank":
                 return "LT";
             case "mediumTank":
@@ -288,11 +289,12 @@ public class CommonUtil {
 
     /**
      * 坦克国家
+     *
      * @param country
      * @return
      */
     public static String getTankCountry(String country) {
-        switch(country){
+        switch (country) {
             case "ussr":
                 return "苏联";
             case "usa":
@@ -312,6 +314,102 @@ public class CommonUtil {
             default:
                 return country;
         }
+    }
+
+    /**
+     * 获取坦克国旗图片路径
+     *
+     * @param country
+     * @return
+     */
+    public static String getTankCountryIcon(String country) {
+        switch (country) {
+            case "ussr":
+                return "http://rank.kongzhong.com/Data/icons/nations/dussr.png";
+            case "usa":
+                return "http://rank.kongzhong.com/Data/icons/nations/dusa.png";
+            case "germany":
+                return "http://rank.kongzhong.com/Data/icons/nations/dgermany.png";
+            case "uk":
+                return "http://rank.kongzhong.com/Data/icons/nations/duk.png";
+            case "china":
+                return "http://rank.kongzhong.com/Data/icons/nations/dchina.png";
+            case "japan":
+                return "http://rank.kongzhong.com/Data/icons/nations/djapan.png";
+            case "czech":
+                return "http://rank.kongzhong.com/Data/icons/nations/dczech.png";
+            case "france":
+                return "http://rank.kongzhong.com/Data/icons/nations/dfrance.png";
+            default:
+                return "http://rank.kongzhong.com/Data/icons/nations/dchina.png";
+        }
+    }
+
+    /**
+     * 获取坦克图标
+     * @param country
+     * @param name
+     * @return http://182.18.61.50/Data/icons/vehicle/france-Bat_Chatillon25t.png
+     */
+    public static String getTankIcon(String country, String name) {
+        String base = "http://182.18.61.50/Data/icons/vehicle/";
+        return base + country + "-" + name + ".png";
+    }
+
+    /**
+     * 获取坦克等级图标
+     * @param level
+     * @return
+     */
+    public static String getTankLevelIcon(String level) {
+        switch (level) {
+            case "level1":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_1.png";
+            case "level2":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_2.png";
+            case "level3":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_3.png";
+            case "level4":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_4.png";
+            case "level5":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_5.png";
+            case "level6":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_6.png";
+            case "level7":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_7.png";
+            case "level8":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_8.png";
+            case "level9":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_9.png";
+            case "level10":
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_10.png";
+
+            default:
+                return "http://rank.kongzhong.com/Data/icons/filters/levels/level_10.png";
+        }
+    }
+
+    /**
+     * 获取坦克类型图标
+     * @param type
+     * @return
+     */
+    public static String getTankTypeIcon(String type) {
+        switch (type) {
+            case "lightTank":
+                return "http://rank.kongzhong.com/Data/icons/filters/tanks/lightTank.png";
+            case "mediumTank":
+                return "http://rank.kongzhong.com/Data/icons/filters/tanks/mediumTank.png";
+            case "heavyTank":
+                return "http://rank.kongzhong.com/Data/icons/filters/tanks/heavyTank.png";
+            case "AT-SPG":
+                return "http://rank.kongzhong.com/Data/icons/filters/tanks/AT-SPG.png";
+            case "SPG":
+                return "http://rank.kongzhong.com/Data/icons/filters/tanks/SPG.png";
+            default:
+                return "http://rank.kongzhong.com/Data/icons/filters/tanks/heavyTank.png";
+        }
+
     }
 
     /**

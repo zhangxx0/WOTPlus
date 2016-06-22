@@ -22,8 +22,7 @@
         <!--上半部分：坦克图标类-->
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="160dp"
@@ -68,15 +67,15 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true">
-                    
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/at_master"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/at_master"/>
+                        android:src="@drawable/at_master" />
 
                     <ImageView
                         android:id="@+id/at_star"
@@ -93,14 +92,59 @@
         <!--下半部分：坦克信息类-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/at_tank_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/linearlayout_margin_less_more"
+                android:layout_marginTop="@dimen/linearlayout_margin_less_more"
                 android:gravity="center"
-                android:text="差涤纶 25T" />
+                android:text="查狄伦 25t"
+                android:textColor="@color/bg_blue" />
+
+            <TextView
+                android:id="@+id/at_tank_battle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/linearlayout_margin_less_more"
+                android:gravity="center"
+                android:text="场次：5689"
+                android:textColor="@color/text_shadow"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/linearlayout_margin_less_more"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="胜率：" />
+
+                <TextView
+                    android:id="@+id/at_tank_wins"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="73.5%"
+                    android:textColor="@color/yellow"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/at_tank_effect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="效率: 199.8%"
+                android:textColor="@color/green"/>
 
         </LinearLayout>
 
