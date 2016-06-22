@@ -64,8 +64,9 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         // (4)类型
         Glide.with(mContext).load(CommonUtil.getTankTypeIcon(tank.getEntype())).centerCrop().into(((ActiveTanksViewHolder) holder).at_type);
         // (5)标识
-        int gunmarkDraw = R.drawable.starlv1;
+        int gunmarkDraw = R.drawable.star0;
         if (ti.getGunmark() == 1) {
+            gunmarkDraw = R.drawable.starlv1;
         } else if (ti.getGunmark() == 2) {
             gunmarkDraw = R.drawable.starlv2;
         } else if (ti.getGunmark() == 3) {
@@ -73,7 +74,7 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
         Glide.with(mContext).load(gunmarkDraw).centerCrop().into(((ActiveTanksViewHolder) holder).at_star);
         // (6)特级
-        int m = 0;
+        int m = R.drawable.master0;
         if (ti.getMark4() > 0) {
             m = 4;
         } else if (ti.getMark3() > 0) {
@@ -83,7 +84,7 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else if (ti.getMark1() > 0) {
             m = 1;
         }
-        int tankmarkDraw = R.drawable.master4;
+        int tankmarkDraw = 0;
         if (m == 1) {
             tankmarkDraw = R.drawable.master1;
         } else if (m == 2) {
@@ -91,6 +92,7 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else if (m == 3) {
             tankmarkDraw = R.drawable.master3;
         } else if (m == 4) {
+            tankmarkDraw = R.drawable.master4;
         }
         Glide.with(mContext).load(tankmarkDraw).centerCrop().into(((ActiveTanksViewHolder) holder).at_master);
 
