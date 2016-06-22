@@ -35,6 +35,18 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private List<XvmMainInfo.TanklistEntity> sortedTanks;
     private Map tanksmap;
 
+    public interface OnItemClickLitener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
+    }
+
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
     public XvmActiveTanksAdapter(Context mContext, XvmActiveTanks activeTanks) {
         this.mContext = mContext;
         layoutInflater = LayoutInflater.from(mContext);
@@ -49,9 +61,9 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
-        XvmMainInfo.TanklistEntity ti = sortedTanks.get(position);
+        final XvmMainInfo.TanklistEntity ti = sortedTanks.get(position);
         TankInfo tank = (TankInfo) tanksmap.get(ti.getId().getVehicleTypeCd() + "");
 
         // 上半部分图片信息
@@ -64,6 +76,7 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         // (4)类型
         Glide.with(mContext).load(CommonUtil.getTankTypeIcon(tank.getEntype())).centerCrop().into(((ActiveTanksViewHolder) holder).at_type);
         // (5)标识
+        // 占位图片需要更换为透明的
         int gunmarkDraw = R.drawable.star0;
         if (ti.getGunmark() == 1) {
             gunmarkDraw = R.drawable.starlv1;
@@ -74,6 +87,7 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
         Glide.with(mContext).load(gunmarkDraw).centerCrop().into(((ActiveTanksViewHolder) holder).at_star);
         // (6)特级
+        // 占位图片需要更换为透明的
         int m = R.drawable.master0;
         if (ti.getMark4() > 0) {
             m = 4;
@@ -101,14 +115,25 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         DecimalFormat df = new DecimalFormat("0.0");
 
         ((ActiveTanksViewHolder) holder).at_tank_name.setText(tank.getAlias());
-        ((ActiveTanksViewHolder) holder).at_tank_battle.setText("场次："+ti.getBattles());
+        ((ActiveTanksViewHolder) holder).at_tank_battle.setText("场次：" + ti.getBattles());
         float wins = ti.getWins() * 100 / ti.getBattles();
         ((ActiveTanksViewHolder) holder).at_tank_wins.setText(df.format(wins) + "%");
         ((ActiveTanksViewHolder) holder).at_tank_wins.setTextColor(CommonUtil.getWRClass(wins));
         double eff = (ti.getTotalpower() / ti.getBattles() + ti.getMovingpower()) / 2 + ti.getWinpower() / ti.getBattles();
         double wei = getTankWeight(tank);
-        ((ActiveTanksViewHolder) holder).at_tank_effect.setText("效率："+df.format((float) eff * 100 / wei) + "%");
+        ((ActiveTanksViewHolder) holder).at_tank_effect.setText("效率：" + df.format((float) eff * 100 / wei) + "%");
 
+
+        // 如果设置了回调，则设置点击事件
+        if (mOnItemClickLitener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                }
+            });
+        }
 
     }
 

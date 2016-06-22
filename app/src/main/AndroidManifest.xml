@@ -46,6 +46,7 @@
         <activity android:name=".activity.AtyXvmTankTable" />
         <activity android:name=".activity.AtyXvmTankTop" />
         <activity android:name=".activity.AtyXvmActiveTank" />
+        <activity android:name=".activity.AtyXvmTankDetail" />
 
 
     </application>

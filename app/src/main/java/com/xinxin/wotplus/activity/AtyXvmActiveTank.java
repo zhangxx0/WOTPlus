@@ -1,5 +1,6 @@
 package com.xinxin.wotplus.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
@@ -7,7 +8,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmActiveTanksAdapter;
@@ -20,6 +22,7 @@ import com.xinxin.wotplus.util.mapper.ActiveTanksMapper;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.widget.FireWotProgressDialog;
 
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -53,16 +56,40 @@ public class AtyXvmActiveTank extends BaseActivity {
 
         @Override
         public void onError(Throwable e) {
-            Log.e("tank", e.getMessage(), e);
-            Snackbar.make(recyclerview_xvm_active_tank, "获取数据出错！", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(recyclerview_xvm_active_tank, "获取活跃战车数据出错！", Snackbar.LENGTH_LONG).show();
             firWotProgressDialog.dismiss();
         }
 
         @Override
-        public void onNext(XvmActiveTanks activetanks) {
-            Log.d("zzz", activetanks.toString());
+        public void onNext(final XvmActiveTanks activetanks) {
 
             adapter = new XvmActiveTanksAdapter(AtyXvmActiveTank.this, activetanks);
+
+            final List<XvmMainInfo.TanklistEntity> sortedTanks = activetanks.getTanklistEntities();
+            adapter.setOnItemClickLitener(new XvmActiveTanksAdapter.OnItemClickLitener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    // 点击进入该战车战斗明细页面
+                    XvmMainInfo.TanklistEntity tank = sortedTanks.get(position);
+
+                    String tankId = tank.getId().getVehicleTypeCd()+"";
+
+                    Intent intent = new Intent(AtyXvmActiveTank.this, AtyXvmTankDetail.class);
+                    if (tank != null) {
+                        intent.putExtra(AtyXvmTankDetail.TANKID, tankId);
+                        intent.putExtra(AtyXvmTankDetail.XVMACTIVETANKS, activetanks);
+
+                    }
+                    startActivity(intent);
+
+                }
+
+                @Override
+                public void onItemLongClick(View view, int position) {
+                }
+            });
+
+
             recyclerview_xvm_active_tank.setAdapter(adapter);
 
             firWotProgressDialog.dismiss();
@@ -113,5 +140,16 @@ public class AtyXvmActiveTank extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(activeTankObserver);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
