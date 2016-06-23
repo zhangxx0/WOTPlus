@@ -75,7 +75,6 @@ public class AtyXvmThirtyRecord extends BaseActivity {
         @Override
         public void onNext(XvmAllInfo xvmAllInfo) {
             Map daymap = xvmAllInfo.getDaymap();
-            Log.d("列表数据源", String.valueOf(daymap));
 //            for (Object key : daymap.keySet()) {
 //                Object value = daymap.get(key);
 //                System.out.println("Key = " + key + ", Value = " + value);

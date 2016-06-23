@@ -109,16 +109,12 @@ public class AtyXvmTankDetail extends BaseActivity {
 
         @Override
         public void onError(Throwable e) {
-            Log.d("XXXXXX", e.getMessage());
             Snackbar.make(recyclerview_xvm_tank_detail, "获取30日数据出错！", Snackbar.LENGTH_LONG).show();
             firWotProgressDialog.dismiss();
         }
 
         @Override
         public void onNext(List<XvmMainInfo.DaylistEntity> dayinfolist) {
-
-            Log.d("+++", String.valueOf(dayinfolist.size()));
-            Log.d("+++", dayinfolist.toString());
 
             XvmTankDetail tankDetail = reBuildDataForTankDetail(dayinfolist, xvmActiveTanks);
 
@@ -206,26 +202,18 @@ public class AtyXvmTankDetail extends BaseActivity {
         // 构建tankmap
         for (int i = 0; i < tankinfolist.size(); i++) {
             XvmMainInfo.TanklistEntity ti = tankinfolist.get(i);
-
             tankmap.put(ti.getId().getVehicleTypeCd() + "", ti);
         }
-        Log.d("+++", tankmap.toString());
 
         // daylist与tankmap对应
         for (int i = 0; i < dayinfolist.size(); i++) {
             XvmMainInfo.DaylistEntity day = dayinfolist.get(i);
 
             if (tankmap.containsKey(day.getId().getVehicleTypeCd() + "")) {
-
                 XvmMainInfo.TanklistEntity temptank = (XvmMainInfo.TanklistEntity) tankmap.get(day.getId().getVehicleTypeCd() + "");
-
                 temptank.getTankdaylist().add(day);
-
             }
         }
-
-        Log.d("++++", String.valueOf(tankmap.size()));
-        Log.d("++++", tankmap.toString());
 
         tankDetail.setTankDict(tankDictMap);
         tankDetail.setTankmap(tankmap);
