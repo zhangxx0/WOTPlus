@@ -494,6 +494,26 @@ public class CommonUtil {
     }
 
     /**
+     * 战车战斗明细中日战斗数据排序
+     * @param daylist
+     * @return
+     */
+    public static List<XvmMainInfo.DaylistEntity> dayListSortByDate(List<XvmMainInfo.DaylistEntity> daylist) {
+
+        Collections.sort(daylist, new Comparator<XvmMainInfo.DaylistEntity>() {
+            @Override
+            public int compare(XvmMainInfo.DaylistEntity d1, XvmMainInfo.DaylistEntity d2) {
+                String date1 = formatDate(d1.getInsert_date());
+                String date2 = formatDate(d2.getInsert_date());
+                int j = date2.compareTo(date1);
+                return j;
+            }
+        });
+
+        return daylist;
+    }
+
+    /**
      * 坦克榜单排序
      *
      * @param tankTopVOs
