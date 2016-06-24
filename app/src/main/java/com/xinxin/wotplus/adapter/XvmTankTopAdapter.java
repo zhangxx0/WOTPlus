@@ -60,8 +60,8 @@ public class XvmTankTopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ((TankTopViewholder) holder).xvm_tanktop_type.setText(CommonUtil.getTankType(tank.getEntype()));
         ((TankTopViewholder) holder).xvm_tanktop_country.setText(CommonUtil.getTankCountry(tank.getEncountry()));
 
-        ((TankTopViewholder) holder).xvm_tanktop_wins.setText(top.getWinrate().substring(0, top.getWinrate().length() - 1) + "%");
-        ((TankTopViewholder) holder).xvm_tanktop_wins.setTextColor(CommonUtil.getWRClass(Float.parseFloat(top.getWinrate())));
+        ((TankTopViewholder) holder).xvm_tanktop_wins.setText(Math.round(Double.valueOf(top.getWinrate())*100/100.0) + "%");
+        ((TankTopViewholder) holder).xvm_tanktop_wins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(Float.parseFloat(top.getWinrate()))));
 
         ((TankTopViewholder) holder).xvm_tanktop_effect.setText((int) ((Double.valueOf(top.getDaypower()) + Double.valueOf(top.getWinpower())) * 100 / CommonUtil.getTankWeight(tank)) + "%");
         ((TankTopViewholder) holder).xvm_tanktop_kill.setText(top.getFrags());
