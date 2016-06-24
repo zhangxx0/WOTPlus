@@ -148,7 +148,6 @@ public class XvmFragment extends BaseFragment {
 
             @Override
             public void onNext(XvmAllInfo xvmAllInfo) {
-                Log.d("xvm", xvmAllInfo.toString());
                 xvmAllInfoForOtherPage = xvmAllInfo;
                 xvmMainInfoForOtherPage = xvmAllInfo.getXvmMainInfo();
 

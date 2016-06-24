@@ -1,7 +1,5 @@
 package com.xinxin.wotplus.util.mapper;
 
-import android.util.Log;
-
 import com.xinxin.wotplus.model.DaylistEntityForRecent;
 import com.xinxin.wotplus.model.TankInfo;
 import com.xinxin.wotplus.model.XvmAllInfo;
@@ -25,7 +23,7 @@ import rx.functions.Func1;
 
 /**
  * Created by xinxin on 2016/5/23.
- *
+ * <p/>
  * 为 XvmAllInfo 添加近日数据 map
  */
 public class XvmAllInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
@@ -115,7 +113,7 @@ public class XvmAllInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
         });
 
         for (int i = 0; i < daydate.size(); i++) {
-            Log.d("daydate", daydate.get(i).toString());
+            // Log.d("daydate", daydate.get(i).toString());
             String daydates = daydate.get(i).toString();
 
             // 使用的一个新的类，因为要加一个新的属性weight，而原先的类不能破坏
@@ -183,14 +181,18 @@ public class XvmAllInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
 
         // 为 XvmAllInfo 添加近日数据 map
         reXvmAllInfo.setDaymap(daymaps);
-        System.out.println("近日战绩map：" + daymaps);
+        // System.out.println("近日战绩map：" + daymaps);
 
         /**
          * 处理五个主要图标的信息
          */
         XvmMainInfo xvmMainInfo = xvmAllInfo.getXvmMainInfo();
-        List<XvmMainInfo.TanklistEntity> tanklist = xvmMainInfo.getTanklist();
         Map tanksMap = xvmAllInfo.getTanks();
+
+        // 未排序的
+        // List<XvmMainInfo.TanklistEntity> tanklist = xvmMainInfo.getTanklist();
+        // 排序的(活跃战力计算需要)
+        List<XvmMainInfo.TanklistEntity> tanklist = CommonUtil.tanksort(xvmMainInfo.getTanklist(),tanksMap);
 
         XvmMainPageVO xvmMainPageVO = new XvmMainPageVO();
         xvmMainPageVO.setLable(xvmMainInfo.getPlayer().getName());
@@ -202,7 +204,7 @@ public class XvmAllInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
         float winrate = (float) 0.0;
         // 胜率 56 52 48 0
         if (battles > 0) {
-            winrate = (float)xvmMainInfo.getPlayer().getWins()*100/battles;
+            winrate = (float) xvmMainInfo.getPlayer().getWins() * 100 / battles;
         }
         xvmMainPageVO.setWinrate(winrate);
 
@@ -222,19 +224,33 @@ public class XvmAllInfoToDayMap implements Func1<XvmAllInfo, XvmAllInfo> {
             map.put(vehicleId, tanklist.get(i));
 
             // 计算活跃战力
+            // 需要排序后计算
             float dt = tanklist.get(i).getActiveTime().getTime() - new Date().getTime();
             if (dt > 0 && tanklist.get(i).getBattles() > 100) {
                 activetime += dt;
                 activelevel += dt * ((TankInfo) tanksMap.get(vehicleId + "")).getLevel();
                 activecount++;
                 if (activecount <= 10) {
-                    activepower += ((float)ti.getTotalpower() / ti.getBattles() + (float)ti.getMovingpower()) / 2
-                            + (float)ti.getWinpower() / ti.getBattles();
+                    activepower += ((float) ti.getTotalpower() / ti.getBattles() + (float) ti.getMovingpower()) / 2
+                            + (float) ti.getWinpower() / ti.getBattles();
+
+                    try {
+                        // 活跃战力的title，鼠标指向时显示,app未展示；
+                        TankInfo tank = (TankInfo) tanksMap.get(ti.getId().getVehicleTypeCd()+"");
+                        float power = ((float) ti.getTotalpower() / ti.getBattles() + (float) ti.getMovingpower()) / 2
+                                + (float) ti.getWinpower() / ti.getBattles();
+                        String activetitle = tank.getAlias() + "——战力:" + power + ",场次:" + ti.getBattles() + "\n";
+
+                        // Log.d("power", activetitle);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
 
         }
-        System.out.println("活跃战力为：" + activepower);
+        // System.out.println("活跃战力为：" + activepower);
         xvmMainPageVO.setActivepower(activepower);
         xvmMainPageVO.setActivecount(activecount);
 
