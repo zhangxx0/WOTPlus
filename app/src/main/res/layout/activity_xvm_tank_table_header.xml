@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/linearlayout_margin_less"
+    android:layout_marginBottom="@dimen/linearlayout_margin_less"
     android:orientation="horizontal">
 
     <TextView
@@ -11,6 +12,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:singleLine="true"
+        android:textColor="@color/bg_blue"
         android:text="车名" />
 
 
@@ -20,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="标记" />
 
     <TextView
@@ -28,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="等级" />
 
     <TextView
@@ -36,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="场次" />
 
     <TextView
@@ -44,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="胜率" />
 
     <TextView
@@ -52,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="效率" />
 
     <TextView
@@ -60,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="击杀" />
 
     <TextView
@@ -68,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="伤害" />
 
     <TextView
@@ -76,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/bg_blue"
         android:text="助攻" />
 
 

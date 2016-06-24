@@ -81,7 +81,6 @@ public class AtyXvmTankTable extends BaseActivity {
 
         @Override
         public void onNext(XvmAllInfo xvmAllInfo) {
-            Log.d("列表数据源", String.valueOf(xvmAllInfo));
 
             adapter = new XvmTankTableAdapter(AtyXvmTankTable.this, xvmAllInfo);
 

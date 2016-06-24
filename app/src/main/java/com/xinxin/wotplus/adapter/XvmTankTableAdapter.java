@@ -13,6 +13,7 @@ import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.TankInfo;
 import com.xinxin.wotplus.model.XvmAllInfo;
 import com.xinxin.wotplus.model.XvmMainInfo;
+import com.xinxin.wotplus.util.CommonUtil;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -60,7 +61,12 @@ public class XvmTankTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((TankTableViewHolder) holder).xvm_tanktable_vehicle_name.setText(tankInfo.getAlias());
         ((TankTableViewHolder) holder).xvm_tanktable_level.setText(tankInfo.getLevel() + "");
 
+        // 为什么用switch判断填充图片造成填充混乱》？
+        // 不是switch的锅，之前case0没有设置占位图，不知道怎么就乱了
         switch (ti.getGunmark()) {
+            case 0:
+                Glide.with(mContext).load(R.drawable.star00).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
+                break;
             case 1:
                 Glide.with(mContext).load(R.drawable.starlv1).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
                 break;
@@ -73,11 +79,12 @@ public class XvmTankTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         ((TankTableViewHolder) holder).xvm_tanktable_battle.setText(ti.getBattles() + "");
-        ((TankTableViewHolder) holder).xvm_tanktable_wins.setText(df2.format((float) ti.getWins() * 100 / ti.getBattles()) + "%");
+        ((TankTableViewHolder) holder).xvm_tanktable_wins.setText(df.format((float) ti.getWins() * 100 / ti.getBattles()) + "%");
+        ((TankTableViewHolder) holder).xvm_tanktable_wins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass((float) ti.getWins() * 100 / ti.getBattles())));
 
         double eff = (ti.getTotalpower() / ti.getBattles() + ti.getMovingpower()) / 2 + ti.getWinpower() / ti.getBattles();
         double wei = getTankWeight(tankInfo);
-        ((TankTableViewHolder) holder).xvm_tanktable_effect.setText(df.format((float) eff * 100 / wei) + "");
+        ((TankTableViewHolder) holder).xvm_tanktable_effect.setText(df2.format((float) eff * 100 / wei) + "%");
         ((TankTableViewHolder) holder).xvm_tanktable_kill.setText(df.format((float) ti.getFrags() / ti.getBattles()) + "");
         ((TankTableViewHolder) holder).xvm_tanktable_damage.setText(ti.getDamage() / ti.getBattles() + "");
         ((TankTableViewHolder) holder).xvm_tanktable_light.setText(ti.getAssist() / ti.getBattles() + "");

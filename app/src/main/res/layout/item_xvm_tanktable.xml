@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/linearlayout_margin_less"
+    android:layout_marginBottom="@dimen/linearlayout_margin_less"
+    android:background="@drawable/recyclerview_bg"
     android:orientation="horizontal">
 
     <TextView
@@ -19,7 +21,6 @@
         android:id="@+id/xvm_tanktable_mark"
         android:layout_width="30dp"
         android:layout_height="20dp"
-        android:src="@drawable/starlv3"
         />
 
     <TextView
