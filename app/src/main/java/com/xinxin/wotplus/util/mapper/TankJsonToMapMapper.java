@@ -103,7 +103,17 @@ public class TankJsonToMapMapper implements Func1<ResponseBody, TankAchieveNew> 
                             if (achieveMap.containsKey(achieveName)) {
                                 // 设置勋章数目
                                 achievements.get(j).setNums(achieveMap.get(achieveName) + "");
-                                rebuildTankAchieveList.add(achievements.get(j));
+                                if (achievements.get(j).getNumber() != null) {
+                                    Double number = (Double) achievements.get(j).getNumber();
+                                    if (number.intValue() == Integer.valueOf(achieveMap.get(achieveName)+"") &&
+                                            !"markOfMastery".equals(achievements.get(j).getName())) {
+
+                                        rebuildTankAchieveList.add(achievements.get(j));
+
+                                    }
+                                } else {
+                                    rebuildTankAchieveList.add(achievements.get(j));
+                                }
                                 // 重组之后的勋章数量好像有问题，比成就map还多！
                             }
                         }
