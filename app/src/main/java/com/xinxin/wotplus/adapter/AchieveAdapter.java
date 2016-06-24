@@ -83,7 +83,7 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
                     // 成就的描述信息
-                    String description = achieve.getLocalization().getDescription();
+                    String description = achieve.getLocalization().getDescription() +"\n"+ achieve.getLocalization().getCondition();
                     mOnItemClickLitener.onItemClick(holder.itemView, pos, description);
                 }
             });

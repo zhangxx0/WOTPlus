@@ -57,6 +57,7 @@ public class GradeFragment extends BaseFragment {
             @Override
             public void onError(Throwable e) {
                 Snackbar.make(getView(), "获取等级信息出错！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
             }
 
             @Override

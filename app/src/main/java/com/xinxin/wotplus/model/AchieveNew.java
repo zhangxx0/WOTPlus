@@ -88,10 +88,10 @@ public class AchieveNew {
     public static class AchievementsEntity {
 
         /**
-         * 手动添加，勋章数量
+         * 手动添加，勋章数量，设置初始值为0
          * 2016年6月19日21:57:02
          */
-        private String nums;
+        private String nums = "0";
 
         private String block;
         /**

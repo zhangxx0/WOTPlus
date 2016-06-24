@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.AchieveJsonToMapMapper;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import java.util.List;
 
@@ -36,6 +36,7 @@ public class AchieveMentFragment extends BaseFragment {
 
     private RecyclerView recyclerview_achieve;
     private AchieveMentAdapter adapter;
+    private DeathWheelProgressDialog deathWheelProgressDialog;
     Woter woter = new Woter();
 
     @Nullable
@@ -61,8 +62,8 @@ public class AchieveMentFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("XXX", e.getMessage());
                 Snackbar.make(getView(), "获取成就信息错误！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
             }
 
             @Override
@@ -74,8 +75,12 @@ public class AchieveMentFragment extends BaseFragment {
                 // RecyclerView 动画
                 SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_achieve);
                 recyclerview_achieve.setAdapter(animatorAdapter);
+                deathWheelProgressDialog.dismiss();
             }
         };
+
+        deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
+        deathWheelProgressDialog.show();
 
         String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
 
