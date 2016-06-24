@@ -27,6 +27,9 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private int[] tanksTypesImgs = {R.drawable.filter_ic_light, R.drawable.filter_ic_medium, R.drawable.filter_ic_heavy,
             R.drawable.filter_ic_td, R.drawable.filter_ic_sau};
 
+    private int[] tanksTypesImgs0 = {R.drawable.filter_ic_light2, R.drawable.filter_ic_medium2, R.drawable.filter_ic_heavy2,
+            R.drawable.filter_ic_td2, R.drawable.filter_ic_sau2};
+
     List<TanksType> tanksTypes = new ArrayList<TanksType>();
 
     public interface OnItemClickLitener {

@@ -3,6 +3,7 @@ package com.xinxin.wotplus.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -50,6 +51,8 @@ public class AtyXvmThirtyRecord extends BaseActivity {
     AppBarLayout xvm_thirtydays_appbar;
     @BindView(R.id.xvm_thirtydays_toolbar)
     Toolbar xvm_thirtydays_toolbar;
+    @BindView(R.id.xvm_30_collapsing_toolbar)
+    CollapsingToolbarLayout xvm_30_collapsing_toolbar;
     @BindView(R.id.recyclerview_xvm_thirtydays)
     RecyclerView recyclerview_xvm_thirtydays;
 
@@ -120,7 +123,8 @@ public class AtyXvmThirtyRecord extends BaseActivity {
             }
         });
 
-        setTitle("30日数据");
+        xvm_30_collapsing_toolbar.setTitle("30日数据");
+//        setTitle("30日数据");
 
         Intent intent = this.getIntent();
         // 未使用

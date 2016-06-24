@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:layout_marginTop="@dimen/linearlayout_margin_less"
-    android:layout_marginBottom="@dimen/linearlayout_margin_less"
-    android:background="@drawable/recyclerview_bg"
-    android:orientation="horizontal">
+    >
 
     <TextView
         android:id="@+id/xvm_30_daylist_date"
@@ -13,23 +12,27 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="时间" />
-
+        android:text="时间"
+        android:textColor="@color/bg_blue"
+        />
     <TextView
         android:id="@+id/xvm_30_daylist_battles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="场次" />
-
+        android:text="场次"
+        android:textColor="@color/bg_blue"
+        />
     <TextView
         android:id="@+id/xvm_30_daylist_comp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="组队" />
+        android:text="组队"
+        android:textColor="@color/bg_blue"
+        />
     <!--<TextView
         android:id="@+id/xvm_30_daylist_compwins"
         android:layout_width="0dp"
@@ -44,39 +47,44 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="胜率" />
-
+        android:text="胜率"
+        android:textColor="@color/bg_blue"
+        />
     <TextView
         android:id="@+id/xvm_30_daylist_effect"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="效率" />
-
+        android:text="效率"
+        />
     <TextView
         android:id="@+id/xvm_30_daylist_kill"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="击杀" />
-
+        android:text="击杀"
+        android:textColor="@color/bg_blue"
+        />
     <TextView
         android:id="@+id/xvm_30_daylist_damg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="伤害" />
-
+        android:text="伤害"
+        android:textColor="@color/bg_blue"
+        />
     <TextView
         android:id="@+id/xvm_30_daylist_assist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="助攻" />
+        android:text="助攻"
+        android:textColor="@color/bg_blue"
+        />
 
 
 </LinearLayout>

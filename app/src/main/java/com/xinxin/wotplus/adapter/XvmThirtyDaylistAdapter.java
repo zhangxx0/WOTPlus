@@ -36,9 +36,6 @@ public class XvmThirtyDaylistAdapter extends RecyclerView.Adapter<RecyclerView.V
         layoutInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
 
-        daylistdate.add(0,"占位日期");
-        daylist.add(new DaylistEntityForRecent());
-
         // 将map数据分解到两个list中
         Iterator it = map.keySet().iterator();
         while (it.hasNext()) {
@@ -59,39 +56,37 @@ public class XvmThirtyDaylistAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DecimalFormat df = new DecimalFormat("0.0");
 
-        if (position > 0) {
-            // 时间
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_date.setText(daylistdate.get(position).substring(5));
-            // 场次
-            DaylistEntityForRecent day = daylist.get(position);
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_battles.setText(day.getBattles() + "");
+        // 时间
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_date.setText(daylistdate.get(position).substring(5));
+        // 场次
+        DaylistEntityForRecent day = daylist.get(position);
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_battles.setText(day.getBattles() + "");
 
-            // 组队
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_comp.setText(day.getTeambattles() + "");
+        // 组队
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_comp.setText(day.getTeambattles() + "");
 
-            // 组队胜率
-            float teamwinrate = (float) day.getTeamwins() * 100 / day.getBattles();
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_compwins.setText(df.format(teamwinrate) + "%");
-            // 组队胜率的颜色设置
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_compwins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(teamwinrate)));
+        // 组队胜率
+        /*float teamwinrate = (float) day.getTeamwins() * 100 / day.getBattles();
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_compwins.setText(df.format(teamwinrate) + "%");
+        // 组队胜率的颜色设置
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_compwins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(teamwinrate)));*/
 
 
-            // 胜率
-            float winrate = (float) day.getWins() * 100 / day.getBattles();
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_wins.setText(df.format(winrate) + "%");
-            // 胜率的颜色设置
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_wins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(winrate)));
+        // 胜率
+        float winrate = (float) day.getWins() * 100 / day.getBattles();
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_wins.setText(df.format(winrate) + "%");
+        // 胜率的颜色设置
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_wins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(winrate)));
 
-            // 效率
-            // ((ThirtyDayListViewHolder) holder).xvm_daylist_effect.setText((day.getDaypower() + day.getWinpower()) * 100 / day.getWeight());
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_effect.setText((int) (CommonUtil.addDouble(day.getDaypower(), day.getWinpower()) * 100 / day.getWeight()) + "%");
-            // 击杀
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_kill.setText(df.format((float) day.getFrags() / day.getBattles()));
-            // 伤害
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_damg.setText(day.getDamage() / day.getBattles() + "");
-            // 助攻
-            ((ThirtyDayListViewHolder) holder).xvm_30_daylist_assist.setText(day.getAssist() / day.getBattles() + "");
-        }
+        // 效率
+        // ((ThirtyDayListViewHolder) holder).xvm_daylist_effect.setText((day.getDaypower() + day.getWinpower()) * 100 / day.getWeight());
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_effect.setText((int) (CommonUtil.addDouble(day.getDaypower(), day.getWinpower()) * 100 / day.getWeight()) + "%");
+        // 击杀
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_kill.setText(df.format((float) day.getFrags() / day.getBattles()));
+        // 伤害
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_damg.setText(day.getDamage() / day.getBattles() + "");
+        // 助攻
+        ((ThirtyDayListViewHolder) holder).xvm_30_daylist_assist.setText(day.getAssist() / day.getBattles() + "");
 
     }
 
@@ -108,8 +103,8 @@ public class XvmThirtyDaylistAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView xvm_30_daylist_battles;
         @BindView(R.id.xvm_30_daylist_comp)
         TextView xvm_30_daylist_comp;
-        @BindView(R.id.xvm_30_daylist_compwins)
-        TextView xvm_30_daylist_compwins;
+        /*@BindView(R.id.xvm_30_daylist_compwins)
+        TextView xvm_30_daylist_compwins;*/
         @BindView(R.id.xvm_30_daylist_wins)
         TextView xvm_30_daylist_wins;
         @BindView(R.id.xvm_30_daylist_effect)
