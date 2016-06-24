@@ -362,7 +362,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/linearlayout_margin_less"
                     android:gravity="center"
-                    android:text="军工中心"
+                    android:text="军功中心"
                     android:textColor="@color/bg_blue" />
             </LinearLayout>
 
