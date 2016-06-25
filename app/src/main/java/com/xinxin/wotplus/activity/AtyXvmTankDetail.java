@@ -8,7 +8,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -21,9 +20,11 @@ import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.model.XvmTankDetail;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.CommonUtil;
+import com.xinxin.wotplus.util.MathExtend;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.widget.FireWotProgressDialog;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,36 +143,40 @@ public class AtyXvmTankDetail extends BaseActivity {
      * @param tankInfo
      */
     private void initCard(XvmMainInfo.TanklistEntity tankInfo) {
+        DecimalFormat df = new DecimalFormat("0.0");
 
         int battles = tankInfo.getBattles() - tankInfo.getTeambattles();
         tank_detail_battle.setText(battles + "");
 
         String wins = "--%";
         if (battles > 0) {
-            float winsf = 100 * (tankInfo.getWins() - tankInfo.getTeamwins()) / battles;
-            wins = winsf + "%";
+            float winsf = (float) 100 * (tankInfo.getWins() - tankInfo.getTeamwins()) / battles;
+            tank_detail_wins.setTextColor(this.getResources().getColor(CommonUtil.getWRClass(winsf)));
+            wins = df.format(winsf) + "%";
         }
         tank_detail_wins.setText(wins);
 
         tank_detail_teambattle.setText(tankInfo.getTeambattles() + "");
         String teamwins = "--%";
         if (tankInfo.getTeambattles() > 0) {
-            float teamwinsf = 100 * tankInfo.getTeamwins() / tankInfo.getTeambattles();
-            teamwins = teamwinsf + "%";
+            float teamwinsf = (float) 100 * tankInfo.getTeamwins() / tankInfo.getTeambattles();
+            tank_detail_teamwins.setTextColor(this.getResources().getColor(CommonUtil.getWRClass(teamwinsf)));
+            teamwins = df.format(teamwinsf) + "%";
         }
         tank_detail_teamwins.setText(teamwins);
 
         tank_detail_eff.setText((int) (tankInfo.getTotalpower() / tankInfo.getBattles()) + "");
-        tank_detail_recent_eff.setText((int) tankInfo.getMovingpower() + "");
+        tank_detail_recent_eff.setText(MathExtend.round(tankInfo.getMovingpower(), 0) + "");
 
+        // 有误差
         tank_detail_perdam.setText(tankInfo.getDamage() / tankInfo.getBattles() + "");
-        tank_detail_perkill.setText(tankInfo.getFrags() / tankInfo.getBattles() + "");
+        tank_detail_perkill.setText(MathExtend.round((double) tankInfo.getFrags() / tankInfo.getBattles(), 2) + "");
 
-        tank_detail_perlight.setText(tankInfo.getSpotted() / tankInfo.getBattles() + "");
+        tank_detail_perlight.setText(MathExtend.round((double) tankInfo.getSpotted() / tankInfo.getBattles(), 2) + "");
         tank_detail_perassist.setText(tankInfo.getAssist() / tankInfo.getBattles() + "");
 
-        tank_detail_peroccupy.setText(tankInfo.getCapture() / tankInfo.getBattles() + "");
-        tank_detail_perdef.setText(tankInfo.getDefense() / tankInfo.getBattles() + "");
+        tank_detail_peroccupy.setText(MathExtend.round((double) tankInfo.getCapture() / tankInfo.getBattles(), 2) + "");
+        tank_detail_perdef.setText(MathExtend.round((double) tankInfo.getDefense() / tankInfo.getBattles(), 2) + "");
 
         tank_detail_master4.setText(tankInfo.getMark4() + "");
         tank_detail_master3.setText(tankInfo.getMark3() + "");
@@ -234,13 +239,12 @@ public class AtyXvmTankDetail extends BaseActivity {
         recyclerview_xvm_tank_detail.setLayoutManager(lm);
         recyclerview_xvm_tank_detail.setItemAnimator(new DefaultItemAnimator());
 
+        // 添加车名***-战斗明细
         setTitle("战斗明细");
 
         Intent intent = getIntent();
         tankId = intent.getStringExtra(TANKID);
         xvmActiveTanks = (XvmActiveTanks) intent.getSerializableExtra(XVMACTIVETANKS);
-        Log.d("++++", xvmActiveTanks.toString());
-        Log.d("+++++", tankId);
 
         firWotProgressDialog = FireWotProgressDialog.createDialog(this);
         firWotProgressDialog.show();

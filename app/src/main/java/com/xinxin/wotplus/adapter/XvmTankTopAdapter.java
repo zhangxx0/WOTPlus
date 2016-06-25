@@ -13,6 +13,7 @@ import com.xinxin.wotplus.model.XvmTankTopAll;
 import com.xinxin.wotplus.model.XvmTankTopSingleVO;
 import com.xinxin.wotplus.model.XvmTankTopVO;
 import com.xinxin.wotplus.util.CommonUtil;
+import com.xinxin.wotplus.util.MathExtend;
 
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,8 @@ public class XvmTankTopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ((TankTopViewholder) holder).xvm_tanktop_type.setText(CommonUtil.getTankType(tank.getEntype()));
         ((TankTopViewholder) holder).xvm_tanktop_country.setText(CommonUtil.getTankCountry(tank.getEncountry()));
 
-        ((TankTopViewholder) holder).xvm_tanktop_wins.setText(Math.round(Double.valueOf(top.getWinrate())*100/100.0) + "%");
+        // 四舍五入的精度保留
+        ((TankTopViewholder) holder).xvm_tanktop_wins.setText(MathExtend.round(Double.valueOf(top.getWinrate()), 1) + "%");
         ((TankTopViewholder) holder).xvm_tanktop_wins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(Float.parseFloat(top.getWinrate()))));
 
         ((TankTopViewholder) holder).xvm_tanktop_effect.setText((int) ((Double.valueOf(top.getDaypower()) + Double.valueOf(top.getWinpower())) * 100 / CommonUtil.getTankWeight(tank)) + "%");

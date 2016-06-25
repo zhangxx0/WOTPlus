@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginTop="@dimen/linearlayout_margin_less"
+    android:layout_marginBottom="@dimen/linearlayout_margin_less"
     >
 
     <TextView
@@ -13,22 +14,23 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="时间"
+        android:textColor="@color/bg_blue"
         />
     <TextView
         android:id="@+id/xvm_tankdetail_daylist_battles"
-        android:layout_width="0dp"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="场次"
+        android:textColor="@color/bg_blue"
         />
     <TextView
         android:id="@+id/xvm_tankdetail_daylist_comp"
-        android:layout_width="0dp"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="组队"
+        android:textColor="@color/bg_blue"
         />
     <TextView
         android:id="@+id/xvm_tankdetail_daylist_wins"
@@ -37,6 +39,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="胜率"
+        android:textColor="@color/bg_blue"
         />
     <TextView
         android:id="@+id/xvm_tankdetail_daylist_effect"
@@ -45,14 +48,15 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="效率"
+        android:textColor="@color/bg_blue"
         />
     <TextView
         android:id="@+id/xvm_tankdetail_daylist_kill"
-        android:layout_width="0dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
         android:text="击杀"
+        android:textColor="@color/bg_blue"
         />
     <TextView
         android:id="@+id/xvm_tankdetail_daylist_damg"
@@ -61,6 +65,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="伤害"
+        android:textColor="@color/bg_blue"
         />
     <TextView
         android:id="@+id/xvm_tankdetail_daylist_assist"
@@ -69,6 +74,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="助攻"
+        android:textColor="@color/bg_blue"
         />
 
 
