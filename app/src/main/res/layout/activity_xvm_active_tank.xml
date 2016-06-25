@@ -4,7 +4,7 @@
     android:id="@+id/xvm_active_tank_main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/xvm_active_tank_appbar"
@@ -18,8 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <!--去掉滚动-->
+        <!--app:layout_scrollFlags="scroll|enterAlways|snap"-->
+
 
     </android.support.design.widget.AppBarLayout>
 
@@ -28,6 +30,6 @@
         android:id="@+id/recyclerview_xvm_active_tank"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

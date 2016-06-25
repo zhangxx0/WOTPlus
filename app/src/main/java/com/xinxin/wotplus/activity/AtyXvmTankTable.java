@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmTankTableAdapter;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.XvmAllInfo;
 import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.model.XvmTankTable;
@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
  * Created by xinxin on 2016/6/5.
  * 单车数据列表
  */
-public class AtyXvmTankTable extends BaseActivity {
+public class AtyXvmTankTable extends SwipeBackBaseActivity {
 
     @BindView(R.id.xvm_tanktable_appbar)
     AppBarLayout xvm_tanktable_appbar;

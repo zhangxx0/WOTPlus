@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmTankDetailAdapter;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.TankInfo;
 import com.xinxin.wotplus.model.XvmActiveTanks;
 import com.xinxin.wotplus.model.XvmMainInfo;
@@ -39,7 +39,7 @@ import rx.schedulers.Schedulers;
  * Created by xinxin on 2016/6/22.
  * 坦克战斗明细
  */
-public class AtyXvmTankDetail extends BaseActivity {
+public class AtyXvmTankDetail extends SwipeBackBaseActivity {
 
     public static final String TANKID = "TANKID";
     public static final String XVMACTIVETANKS = "XVMACTIVETANKS";
@@ -239,12 +239,13 @@ public class AtyXvmTankDetail extends BaseActivity {
         recyclerview_xvm_tank_detail.setLayoutManager(lm);
         recyclerview_xvm_tank_detail.setItemAnimator(new DefaultItemAnimator());
 
-        // 添加车名***-战斗明细
-        setTitle("战斗明细");
-
         Intent intent = getIntent();
         tankId = intent.getStringExtra(TANKID);
         xvmActiveTanks = (XvmActiveTanks) intent.getSerializableExtra(XVMACTIVETANKS);
+
+        // 添加车名***-战斗明细
+        TankInfo tank = (TankInfo) xvmActiveTanks.getTanks().get(tankId+"");
+        setTitle(tank.getAlias()+" - 战斗明细");
 
         firWotProgressDialog = FireWotProgressDialog.createDialog(this);
         firWotProgressDialog.show();

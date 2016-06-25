@@ -116,9 +116,9 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         ((ActiveTanksViewHolder) holder).at_tank_name.setText(tank.getAlias());
         ((ActiveTanksViewHolder) holder).at_tank_battle.setText("场次：" + ti.getBattles());
-        float wins = ti.getWins() * 100 / ti.getBattles();
+        float wins = (float) ti.getWins() * 100 / ti.getBattles();
         ((ActiveTanksViewHolder) holder).at_tank_wins.setText(df.format(wins) + "%");
-        ((ActiveTanksViewHolder) holder).at_tank_wins.setTextColor(CommonUtil.getWRClass(wins));
+        ((ActiveTanksViewHolder) holder).at_tank_wins.setTextColor(mContext.getResources().getColor(CommonUtil.getWRClass(wins)));
         double eff = (ti.getTotalpower() / ti.getBattles() + ti.getMovingpower()) / 2 + ti.getWinpower() / ti.getBattles();
         double wei = getTankWeight(tank);
         ((ActiveTanksViewHolder) holder).at_tank_effect.setText("效率：" + df.format((float) eff * 100 / wei) + "%");

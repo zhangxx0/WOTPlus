@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmActiveTanksAdapter;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.XvmActiveTanks;
 import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.network.Network;
@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
  * Created by xinxin on 2016/6/22.
  * 活跃坦克列表
  */
-public class AtyXvmActiveTank extends BaseActivity {
+public class AtyXvmActiveTank extends SwipeBackBaseActivity {
 
     @BindView(R.id.xvm_active_tank_appbar)
     AppBarLayout xvm_active_tank_appbar;

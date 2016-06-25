@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmTankTopAdapter;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.XvmTankTopAll;
 import com.xinxin.wotplus.model.XvmTankTopVO;
 import com.xinxin.wotplus.network.Network;
@@ -36,7 +36,7 @@ import rx.schedulers.Schedulers;
  * Created by xinxin on 2016/6/21.
  * 坦克榜单Activity
  */
-public class AtyXvmTankTop extends BaseActivity {
+public class AtyXvmTankTop extends SwipeBackBaseActivity {
 
     @BindView(R.id.xvm_tanktop_appbar)
     AppBarLayout xvm_tanktop_appbar;

@@ -69,11 +69,21 @@
             android:name=".activity.AtyQueryDialog"
             android:theme="@style/DialogQueryTheme" />
 
-        <activity android:name=".activity.AtyXvmThirtyRecord" />
-        <activity android:name=".activity.AtyXvmTankTable" />
-        <activity android:name=".activity.AtyXvmTankTop" />
-        <activity android:name=".activity.AtyXvmActiveTank" />
-        <activity android:name=".activity.AtyXvmTankDetail" />
+        <activity
+            android:name=".activity.AtyXvmThirtyRecord"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".activity.AtyXvmTankTable"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".activity.AtyXvmTankTop"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".activity.AtyXvmActiveTank"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".activity.AtyXvmTankDetail"
+            android:theme="@style/AppTheme.TransparentActivity" />
 
 
         <!--以下为极光推送配置-->
@@ -81,10 +91,11 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="${applicationId}" />
             </intent-filter>
@@ -94,8 +105,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
 
         <!-- Required SDK 核心功能-->
@@ -142,6 +152,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
 
@@ -150,8 +161,8 @@
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
             android:name="com.xinxin.wotplus.receiver.MyJpushReceiver"
-            android:exported="false"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
@@ -165,11 +176,17 @@
         </receiver>
 
         <!-- Required SDK核心功能-->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
 
         <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="3fc45bfb778f59535b32d56e" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="3fc45bfb778f59535b32d56e" /> <!--  </>值来自开发者平台取得的AppKey-->
 
     </application>
 

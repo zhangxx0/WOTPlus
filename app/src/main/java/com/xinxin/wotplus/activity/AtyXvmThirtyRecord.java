@@ -18,7 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.XvmThirtyDaylistAdapter;
-import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.listener.HidingScrollListener;
 import com.xinxin.wotplus.model.XvmAllInfo;
 import com.xinxin.wotplus.model.XvmMainInfo;
@@ -42,8 +42,9 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by xinxin on 2016/5/28.
+ * 30日战绩列表
  */
-public class AtyXvmThirtyRecord extends BaseActivity {
+public class AtyXvmThirtyRecord extends SwipeBackBaseActivity {
 
     public static final String TANKS_JS_MAP = "tanks_js_msp";
 
