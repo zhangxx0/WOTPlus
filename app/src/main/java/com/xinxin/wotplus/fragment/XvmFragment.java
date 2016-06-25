@@ -38,6 +38,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -161,7 +162,9 @@ public class XvmFragment extends BaseFragment {
                 Map daymap = xvmAllInfo.getDaymap();
                 adapter = new XvmDaylistAdapter(getActivity(), daymap);
 
-                xvm_recentdays.setAdapter(adapter);
+                // RecyclerView 动画
+                SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, xvm_recentdays);
+                xvm_recentdays.setAdapter(animatorAdapter);
                 deathWheelProgressDialog.dismiss();
             }
         };

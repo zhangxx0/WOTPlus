@@ -17,16 +17,18 @@ import com.xinxin.wotplus.base.SwipeBackBaseActivity;
 import com.xinxin.wotplus.model.XvmActiveTanks;
 import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.network.Network;
+import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.ActiveTanksMapper;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
-import com.xinxin.wotplus.widget.FireWotProgressDialog;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,7 +48,8 @@ public class AtyXvmActiveTank extends SwipeBackBaseActivity {
     @BindView(R.id.recyclerview_xvm_active_tank)
     RecyclerView recyclerview_xvm_active_tank;
 
-    private FireWotProgressDialog firWotProgressDialog;
+    // private FireWotProgressDialog firWotProgressDialog;
+    private DeathWheelProgressDialog firWotProgressDialog;
     private XvmActiveTanksAdapter adapter;
 
     Observer<XvmActiveTanks> activeTankObserver = new Observer<XvmActiveTanks>() {
@@ -72,15 +75,23 @@ public class AtyXvmActiveTank extends SwipeBackBaseActivity {
                     // 点击进入该战车战斗明细页面
                     XvmMainInfo.TanklistEntity tank = sortedTanks.get(position);
 
-                    String tankId = tank.getId().getVehicleTypeCd()+"";
+                    String tankId = tank.getId().getVehicleTypeCd() + "";
+
+                    // 全屏扩散
+                    // 开始位置
+                    int[] startingLocation = new int[2];
+                    view.getLocationOnScreen(startingLocation);
+                    startingLocation[0] += view.getWidth() / 2;
 
                     Intent intent = new Intent(AtyXvmActiveTank.this, AtyXvmTankDetail.class);
+                    intent.putExtra(Constant.START_LOCATION, startingLocation);
                     if (tank != null) {
                         intent.putExtra(AtyXvmTankDetail.TANKID, tankId);
                         intent.putExtra(AtyXvmTankDetail.XVMACTIVETANKS, activetanks);
 
                     }
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
 
                 }
 
@@ -89,8 +100,10 @@ public class AtyXvmActiveTank extends SwipeBackBaseActivity {
                 }
             });
 
-
-            recyclerview_xvm_active_tank.setAdapter(adapter);
+            // 添加载入动画
+            AlphaAnimatorAdapter animatorAdapter = new AlphaAnimatorAdapter(adapter, recyclerview_xvm_active_tank);
+            recyclerview_xvm_active_tank.setAdapter(animatorAdapter);
+//            recyclerview_xvm_active_tank.setAdapter(adapter);
 
             firWotProgressDialog.dismiss();
         }
@@ -111,7 +124,7 @@ public class AtyXvmActiveTank extends SwipeBackBaseActivity {
 
         setTitle("活跃战车");
 
-        firWotProgressDialog = FireWotProgressDialog.createDialog(this);
+        firWotProgressDialog = DeathWheelProgressDialog.createDialog(this);
         firWotProgressDialog.show();
 
         String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");

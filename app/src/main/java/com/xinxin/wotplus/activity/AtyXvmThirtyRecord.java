@@ -26,7 +26,7 @@ import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmThirtyInfoToDayMap;
-import com.xinxin.wotplus.widget.FireWotProgressDialog;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +34,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -62,7 +63,8 @@ public class AtyXvmThirtyRecord extends SwipeBackBaseActivity {
 
     private XvmAllInfo xvmAllInfoForOtherPage;
     private XvmThirtyDaylistAdapter adapter;
-    private FireWotProgressDialog firWotProgressDialog;
+    // private FireWotProgressDialog firWotProgressDialog;
+    private DeathWheelProgressDialog firWotProgressDialog;
 
     Observer<XvmAllInfo> thirtyDayObserver = new Observer<XvmAllInfo>() {
         @Override
@@ -85,7 +87,9 @@ public class AtyXvmThirtyRecord extends SwipeBackBaseActivity {
 //            }
 
             adapter = new XvmThirtyDaylistAdapter(AtyXvmThirtyRecord.this, daymap);
-            recyclerview_xvm_thirtydays.setAdapter(adapter);
+            // RecyclerView 动画
+            SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_xvm_thirtydays);
+            recyclerview_xvm_thirtydays.setAdapter(animatorAdapter);
 
             firWotProgressDialog.dismiss();
         }
@@ -134,7 +138,7 @@ public class AtyXvmThirtyRecord extends SwipeBackBaseActivity {
         String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
         // String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
 
-        firWotProgressDialog = FireWotProgressDialog.createDialog(this);
+        firWotProgressDialog = DeathWheelProgressDialog.createDialog(this);
         firWotProgressDialog.show();
 
         Observable.zip(Network.getXvmInfo().getXvmThirtyDay(woterId),

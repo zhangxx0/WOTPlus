@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xinxin.wotplus.R;
@@ -20,9 +24,11 @@ import com.xinxin.wotplus.model.XvmMainInfo;
 import com.xinxin.wotplus.model.XvmTankDetail;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.CommonUtil;
+import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.MathExtend;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.widget.FireWotProgressDialog;
+import com.xinxin.wotplus.widget.RevealBackgroundView;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -31,6 +37,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -39,7 +46,7 @@ import rx.schedulers.Schedulers;
  * Created by xinxin on 2016/6/22.
  * 坦克战斗明细
  */
-public class AtyXvmTankDetail extends SwipeBackBaseActivity {
+public class AtyXvmTankDetail extends SwipeBackBaseActivity implements RevealBackgroundView.OnStateChangeListener {
 
     public static final String TANKID = "TANKID";
     public static final String XVMACTIVETANKS = "XVMACTIVETANKS";
@@ -50,6 +57,14 @@ public class AtyXvmTankDetail extends SwipeBackBaseActivity {
     Toolbar xvm_tank_detail_toolbar;
     @BindView(R.id.recyclerview_xvm_tank_detail)
     RecyclerView recyclerview_xvm_tank_detail;
+
+    /*点击扩散使用*/
+    @BindView(R.id.xvm_revealBackgroundView)
+    RevealBackgroundView vRevealBackground;
+    @BindView(R.id.tank_detail_scroll)
+    NestedScrollView tank_detail_scroll;
+    @BindView(R.id.tank_detail_linear)
+    LinearLayout tank_detail_linear;
 
     @BindView(R.id.tank_detail_battle)
     TextView tank_detail_battle;
@@ -128,7 +143,9 @@ public class AtyXvmTankDetail extends SwipeBackBaseActivity {
 
             // 日战斗列表
             adapter = new XvmTankDetailAdapter(AtyXvmTankDetail.this, sortedtankdaylist, tank);
-            recyclerview_xvm_tank_detail.setAdapter(adapter);
+            // RecyclerView 动画
+            SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_xvm_tank_detail);
+            recyclerview_xvm_tank_detail.setAdapter(animatorAdapter);
 
             // 数据统计与最高纪录Card赋值
             initCard(tankInfo);
@@ -239,16 +256,19 @@ public class AtyXvmTankDetail extends SwipeBackBaseActivity {
         recyclerview_xvm_tank_detail.setLayoutManager(lm);
         recyclerview_xvm_tank_detail.setItemAnimator(new DefaultItemAnimator());
 
+        tank_detail_scroll.setVisibility(View.INVISIBLE);
+
         Intent intent = getIntent();
         tankId = intent.getStringExtra(TANKID);
         xvmActiveTanks = (XvmActiveTanks) intent.getSerializableExtra(XVMACTIVETANKS);
 
         // 添加车名***-战斗明细
-        TankInfo tank = (TankInfo) xvmActiveTanks.getTanks().get(tankId+"");
-        setTitle(tank.getAlias()+" - 战斗明细");
+        TankInfo tank = (TankInfo) xvmActiveTanks.getTanks().get(tankId + "");
+        setTitle(tank.getAlias() + " - 战斗明细");
 
         firWotProgressDialog = FireWotProgressDialog.createDialog(this);
-        firWotProgressDialog.show();
+        // 为了全屏扩散效果，去掉加载框
+        // firWotProgressDialog.show();
 
         String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
 
@@ -258,9 +278,25 @@ public class AtyXvmTankDetail extends SwipeBackBaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(thirtyDayList);
 
-
+        setupRevealBackground(savedInstanceState);
     }
 
+    private void setupRevealBackground(Bundle savedInstanceState) {
+        vRevealBackground.setOnStateChangeListener(this);
+        if (savedInstanceState == null) {
+            final int[] startingLocation = getIntent().getIntArrayExtra(Constant.START_LOCATION);
+            vRevealBackground.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    vRevealBackground.getViewTreeObserver().removeOnPreDrawListener(this);
+                    vRevealBackground.startFromLocation(startingLocation);
+                    return true;
+                }
+            });
+        } else {
+            vRevealBackground.setToFinishedFrame();
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -271,5 +307,16 @@ public class AtyXvmTankDetail extends SwipeBackBaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStateChange(int state) {
+        if (RevealBackgroundView.STATE_FINISHED == state) {
+            // tankMainContent.setVisibility(View.VISIBLE);
+            xvm_tank_detail_appbar.setVisibility(View.VISIBLE);
+            tank_detail_scroll.setVisibility(View.VISIBLE);
+            // 有自动滚动，拉上来；
+            tank_detail_scroll.scrollTo(0, 0);
+        }
     }
 }

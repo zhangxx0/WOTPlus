@@ -4,7 +4,13 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/xvm_tank_detail_main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.xinxin.wotplus.widget.RevealBackgroundView
+        android:id="@+id/xvm_revealBackgroundView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/xvm_tank_detail_appbar"
@@ -18,20 +24,24 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <!--app:layout_scrollFlags="scroll|enterAlways|snap"-->
+
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/tank_detail_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/tank_detail_linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -39,7 +49,7 @@
                 android:layout_marginBottom="@dimen/cardview_margin"
                 android:layout_marginLeft="@dimen/cardview_margin_edge"
                 android:layout_marginRight="@dimen/cardview_margin_edge"
-                android:layout_marginTop="@dimen/cardview_margin"
+                android:layout_marginTop="@dimen/cardview_margin_top"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"

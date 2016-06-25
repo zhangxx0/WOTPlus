@@ -19,13 +19,14 @@ import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmTankTopSortMapper;
 import com.xinxin.wotplus.util.mapper.XvmTankTopToVoMapper;
-import com.xinxin.wotplus.widget.FireWotProgressDialog;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,7 +46,8 @@ public class AtyXvmTankTop extends SwipeBackBaseActivity {
     @BindView(R.id.recyclerview_xvm_tanktop)
     RecyclerView recyclerview_xvm_tanktop;
 
-    private FireWotProgressDialog firWotProgressDialog;
+    // private FireWotProgressDialog firWotProgressDialog;
+    private DeathWheelProgressDialog firWotProgressDialog;
     private XvmTankTopAdapter adapter;
 
 
@@ -64,8 +66,9 @@ public class AtyXvmTankTop extends SwipeBackBaseActivity {
         public void onNext(XvmTankTopAll all) {
 
             adapter = new XvmTankTopAdapter(AtyXvmTankTop.this, all);
-
-            recyclerview_xvm_tanktop.setAdapter(adapter);
+// RecyclerView 动画
+            SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_xvm_tanktop);
+            recyclerview_xvm_tanktop.setAdapter(animatorAdapter);
             firWotProgressDialog.dismiss();
 
         }
@@ -92,7 +95,7 @@ public class AtyXvmTankTop extends SwipeBackBaseActivity {
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(tankTopObserver);
-        firWotProgressDialog = FireWotProgressDialog.createDialog(this);
+        firWotProgressDialog = DeathWheelProgressDialog.createDialog(this);
         firWotProgressDialog.show();
 
         Observable.zip(Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),

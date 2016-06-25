@@ -20,13 +20,14 @@ import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.TanksjsToMapMapper;
 import com.xinxin.wotplus.util.mapper.XvmTankTableMap;
-import com.xinxin.wotplus.widget.FireWotProgressDialog;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,7 +47,8 @@ public class AtyXvmTankTable extends SwipeBackBaseActivity {
     @BindView(R.id.recyclerview_xvm_tanktable)
     RecyclerView recyclerview_xvm_tanktable;
 
-    private FireWotProgressDialog firWotProgressDialog;
+    // private FireWotProgressDialog firWotProgressDialog;
+    private DeathWheelProgressDialog firWotProgressDialog;
     private XvmTankTableAdapter adapter;
 
     Observer<List<XvmTankTable>> tanktableObserver = new Observer<List<XvmTankTable>>() {
@@ -84,7 +86,9 @@ public class AtyXvmTankTable extends SwipeBackBaseActivity {
 
             adapter = new XvmTankTableAdapter(AtyXvmTankTable.this, xvmAllInfo);
 
-            recyclerview_xvm_tanktable.setAdapter(adapter);
+            // RecyclerView 动画
+            SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerview_xvm_tanktable);
+            recyclerview_xvm_tanktable.setAdapter(animatorAdapter);
             firWotProgressDialog.dismiss();
 
         }
@@ -110,7 +114,7 @@ public class AtyXvmTankTable extends SwipeBackBaseActivity {
         String name = PreferenceUtils.getCustomPrefString(this, "queryinfo", "name", "");
         String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
 
-        firWotProgressDialog = FireWotProgressDialog.createDialog(this);
+        firWotProgressDialog = DeathWheelProgressDialog.createDialog(this);
         firWotProgressDialog.show();
 
         // 获取单车数据
