@@ -83,8 +83,9 @@ public class AchieveMentFragment extends BaseFragment {
         deathWheelProgressDialog.show();
 
         String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
+        String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
 
-        Network.getAchieveApi()
+        Network.getAchieveApi(region)
                 .getAchievesNums(woterId)
                 .map(AchieveJsonToMapMapper.getInstance())
                 .subscribeOn(Schedulers.io())

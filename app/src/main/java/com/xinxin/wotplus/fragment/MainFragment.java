@@ -218,7 +218,7 @@ public class MainFragment extends BaseFragment {
                 Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
             } else {
                 Snackbar.make(getView(), "Rx其他错误！", Snackbar.LENGTH_LONG).show();
-                // Log.e("eeee", e.getMessage(), e);
+                 Log.e("eeee", e.getMessage(), e);
             }
 
             backToQuery();
@@ -226,8 +226,6 @@ public class MainFragment extends BaseFragment {
 
         @Override
         public void onNext(Woter w) {
-
-            w.setEnterClanFlag("0");
 
             if (!TextUtils.isEmpty(clanUrl)) {
                 w.setEnterClanFlag("1");
@@ -241,6 +239,17 @@ public class MainFragment extends BaseFragment {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(clanObserver);
+            } else {
+                w.setEnterClanFlag("0");
+
+                woter = w;
+
+                woterAdapter = new WoterAdapter(getActivity(), woter);
+                // 添加载入动画
+                AlphaAnimatorAdapter animatorAdapter = new AlphaAnimatorAdapter(woterAdapter, mRecyclerView);
+
+                mRecyclerView.setAdapter(animatorAdapter);
+                deathWheelProgressDialog.dismiss();
             }
 
         }
@@ -264,12 +273,15 @@ public class MainFragment extends BaseFragment {
                     public Observable<ResponseBody> call(KongzhongUserInfo kongzhongUserInfo) {
                         clanUrl = kongzhongUserInfo.getResponse().get(0).getClan_url();
                         accountId = kongzhongUserInfo.getResponse().get(0).getAccount_id();
+                        int userSize = kongzhongUserInfo.getResponse().size();
+                        String account_profile = kongzhongUserInfo.getResponse().get(0).getAccount_profile();
+
                         // 保存woterId
-                        PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", kongzhongUserInfo.getResponse().get(0).getAccount_id());
-                        return kongzhongUserInfo.getResponse().size() == 0
+                        PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", accountId);
+                        return userSize == 0
                                 ? Observable.<ResponseBody>error(new Exception("getUserInfoError"))
                                 : Network.getRecordApi(region)
-                                .getHtml2(kongzhongUserInfo.getResponse().get(0).getAccount_profile());
+                                .getHtml2(account_profile);
                     }
                 })
                 .map(HtmlToWoterMapper.getInstance())

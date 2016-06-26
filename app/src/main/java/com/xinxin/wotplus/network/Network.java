@@ -56,7 +56,8 @@ public class Network {
             baseUrl = Constant.USER_BASE_URL_SOUTH;
         }
 
-        if (userInfoApi == null) {
+        // 这个if判断导致不能进行南北区切换请求数据的错误；导致先查询北区再查询南区的情况下，显示的总是北区的userinfo；
+//        if (userInfoApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(baseUrl)
@@ -65,7 +66,7 @@ public class Network {
                     .build();
             userInfoApi = retrofit.create(UserInfoApi.class);
 
-        }
+//        }
         return userInfoApi;
     }
 
@@ -85,7 +86,7 @@ public class Network {
             baseUrl = Constant.BASE_URL_SOUTH;
         }
 
-        if (recordApi == null) {
+//        if (recordApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(baseUrl)
@@ -93,7 +94,7 @@ public class Network {
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             recordApi = retrofit.create(RecordApi.class);
-        }
+//        }
 
         return recordApi;
     }
@@ -113,7 +114,7 @@ public class Network {
         } else {
             baseUrl = Constant.BASE_URL_SOUTH + "/zh-cn/community/";
         }
-        if (clanInfoApi == null) {
+//        if (clanInfoApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(baseUrl)
@@ -121,7 +122,7 @@ public class Network {
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             clanInfoApi = retrofit.create(ClanInfoApi.class);
-        }
+//        }
 
         return clanInfoApi;
     }
@@ -141,7 +142,7 @@ public class Network {
         } else {
             baseUrl = Constant.GRADE_URL_BASE_SOUTH;
         }
-        if (gradeApi == null) {
+//        if (gradeApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(baseUrl)
@@ -149,7 +150,7 @@ public class Network {
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             gradeApi = retrofit.create(GradeApi.class);
-        }
+//        }
 
         return gradeApi;
 
@@ -170,7 +171,7 @@ public class Network {
         } else {
             baseUrl = Constant.TANK_ACHIEVE_URL_BASE_SOUTH;
         }
-        if (tankApi == null) {
+//        if (tankApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(baseUrl)
@@ -178,7 +179,7 @@ public class Network {
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             tankApi = retrofit.create(TankApi.class);
-        }
+//        }
 
         return tankApi;
 
@@ -191,7 +192,7 @@ public class Network {
      */
     public static UtilApi getUtilApi() {
 
-        if (utilApi == null) {
+//        if (utilApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(Constant.FIR_VERSION_BASE)
@@ -199,7 +200,7 @@ public class Network {
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             utilApi = retrofit.create(UtilApi.class);
-        }
+//        }
 
         return utilApi;
 
@@ -211,7 +212,7 @@ public class Network {
      */
     public static XvmInfoApi getXvmInfo() {
 
-        if (xvmInfoApi == null) {
+//        if (xvmInfoApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(Constant.XVM_BASE_URL)
@@ -219,7 +220,7 @@ public class Network {
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             xvmInfoApi = retrofit.create(XvmInfoApi.class);
-        }
+//        }
 
         return xvmInfoApi;
     }
@@ -231,14 +232,14 @@ public class Network {
      */
     public static XvmJsApi getXvmjsApi() {
 
-        if (xvmJsApi == null) {
+//        if (xvmJsApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(Constant.XVM_JS_BASE_URL)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             xvmJsApi = retrofit.create(XvmJsApi.class);
-        }
+//        }
 
         return xvmJsApi;
     }
@@ -249,17 +250,24 @@ public class Network {
      *
      * @return
      */
-    public static AchieveApi getAchieveApi() {
+    public static AchieveApi getAchieveApi(String region) {
 
-        if (achieveApi == null) {
+        // 需根据大区判断baseurl
+        String baseUrl;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            baseUrl = Constant.ACHIEVE_NUMS_BASE_N;
+        } else {
+            baseUrl = Constant.ACHIEVE_NUMS_BASE_S;
+        }
+//        if (achieveApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
-                    .baseUrl(Constant.ACHIEVE_NUMS_BASE)
+                    .baseUrl(baseUrl)
                     //.addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             achieveApi = retrofit.create(AchieveApi.class);
-        }
+//        }
 
         return achieveApi;
     }

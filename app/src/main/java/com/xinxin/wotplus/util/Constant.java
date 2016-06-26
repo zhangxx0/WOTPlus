@@ -82,7 +82,8 @@ public class Constant {
      * 基础的URL，单车战绩也使用这个
      * http://wotpbe-cnn.worldoftanks.cn/accounts/api/statistics/achievements/?filter%5Baccount_ids%5D=1509154099
      */
-    public static final String ACHIEVE_NUMS_BASE ="http://wotpbe-cnn.worldoftanks.cn/accounts/api/statistics/";
+    public static final String ACHIEVE_NUMS_BASE_N ="http://wotpbe-cnn.worldoftanks.cn/accounts/api/statistics/";
+    public static final String ACHIEVE_NUMS_BASE_S ="http://wotpbe-cns.worldoftanks.cn/accounts/api/statistics/";
 
     /**
      * 全屏扩散起始位置

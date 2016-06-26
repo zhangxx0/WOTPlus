@@ -21,7 +21,7 @@ public class MyApplication extends Application {
         context = getApplicationContext();
         super.onCreate();
         // 初始化极光推送sdk
-        JPushInterface.setDebugMode(true);
+        // JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
         JPushInterface.setAlias(context, "WOTPlus0.7", new TagAliasCallback() {
             @Override

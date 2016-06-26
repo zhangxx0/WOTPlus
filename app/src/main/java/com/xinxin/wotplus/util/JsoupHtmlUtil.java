@@ -222,7 +222,17 @@ public class JsoupHtmlUtil {
             String achievejsonString = achievejson.toString();
 
             // 这个地方和eclipse中的截取长度还不一样!
-            String formatAchieveJson = achievejsonString.substring(75,achievejsonString.length()-355);
+            String formatAchieveJson = "";
+            // 南北区截取的也不一样，，，
+            if (QueryActivity.REGION_NORTH.equals(region)) {
+                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 355);
+            } else {
+                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 334);
+            }
+
+
+            String formatJson = achievejsonString.replaceAll("\r|\t", "");
+            String formatJson2 = formatJson.replaceAll(" ", "");
 
 //            Log.d("111", ""+formatAchieveJson.substring(0,10));
 //            Log.d("111", ""+formatAchieveJson.substring(formatAchieveJson.length()-10));
@@ -230,7 +240,9 @@ public class JsoupHtmlUtil {
             Gson gson = new Gson();
             List<AchieveNew> achieveNews = null;
             try {
-                achieveNews = gson.fromJson(formatAchieveJson, new TypeToken<List<AchieveNew>>() {}.getType());
+                if (!"".equals(formatAchieveJson)) {
+                    achieveNews = gson.fromJson(formatAchieveJson, new TypeToken<List<AchieveNew>>() {}.getType());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

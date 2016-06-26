@@ -176,7 +176,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(tankObserver);
 
-        Network.getAchieveApi()
+        Network.getAchieveApi(region)
                 .getTankAchieve(woterId, tankId)
                 .map(TankJsonToMapMapper.getInstance())
                 .subscribeOn(Schedulers.io())

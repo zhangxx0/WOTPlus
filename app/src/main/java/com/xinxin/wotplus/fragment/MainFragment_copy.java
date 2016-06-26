@@ -35,7 +35,6 @@ import com.xinxin.wotplus.util.HttpUtil;
 import com.xinxin.wotplus.util.JsoupHtmlUtil;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.ClanInfoToWoterMapper;
-import com.xinxin.wotplus.util.mapper.HtmlToWoterMapper;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
 import org.jsoup.Jsoup;
@@ -45,11 +44,8 @@ import org.jsoup.nodes.Element;
 import java.util.Date;
 
 import it.gmariotti.recyclerview.adapter.AlphaAnimatorAdapter;
-import okhttp3.ResponseBody;
-import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -286,7 +282,7 @@ public class MainFragment_copy extends BaseFragment {
         region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
         String name_gt = "";
 
-        subscription = Network.getUseInfoApi(region)
+        /*subscription = Network.getUseInfoApi(region)
                 .getUserInfo(name, name_gt)
                 .flatMap(new Func1<KongzhongUserInfo, Observable<ResponseBody>>() {
                     @Override
@@ -302,7 +298,7 @@ public class MainFragment_copy extends BaseFragment {
                 .map(HtmlToWoterMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .subscribe(observer);*/
 
 
 
