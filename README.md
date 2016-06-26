@@ -19,6 +19,11 @@ _ _ _
 ![](http://7xsvfv.com2.z0.glb.clouddn.com/wotplus_xiaoguo4.jpg)
 ![](http://7xsvfv.com2.z0.glb.clouddn.com/wotplus_xiaoguo5.jpg)
 
+_ _ _ 
+
+![](http://7xsvfv.com1.z0.glb.clouddn.com/xvm_show0.jpg)
+![](http://7xsvfv.com1.z0.glb.clouddn.com/xvm_show1.jpg)
+
 
 ## 功能简介
 
@@ -29,6 +34,10 @@ WOTPlus主要提供坦克世界战绩查询的功能，分为以下几个模块�
 - 统计
 - 等级
 - 战车
+
+新增功能：（2016年6月26日）
+
+- XVM战绩查询
 
 ## 技术阐述
 
@@ -53,6 +62,13 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 第一版并没有使用架构诸如MVP、或者Rxjava等流行技术之类，别问我为什么，还没学会。。。
 因此编写之初就有了重构的计划，初步构想是使用Rxjava+Retrofit进行第二个版本的重构
 
+2016年6月26日 新技术的使用：
+
+- RxJava+Retrofit
+- ButterKnife
+- Jpush
+
+
 ## 版本更新
 
 
@@ -60,15 +76,13 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 * 魅族应用中心：[ WOTPlus-魅族应用中心 ](http://app.meizu.com/apps/public/detail?package_name=com.xinxin.wotplus)
 * 应用宝：[ WOTPlus-应用宝](http://android.myapp.com/myapp/detail.htm?apkName=com.xinxin.wotplus)
 
-或者直接扫描下面的二维码下载：  
 
-![二维码分发](http://7xsvfv.com2.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%88%86%E5%8F%91.png)
 
 ## TODO
 
 - [x] 代码重构：RxJava + Retrofit；2016年5月21日03:31:21 完成基础的重构；
 - [ ] fresco 替代 glide；
-- [ ] butter knife 使用；
+- [x] butter knife 使用；2016年6月26日 新页面使用该技术；
 
 
 ## 关于作者
