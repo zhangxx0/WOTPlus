@@ -94,6 +94,10 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 [05-06【原创】国服坦克世界战绩查询APP（安卓）WOTPlus上线了](http://tieba.baidu.com/p/4530207210)  
 [06-26【原创】国服战绩查询APP WOTPlus 更新XVM查询](http://tieba.baidu.com/p/4634156452)
 
+第一个版本0.6有2886的下载量；  
+第二个版本0.9正在增长中，，，
+
+
 
 ## 关于作者
 
