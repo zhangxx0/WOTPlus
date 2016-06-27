@@ -9,6 +9,9 @@ _ _ _
 
 与其等待，不如自己动手，且好几年过去了，并不见坑爹网（空中网）的APP有些许的进步，国服对这个好像不怎么重视，于是，在学习了半年左右的Android之后，我动手来做人生第一个开源安卓项目，我想用可以接触到的最先进的安卓技术来开发这款APP，因为我觉得这是一件很酷的事情，而，上班以来，好久没有做过很酷的事情了。
 
+2016年6月26日 更新到 **0.9版本** ，新增XVM战绩查询功能；
+
+
 ## 截图
 
 _ _ _ 
@@ -83,6 +86,13 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 - [x] 代码重构：RxJava + Retrofit；2016年5月21日03:31:21 完成基础的重构；
 - [ ] fresco 替代 glide；
 - [x] butter knife 使用；2016年6月26日 新页面使用该技术；
+
+
+## 贴吧帖子
+
+两个精品置顶帖：  
+[05-06【原创】国服坦克世界战绩查询APP（安卓）WOTPlus上线了](http://tieba.baidu.com/p/4530207210)  
+[06-26【原创】国服战绩查询APP WOTPlus 更新XVM查询](http://tieba.baidu.com/p/4634156452)
 
 
 ## 关于作者
