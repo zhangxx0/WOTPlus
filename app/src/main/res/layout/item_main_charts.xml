@@ -15,7 +15,7 @@
 
 
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/linearlayout_margin">
@@ -25,7 +25,7 @@
             android:layout_height="160dp"
             android:layout_weight="1">
 
-            <!--击杀／死亡率-->
+            &lt;!&ndash;击杀／死亡率&ndash;&gt;
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/killdiechart"
@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <!--伤害原因／收到-->
+            &lt;!&ndash;伤害原因／收到&ndash;&gt;
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/hurtinjuredchart"
@@ -51,6 +51,91 @@
 
 
         </LinearLayout>
+
+    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/linearlayout_margin">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/linearlayout_margin_less"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="战斗表现"
+                android:textColor="@color/bg_blue"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="击杀/死亡率"
+            android:gravity="center"
+            android:textColor="@color/bg_blue"
+            android:textSize="16sp"
+            android:padding="@dimen/linearlayout_margin"/>
+
+        <com.xinxin.wotplus.widget.WotIndicatorView
+            android:id="@+id/killdie_indacator_view"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:paddingBottom="8.0dip"
+            android:paddingTop="8.0dip"/>
+
+        <TextView
+            android:id="@+id/killdierate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1.83"
+            android:textColor="@color/green"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/killdiedata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="---/---"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="伤害/承受伤害"
+            android:gravity="center"
+            android:textColor="@color/bg_blue"
+            android:textSize="16sp"
+            android:padding="@dimen/linearlayout_margin"/>
+
+        <com.xinxin.wotplus.widget.WotIndicatorView
+            android:id="@+id/hurtinjured_indacator_view"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:paddingBottom="8.0dip"
+            android:paddingTop="8.0dip"/>
+
+        <TextView
+            android:id="@+id/hurtinjuredrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1.42"
+            android:textColor="@color/green"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/hurtinjureddata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="---/---"/>
 
     </LinearLayout>
 

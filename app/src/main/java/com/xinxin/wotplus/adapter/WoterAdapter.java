@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -21,6 +20,7 @@ import com.xinxin.wotplus.MyApplication;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.PreferenceUtils;
+import com.xinxin.wotplus.widget.WotIndicatorView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,7 +135,18 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
         if (holder instanceof ChartsViewHolder) {
-            try {
+
+            ((ChartsViewHolder) holder).killdie_indacator_view.setmDesiredAngle((float) 2.5);
+            ((ChartsViewHolder) holder).killdie_indacator_view.animateAngle();
+            ((ChartsViewHolder) holder).hurtinjured_indacator_view.setmDesiredAngle((float) 2.5);
+            ((ChartsViewHolder) holder).hurtinjured_indacator_view.animateAngle();
+
+            ((ChartsViewHolder) holder).killdierate.setText(mWoter.getKillDeathRate());
+            ((ChartsViewHolder) holder).killdiedata.setText(mWoter.getKillDeathNum());
+            ((ChartsViewHolder) holder).hurtinjuredrate.setText(mWoter.getDmgRecRate());
+            ((ChartsViewHolder) holder).hurtinjureddata.setText(mWoter.getDmgRecNum());
+
+            /*try {
 
                 PieData mpieData = getKillDieData(4, 100);
                 ((ChartsViewHolder) holder).killdiechart.setHoleRadius(60f);  //半径
@@ -170,7 +181,7 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             } catch (Exception e) {
                 e.printStackTrace();
-            }
+            }*/
 
         }
 
@@ -243,10 +254,19 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private PieChart killdiechart;
         private PieChart hurtinjuredchart;
 
+        private TextView killdierate,killdiedata,hurtinjuredrate,hurtinjureddata;
+        private WotIndicatorView killdie_indacator_view, hurtinjured_indacator_view;
+
         public ChartsViewHolder(View itemView) {
             super(itemView);
-            killdiechart = (PieChart) itemView.findViewById(R.id.killdiechart);
-            hurtinjuredchart = (PieChart) itemView.findViewById(R.id.hurtinjuredchart);
+//            killdiechart = (PieChart) itemView.findViewById(R.id.killdiechart);
+//            hurtinjuredchart = (PieChart) itemView.findViewById(R.id.hurtinjuredchart);
+            killdierate = (TextView) itemView.findViewById(R.id.killdierate);
+            killdiedata = (TextView) itemView.findViewById(R.id.killdiedata);
+            hurtinjuredrate = (TextView) itemView.findViewById(R.id.hurtinjuredrate);
+            hurtinjureddata = (TextView) itemView.findViewById(R.id.hurtinjureddata);
+            killdie_indacator_view = (WotIndicatorView) itemView.findViewById(R.id.killdie_indacator_view);
+            hurtinjured_indacator_view = (WotIndicatorView) itemView.findViewById(R.id.hurtinjured_indacator_view);
         }
     }
 
