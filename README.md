@@ -87,6 +87,12 @@ DrawerLayout、CoordinatorLayout、Toolbar、FloatingActionButton、NavigationVi
 - [ ] fresco 替代 glide；
 - [x] butter knife 使用；2016年6月26日 新页面使用该技术；
 
+自定义仪表盘控件：WotIndicatorView  
+2016年7月8日13:36:39
+
+![](http://7xsvfv.com1.z0.glb.clouddn.com/indicator.jpg)
+
+
 
 ## 贴吧帖子
 

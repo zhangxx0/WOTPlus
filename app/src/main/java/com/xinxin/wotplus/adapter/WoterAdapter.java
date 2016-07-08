@@ -136,9 +136,9 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         if (holder instanceof ChartsViewHolder) {
 
-            ((ChartsViewHolder) holder).killdie_indacator_view.setmDesiredAngle((float) 2.5);
+            ((ChartsViewHolder) holder).killdie_indacator_view.setmDesiredAngle(Float.valueOf(mWoter.getKillDeathRate()));
             ((ChartsViewHolder) holder).killdie_indacator_view.animateAngle();
-            ((ChartsViewHolder) holder).hurtinjured_indacator_view.setmDesiredAngle((float) 2.5);
+            ((ChartsViewHolder) holder).hurtinjured_indacator_view.setmDesiredAngle(Float.valueOf(mWoter.getDmgRecRate()));
             ((ChartsViewHolder) holder).hurtinjured_indacator_view.animateAngle();
 
             ((ChartsViewHolder) holder).killdierate.setText(mWoter.getKillDeathRate());
