@@ -241,7 +241,8 @@ public class JsoupHtmlUtil {
             List<AchieveNew> achieveNews = null;
             try {
                 if (!"".equals(formatAchieveJson)) {
-                    achieveNews = gson.fromJson(formatAchieveJson, new TypeToken<List<AchieveNew>>() {}.getType());
+                    achieveNews = gson.fromJson(formatAchieveJson, new TypeToken<List<AchieveNew>>() {
+                    }.getType());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -310,7 +311,12 @@ public class JsoupHtmlUtil {
             woter.setBadgeAndRecord(badgeAndRecord);
 
             // 坦克类型和国家
-            TypesAndCountry typesAndCountry = new TypesAndCountry();
+            /**
+             * 坦克类型和国家的获取变为动态，不在html源码中了
+             * 2016年10月15日13:51:28 修改
+             */
+            // （1）第一版代码
+            /*TypesAndCountry typesAndCountry = new TypesAndCountry();
             // 类型
             Element types = doc.select(".b-diagram-block").first();
             // 国家
@@ -350,6 +356,11 @@ public class JsoupHtmlUtil {
             typesAndCountry.setNumsJa(numsCountrys.get(6).text());
             typesAndCountry.setNumsCz(numsCountrys.get(7).text());
 
+            woter.setTypesAndCountry(typesAndCountry);*/
+
+            // （2）更改为动态接口获取之后的代码
+            // 在页面调用接口，并给下面这个类赋值；
+            TypesAndCountry typesAndCountry = new TypesAndCountry();
             woter.setTypesAndCountry(typesAndCountry);
 
             /**
@@ -369,7 +380,7 @@ public class JsoupHtmlUtil {
             List<Tank> tds = new ArrayList<Tank>();
             List<Tank> spgs = new ArrayList<Tank>();
 
-            // （1）战车类型信息 第一层list
+            /*// （1）战车类型信息 第一层list
             Elements tanktypes = doc.select(".tablesorter-no-sort");
 
             for (Element tankLt : tanktypes) {
@@ -387,9 +398,9 @@ public class JsoupHtmlUtil {
                 tanksType.setTanksTypeBadgeNum(tanksTypeBadgeNum.text());
                 // 添加到tanksTypes
                 tanksTypes.add(tanksType);
-            }
+            }*/
 
-            // (2) 各类型战车列表
+            /*// (2) 各类型战车列表
             Elements tanks = doc.select(".sortable");
 
             for (int i = 0; i < tanks.size(); i++) {
@@ -467,7 +478,14 @@ public class JsoupHtmlUtil {
             tanksvo.setMts(mts);
             tanksvo.setHts(hts);
             tanksvo.setTds(tds);
-            tanksvo.setSpgs(spgs);
+            tanksvo.setSpgs(spgs);*/
+
+            /**
+             * （5）战车信息 NEW
+             *  官网修改了战车信息的展示，现在的战车信息不在html页面中了；
+             *  因此，相应的请求转移到对应的fragment中去，不再在此处解析
+             *  add date 2016年10月15日11:13:29
+             */
 
             woter.setTanks(tanksvo);
 
