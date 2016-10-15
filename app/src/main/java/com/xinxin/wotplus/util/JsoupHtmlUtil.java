@@ -472,7 +472,6 @@ public class JsoupHtmlUtil {
                 }
 
             }
-
             tanksvo.setTanksTypes(tanksTypes);
             tanksvo.setLts(lts);
             tanksvo.setMts(mts);
