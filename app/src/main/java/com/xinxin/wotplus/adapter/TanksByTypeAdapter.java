@@ -25,16 +25,15 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<Tank> tanksByTypeList;
 
-    public interface OnItemClickLitener
-    {
+    public interface OnItemClickLitener {
         void onItemClick(View view, int position);
-        void onItemLongClick(View view , int position);
+
+        void onItemLongClick(View view, int position);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
 
-    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
-    {
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
@@ -57,21 +56,21 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         Tank tank = tanksByTypeList.get(position);
 
         // 2016年4月8日01:17:44
-        if ("b-armory-wrapper__china".equals(tank.getTankCountry())) {
+        if ("china".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_china);
-        } else if ("b-armory-wrapper__germany".equals(tank.getTankCountry())) {
+        } else if ("germany".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_germany);
-        } else if ("b-armory-wrapper__ussr".equals(tank.getTankCountry())) {
+        } else if ("ussr".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_ussr);
-        } else if ("b-armory-wrapper__france".equals(tank.getTankCountry())) {
+        } else if ("france".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_france);
-        } else if ("b-armory-wrapper__usa".equals(tank.getTankCountry())) {
+        } else if ("usa".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_usa);
-        } else if ("b-armory-wrapper__uk".equals(tank.getTankCountry())) {
+        } else if ("uk".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_uk);
-        } else if ("b-armory-wrapper__japan".equals(tank.getTankCountry())) {
+        } else if ("japan".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_japan);
-        } else if ("b-armory-wrapper__czech".equals(tank.getTankCountry())) {
+        } else if ("czech".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_czech);
         }
 
@@ -87,27 +86,35 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (tank.getTankBadge().indexOf("vehicle") != -1) {
             // 包含vehicle则使用占位图
         } else {
-            Glide.with(context).load(tank.getTankBadge()).into(((TankShortInfo) holder).tankBadge);
+            String badge = tank.getTankBadge();
+            int badgePath ;
+            if ("1".equals(badge)) {
+                badgePath = R.drawable.master1;
+            } else if ("2".equals(badge)) {
+                badgePath = R.drawable.master2;
+            } else if ("3".equals(badge)) {
+                badgePath = R.drawable.master3;
+            } else if ("4".equals(badge)) {
+                badgePath = R.drawable.master4;
+            } else {
+                badgePath = R.drawable.master0;
+            }
+            Glide.with(context).load(badgePath).into(((TankShortInfo) holder).tankBadge);
         }
 
         // 如果设置了回调，则设置点击事件
-        if (mOnItemClickLitener != null)
-        {
-            holder.itemView.setOnClickListener(new View.OnClickListener()
-            {
+        if (mOnItemClickLitener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
                     mOnItemClickLitener.onItemClick(holder.itemView, pos);
                 }
             });
 
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
-            {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v)
-                {
+                public boolean onLongClick(View v) {
                     int pos = holder.getLayoutPosition();
                     mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
                     return false;

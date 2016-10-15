@@ -6,6 +6,7 @@ import com.xinxin.wotplus.network.api.ClanInfoApi;
 import com.xinxin.wotplus.network.api.GradeApi;
 import com.xinxin.wotplus.network.api.RecordApi;
 import com.xinxin.wotplus.network.api.TankApi;
+import com.xinxin.wotplus.network.api.TanksApi;
 import com.xinxin.wotplus.network.api.TypeCountryApi;
 import com.xinxin.wotplus.network.api.UserInfoApi;
 import com.xinxin.wotplus.network.api.UtilApi;
@@ -31,7 +32,9 @@ public class Network {
     private static GradeApi gradeApi;
     private static TankApi tankApi;
     private static AchieveApi achieveApi;
+
     private static TypeCountryApi typeCountryApi;
+    private static TanksApi tanksApi;
 
     private static UtilApi utilApi;
 
@@ -183,6 +186,35 @@ public class Network {
         typeCountryApi = retrofit.create(TypeCountryApi.class);
 
         return typeCountryApi;
+
+    }
+
+    /**
+     * 获取各类型战车列表
+     *
+     * @param region
+     * @return
+     * @date 2016年10月15日18:05:49
+     */
+    public static TanksApi getTanksNewInfo(String region) {
+
+        // 需根据大区判断baseurl
+        String baseUrl;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            // 使用成就的baseUrl，都是通用的
+            baseUrl = Constant.ACHIEVE_NUMS_BASE_N;
+        } else {
+            baseUrl = Constant.ACHIEVE_NUMS_BASE_S;
+        }
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl(baseUrl)
+                .addConverterFactory(gsonConverterFactory)
+                .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                .build();
+        tanksApi = retrofit.create(TanksApi.class);
+
+        return tanksApi;
 
     }
 

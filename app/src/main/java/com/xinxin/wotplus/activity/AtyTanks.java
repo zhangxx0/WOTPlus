@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,16 +21,25 @@ import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.TanksByTypeAdapter;
 import com.xinxin.wotplus.base.SwipeBackBaseActivity;
+import com.xinxin.wotplus.fragment.TypeCountryFragment;
 import com.xinxin.wotplus.model.Tank;
+import com.xinxin.wotplus.model.Tanks;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.PreferenceUtils;
+import com.xinxin.wotplus.util.mapper.TankTypeJsonCorrectAndToVoMapper;
+import com.xinxin.wotplus.util.mapper.TanksJsonCorrectAndToVoMapper;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 import com.xinxin.wotplus.widget.RevealBackgroundView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by xinxin on 2016/4/7.
@@ -52,6 +62,7 @@ public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundV
     private RecyclerView recyclerView;
     private Woter woter;
     private TanksByTypeAdapter adapter;
+    private DeathWheelProgressDialog deathWheelProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,87 +97,139 @@ public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundV
         if (!TextUtils.isEmpty(woterString)) {
             woter = gson.fromJson(woterString, Woter.class);
             Log.d("GsonWoter", woter.toString());
-            // 提取勋章的ID与名称对照字段
-            // <string name=""></string> 此方法无效
-//            Achievements achievements = woter.getAchievements();
-//            List<Achieve> warheroList = achievements.getWarheroList();
-//            for (Achieve achieve : warheroList) {
-//                System.out.println("<string name=\"" + achieve.getAchivementId() + "\">" + achieve.getAchivementName() + "</string>");
-//            }
-
-
         }
 
-        List<Tank> tanksByTypeList = new ArrayList<Tank>();
+        /**
+         * 由于数据变为动态获取，所以在此重新获取各类型的list
+         * 2016年10月15日18:15:00 modified by zhang.xx
+         */
+        Observer<Tanks> observer = new Observer<Tanks>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Snackbar.make(tanksMainContent, "获取坦克战绩信息出错！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onNext(Tanks tanks) {
+                // 处理数据
+                woter.setTanks(tanks);
+
+                deathWheelProgressDialog.dismiss();
+
+                List<Tank> tanksByTypeList = new ArrayList<Tank>();
+                // 这个统一放在lts里面，原先的数据结构有些多余 2016年10月15日18:44:42
+                tanksByTypeList = woter.getTanks().getLts();
+
+                switch (Integer.parseInt(tanksType)) {
+                    case 0:
+//                tanksByTypeList = woter.getTanks().getLts();
+                        imageView.setImageResource(R.drawable.lt);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                        break;
+                    case 1:
+//                tanksByTypeList = woter.getTanks().getMts();
+                        imageView.setImageResource(R.drawable.mt);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                        break;
+                    case 2:
+//                tanksByTypeList = woter.getTanks().getHts();
+                        imageView.setImageResource(R.drawable.ht);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                        break;
+                    case 3:
+//                tanksByTypeList = woter.getTanks().getTds();
+                        imageView.setImageResource(R.drawable.td);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                        break;
+                    case 4:
+//                tanksByTypeList = woter.getTanks().getSpgs();
+                        imageView.setImageResource(R.drawable.spg);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                        break;
+                    default:
+                        break;
+                }
+
+                adapter = new TanksByTypeAdapter(tanksByTypeList, AtyTanks.this);
+                recyclerView.setVisibility(View.INVISIBLE);
+
+                final List<Tank> finalTanksByTypeList = tanksByTypeList;
+                adapter.setOnItemClickLitener(new TanksByTypeAdapter.OnItemClickLitener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Tank tank = finalTanksByTypeList.get(position);
+
+                        // 全屏扩散
+                        int[] startingLocation = new int[2];
+                        view.getLocationOnScreen(startingLocation);
+                        startingLocation[0] += view.getWidth() / 2;
+
+                        Intent intent = new Intent(AtyTanks.this, AtyTank.class);
+                        intent.putExtra(Constant.START_LOCATION, startingLocation);
+                        if (tank != null) {
+                            intent.putExtra(AtyTank.TANK_TITLE, tank.getTankName());
+                            intent.putExtra(AtyTank.TANK_ID, tank.getTankId());
+                        }
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+
+                    }
+                });
+                // RecyclerView 动画
+                SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerView);
+                recyclerView.setAdapter(animatorAdapter);
+
+
+            }
+        };
+        deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(this);
+        deathWheelProgressDialog.show();
+        String woterId = PreferenceUtils.getCustomPrefString(this, "woterId", "woterId", "");
+        String region = PreferenceUtils.getCustomPrefString(this, "queryinfo", "region", "");
+        String vehicle_type = "";
         switch (Integer.parseInt(tanksType)) {
             case 0:
-                tanksByTypeList = woter.getTanks().getLts();
-                imageView.setImageResource(R.drawable.lt);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                vehicle_type = "lightTank";
                 break;
             case 1:
-                tanksByTypeList = woter.getTanks().getMts();
-                imageView.setImageResource(R.drawable.mt);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                vehicle_type = "mediumTank";
                 break;
             case 2:
-                tanksByTypeList = woter.getTanks().getHts();
-                imageView.setImageResource(R.drawable.ht);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                vehicle_type = "heavyTank";
                 break;
             case 3:
-                tanksByTypeList = woter.getTanks().getTds();
-                imageView.setImageResource(R.drawable.td);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                vehicle_type = "AT-SPG";
                 break;
             case 4:
-                tanksByTypeList = woter.getTanks().getSpgs();
-                imageView.setImageResource(R.drawable.spg);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                // Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+                vehicle_type = "SPG";
                 break;
             default:
+                vehicle_type = "lightTank";
                 break;
         }
+        Network.getTanksNewInfo(region)
+                .getTanksNewInfo(woterId, TypeCountryFragment.LANG, vehicle_type)
+                .map(TanksJsonCorrectAndToVoMapper.getInstance())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_tanks_bytype);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TanksByTypeAdapter(tanksByTypeList, this);
-        recyclerView.setVisibility(View.INVISIBLE);
-
-        final List<Tank> finalTanksByTypeList = tanksByTypeList;
-        adapter.setOnItemClickLitener(new TanksByTypeAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Tank tank = finalTanksByTypeList.get(position);
-
-                // 全屏扩散
-                int[] startingLocation = new int[2];
-                view.getLocationOnScreen(startingLocation);
-                startingLocation[0] += view.getWidth() / 2;
-
-                Intent intent = new Intent(AtyTanks.this, AtyTank.class);
-                intent.putExtra(Constant.START_LOCATION, startingLocation);
-                if (tank != null) {
-                    intent.putExtra(AtyTank.TANK_TITLE, tank.getTankName());
-                    intent.putExtra(AtyTank.TANK_ID, tank.getTankId());
-                }
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        });
-        // RecyclerView 动画
-        SlideInRightAnimatorAdapter animatorAdapter = new SlideInRightAnimatorAdapter(adapter, recyclerView);
-        recyclerView.setAdapter(animatorAdapter);
 
         // loadBackDrop();
         setupRevealBackground(savedInstanceState);
@@ -187,7 +250,7 @@ public class AtyTanks extends SwipeBackBaseActivity implements RevealBackgroundV
                 @Override
                 public boolean onPreDraw() {
                     vRevealBackground.getViewTreeObserver().removeOnPreDrawListener(this);
-                    Log.d("location",startingLocation.toString());
+                    Log.d("location", startingLocation.toString());
                     vRevealBackground.startFromLocation(startingLocation);
                     return true;
                 }
