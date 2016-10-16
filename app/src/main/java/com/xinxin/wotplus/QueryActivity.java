@@ -101,6 +101,7 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
                     Snackbar.make(v, "网络不可用！", Snackbar.LENGTH_LONG).show();
                 } else {
                     MainActivity.mainActionStart(this, name, region);
+                    finish();
                 }
                 break;
             default:
