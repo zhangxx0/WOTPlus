@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.xinxin.wotplus.base.BaseActivity;
+import com.xinxin.wotplus.util.CommonUtil;
 import com.xinxin.wotplus.util.HttpUtil;
 import com.xinxin.wotplus.util.PreferenceUtils;
 
@@ -22,7 +23,7 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
 
     private EditText nametext;
     private RadioGroup nsregion;
-    private RadioButton north,sourth;
+    private RadioButton north, sourth;
     private Button query;
 
     /**
@@ -43,6 +44,9 @@ public class QueryActivity extends BaseActivity implements View.OnClickListener 
         initView();
 
         query.setOnClickListener(this);
+
+        // 检测版本更新，add 2016年10月16日14:23:19
+        CommonUtil.checkVersion(this, nametext);
 
     }
 
