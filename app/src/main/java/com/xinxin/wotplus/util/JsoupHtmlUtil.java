@@ -216,7 +216,12 @@ public class JsoupHtmlUtil {
              * （2）成就信息(NEW)
              * 2016年6月11日22:59:21
              */
-            Elements achievejsons = doc.select("script[type=application/javascript]");
+            // Elements achievejsons = doc.select("script[type=application/javascript]");
+            /*
+             官网貌似修改了成就部分的js标签，导致我这个地方获取不到相应的代码段；
+             2016年11月5日17:02:49
+             */
+            Elements achievejsons = doc.select("script[type=\"application/javascript\"]");
 
             Element achievejson = achievejsons.first();
             String achievejsonString = achievejson.toString();
@@ -225,9 +230,9 @@ public class JsoupHtmlUtil {
             String formatAchieveJson = "";
             // 南北区截取的也不一样，，，
             if (QueryActivity.REGION_NORTH.equals(region)) {
-                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 355);
+                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 356);
             } else {
-                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 334);
+                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 335);
             }
 
 
