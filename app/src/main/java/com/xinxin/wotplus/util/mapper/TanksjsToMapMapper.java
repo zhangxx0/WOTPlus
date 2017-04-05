@@ -53,7 +53,7 @@ public class TanksjsToMapMapper implements Func1<ResponseBody, Map> {
                     if (i == stringArray.length - 1) {
                         String tankDictStr = stringArray[i];
                         String tankId = tankDictStr.trim().substring(1, tankDictStr.lastIndexOf("{") - 2);
-                        String tankInfoStr = tankDictStr.substring(tankDictStr.lastIndexOf("{")).trim();
+                        String tankInfoStr = tankDictStr.substring(tankDictStr.lastIndexOf("{"),tankDictStr.length()-2).trim();
 
                         tankInfo = gson.fromJson(tankInfoStr, TankInfo.class);
                         map.put(tankId, tankInfo);
