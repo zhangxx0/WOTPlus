@@ -68,13 +68,13 @@ public class XvmTankTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 Glide.with(mContext).load(R.drawable.star00).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
                 break;
             case 1:
-                Glide.with(mContext).load(R.drawable.starlv1).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
+                Glide.with(mContext).load(R.drawable.starlv1_1).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
                 break;
             case 2:
                 Glide.with(mContext).load(R.drawable.starlv2).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
                 break;
             case 3:
-                Glide.with(mContext).load(R.drawable.starlv3).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
+                Glide.with(mContext).load(R.drawable.starlv3_3).centerCrop().into(((TankTableViewHolder) holder).xvm_tanktable_mark);
                 break;
         }
 

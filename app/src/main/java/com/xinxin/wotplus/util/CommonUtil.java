@@ -352,7 +352,7 @@ public class CommonUtil {
      * @return http://182.18.61.50/Data/icons/vehicle/france-Bat_Chatillon25t.png
      */
     public static String getTankIcon(String country, String name) {
-        String base = "http://182.18.61.50/Data/icons/vehicle/";
+        String base = "http://rank.kongzhong.com/Data/icons/vehicle/";
         return base + country + "-" + name + ".png";
     }
 

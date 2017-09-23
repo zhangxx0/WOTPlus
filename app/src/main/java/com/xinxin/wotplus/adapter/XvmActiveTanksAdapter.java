@@ -79,11 +79,11 @@ public class XvmActiveTanksAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         // 占位图片需要更换为透明的
         int gunmarkDraw = R.drawable.star0;
         if (ti.getGunmark() == 1) {
-            gunmarkDraw = R.drawable.starlv1;
+            gunmarkDraw = R.drawable.starlv1_1;
         } else if (ti.getGunmark() == 2) {
             gunmarkDraw = R.drawable.starlv2;
         } else if (ti.getGunmark() == 3) {
-            gunmarkDraw = R.drawable.starlv3;
+            gunmarkDraw = R.drawable.starlv3_3;
         }
         Glide.with(mContext).load(gunmarkDraw).centerCrop().into(((ActiveTanksViewHolder) holder).at_star);
         // (6)特级
