@@ -230,7 +230,8 @@ public class JsoupHtmlUtil {
             String formatAchieveJson = "";
             // 南北区截取的也不一样，，，
             if (QueryActivity.REGION_NORTH.equals(region)) {
-                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 356);
+                String temp = formatAchieveJson = achievejsonString.trim();
+                formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 343);
             } else {
                 formatAchieveJson = achievejsonString.substring(75, achievejsonString.length() - 335);
             }
