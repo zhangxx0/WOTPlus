@@ -1,10 +1,29 @@
 package com.xinxin.wotplus.util;
 
 /**
- * Created by xinxin on 2016/3/31.
  * 常量
+ * Created by xinxin on 2016/3/31.
+ * Modified at 2017年12月31日00:34:27
  */
 public class Constant {
+
+    /**
+     * 官网获取用户ID信息等
+     * http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=%E6%8A%98%E8%85%BE5%E5%8F%B7&name_gt=
+     */
+    public static String USER_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static String USER_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
+
+    /**
+     * 获取战绩页面html
+     * 北区：
+     * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
+     * 南区：
+     * http://scw.worldoftanks.cn/zh-cn/community/accounts/1800661743-%E6%8A%98%E8%85%BE5%E5%8F%B7/
+     */
+    public static final String BASE_URL_NORTH = "http://ncw.worldoftanks.cn";
+    public static final String BASE_URL_SOUTH = "http://scw.worldoftanks.cn";
+
 
     /**
      * XVM用户信息(已廢棄)
@@ -13,30 +32,9 @@ public class Constant {
      */
     public static String XVM_USER_JSON_BASE_URL = "http://182.18.61.50/getUserJson?name=";
     public static String XVM_USER_JSON_URL = "";
-    /**
-     * 官网获取用户ID信息等
-     * 目标样例：
-     * http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=%E6%8A%98%E8%85%BE5%E5%8F%B7&name_gt=
-     */
-    public static String USER_JSON_URL = "";
-    public static String USER_JSON_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/search/?name=";
-    public static String USER_JSON_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=";
-    public static String USER_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
-    public static String USER_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
-    /**
-     * 获取战绩页面html
-     * 目标样例：
-     * 北区：
-     * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
-     * 南区：
-     * http://scw.worldoftanks.cn/zh-cn/community/accounts/1800661743-%E6%8A%98%E8%85%BE5%E5%8F%B7/
-     */
-    public static String WOTER_URL = "";
-    public static final String WOTER_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
-    public static final String WOTER_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
-    public static final String BASE_URL_NORTH = "http://ncw.worldoftanks.cn";
-    public static final String BASE_URL_SOUTH = "http://scw.worldoftanks.cn";
+
+
 
     /**
      * 军团信息URL

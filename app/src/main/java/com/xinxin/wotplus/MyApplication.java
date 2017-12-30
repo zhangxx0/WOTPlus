@@ -23,7 +23,7 @@ public class MyApplication extends Application {
         // 初始化极光推送sdk
         // JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
-        JPushInterface.setAlias(context, "WOTPlus0.7", new TagAliasCallback() {
+        JPushInterface.setAlias(context, "WOTPlus1.0", new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
                 Log.d("Jpush set alias", String.valueOf(i));

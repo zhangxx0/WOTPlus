@@ -22,6 +22,7 @@ import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.widget.WotIndicatorView;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,8 +115,8 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             ((AccountViewHolder) holder).woterName.setText(mWoter.getWoterName());
 
-            String timeStamp = mWoter.getTimeStamp();
-            Long creatLong = Long.parseLong(timeStamp.substring(0, timeStamp.indexOf(".")));
+            String timeStamp = new BigDecimal(mWoter.getTimeStamp()).toString();
+            Long creatLong = Long.parseLong(timeStamp);
             String creatDay = new SimpleDateFormat("yyyy-MM-dd").format(new Date(creatLong * 1000));
             ((AccountViewHolder) holder).createAccount.setText(creatDay);
 
@@ -136,9 +137,9 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         if (holder instanceof ChartsViewHolder) {
 
-            ((ChartsViewHolder) holder).killdie_indacator_view.setmDesiredAngle(Float.valueOf(mWoter.getKillDeathRate()));
+            ((ChartsViewHolder) holder).killdie_indacator_view.setmDesiredAngle(mWoter.getKillDeathRate()!=null ? Float.valueOf(mWoter.getKillDeathRate()):0);
             ((ChartsViewHolder) holder).killdie_indacator_view.animateAngle();
-            ((ChartsViewHolder) holder).hurtinjured_indacator_view.setmDesiredAngle(Float.valueOf(mWoter.getDmgRecRate()));
+            ((ChartsViewHolder) holder).hurtinjured_indacator_view.setmDesiredAngle(mWoter.getDmgRecRate()!=null ? Float.valueOf(mWoter.getDmgRecRate()):0);
             ((ChartsViewHolder) holder).hurtinjured_indacator_view.animateAngle();
 
             ((ChartsViewHolder) holder).killdierate.setText(mWoter.getKillDeathRate());
