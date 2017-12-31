@@ -100,41 +100,6 @@ public class XvmFragment extends BaseFragment {
         xvm_recentdays.setLayoutManager(lm);
         xvm_recentdays.setItemAnimator(new DefaultItemAnimator());
 
-        // main信息的Observer
-        Observer<XvmMainInfo> xvmMainObserver = new Observer<XvmMainInfo>() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Snackbar.make(xvm_recentdays, "获取XVM信息出错！", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNext(XvmMainInfo xvmMainInfo) {
-                Log.d("xvm", xvmMainInfo.toString());
-
-            }
-        };
-
-        // tanks.js信息的Observer
-        Observer<Map> tanksObserver = new Observer<Map>() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Snackbar.make(xvm_recentdays, "获取XVMtanks信息出错！", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNext(Map map) {
-                Log.d("xvm9", map.toString());
-            }
-        };
-
         // 汇总信息的Observer
         Observer<XvmAllInfo> xvmAllObserver = new Observer<XvmAllInfo>() {
             @Override
@@ -171,24 +136,6 @@ public class XvmFragment extends BaseFragment {
 
         String name = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "name", "");
         String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
-
-        /**
-         * 获取主信息
-         */
-//        Network.getXvmInfo()
-//                .getXvmMainInfo(name, region)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(xvmMainObserver);
-        /**
-         * 获取tanks.js
-         */
-//        Network.getXvmjsApi()
-//                .getTanksjs()
-//                .map(TanksjsToMapMapper.getInstance())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(tanksObserver);
 
         deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
         deathWheelProgressDialog.show();

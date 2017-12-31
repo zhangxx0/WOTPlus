@@ -60,11 +60,9 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         final List<List<String>> achieve = achievements;
-
-        System.out.println("achieve:" + achieve);
 
         String icon = achieve.get(position).get(9);
         if ("".equals(icon) || icon == null) {
@@ -83,7 +81,7 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
                     // 成就的描述信息
-                    String description = achieve.get(5).get(1) +"\n"+ achieve.get(6).get(1);
+                    String description = achieve.get(position).get(5) +"\n"+ achieve.get(position).get(6);
                     mOnItemClickLitener.onItemClick(holder.itemView, pos, description);
                 }
             });

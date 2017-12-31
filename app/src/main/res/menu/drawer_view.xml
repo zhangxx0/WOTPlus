@@ -28,10 +28,10 @@
             android:id="@+id/nav_count"
             android:icon="@drawable/ic_count"
             android:title="@string/nav_count" />
-        <item
+        <!--<item
             android:id="@+id/nav_level"
             android:icon="@drawable/ic_level"
-            android:title="@string/nav_level" />
+            android:title="@string/nav_level" />-->
         <item
             android:id="@+id/nav_vehicle"
             android:icon="@drawable/ic_vehivle"

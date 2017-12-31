@@ -3,6 +3,7 @@ package com.xinxin.wotplus.network.api;
 import com.xinxin.wotplus.model.kongzhong.Achievements;
 import com.xinxin.wotplus.model.kongzhong.UserSummary;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -32,6 +33,12 @@ public interface KongzhongNewApi {
      */
     @GET("achievements/short/")
     Observable<Achievements> getShortAchievements(@Query("spa_id") String spaId, @Query("language") String language);
+
+    /**
+     * 战绩与坦克分布信息
+     */
+    @GET("statistics/")
+    Observable<ResponseBody> getStatistics(@Query("spa_id") String spaId, @Query("battle_type") String battleType);
 
 
 }

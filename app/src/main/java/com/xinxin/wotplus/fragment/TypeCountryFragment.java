@@ -55,6 +55,8 @@ public class TypeCountryFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_type_country, container, false);
+        deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
+        deathWheelProgressDialog.show();
 
         // 从CharedPreference中获取woter
         final String woterString = PreferenceUtils.getCustomPrefString(getActivity(), "woter", "woterString", "");
@@ -67,72 +69,44 @@ public class TypeCountryFragment extends BaseFragment {
         type_chart = (PieChart) view.findViewById(R.id.type_chart);
         country_charts = (PieChart) view.findViewById(R.id.country_chart);
 
-        // 请求新的API，获取数据，并添加到woter中去
-        Observer<TypesAndCountry> typesAndCountryObserver = new Observer<TypesAndCountry>() {
-            @Override
-            public void onCompleted() {
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                Snackbar.make(getView(), "获取类型与国家信息出错！", Snackbar.LENGTH_LONG).show();
-                deathWheelProgressDialog.dismiss();
-            }
+        // 处理数据
+        woter.setTypesAndCountry(null);
 
-            @Override
-            public void onNext(TypesAndCountry tc) {
+        /*PieData mpieData = getTypeData();
+        type_chart.setHoleRadius(60f);  //半径
+        type_chart.setTransparentCircleRadius(64f);
+        type_chart.setCenterText(woter.getPersonFight());
+        type_chart.setDrawHoleEnabled(true);
+        type_chart.setRotationAngle(90);
+        type_chart.setRotationEnabled(true);
+        type_chart.setUsePercentValues(false);
+        type_chart.setDescription("");
+        type_chart.setData(mpieData);
+        Legend mLegend = type_chart.getLegend();  //设置比例图
+        mLegend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        // mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
+        mLegend.setXEntrySpace(7f);
+        mLegend.setYEntrySpace(5f);
 
-                // 处理数据
-                woter.setTypesAndCountry(tc);
+        PieData mpieData2 = getCountryData();
+        country_charts.setHoleRadius(60f);  //半径
+        country_charts.setTransparentCircleRadius(64f);
+        country_charts.setCenterText(woter.getPersonFight());
+        country_charts.setDrawHoleEnabled(true);
+        country_charts.setRotationAngle(90);
+        country_charts.setRotationEnabled(true);
+        country_charts.setUsePercentValues(false);
+        country_charts.setDescription("");
+        country_charts.setData(mpieData2);
+        Legend mLegend2 = country_charts.getLegend();  //设置比例图
+        mLegend2.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        mLegend2.setXEntrySpace(7f);
+        mLegend2.setYEntrySpace(5f);*/
 
-                PieData mpieData = getTypeData();
-                type_chart.setHoleRadius(60f);  //半径
-                type_chart.setTransparentCircleRadius(64f);
-                type_chart.setCenterText(woter.getPersonFight());
-                type_chart.setDrawHoleEnabled(true);
-                type_chart.setRotationAngle(90);
-                type_chart.setRotationEnabled(true);
-                type_chart.setUsePercentValues(false);
-                type_chart.setDescription("");
-                type_chart.setData(mpieData);
-                Legend mLegend = type_chart.getLegend();  //设置比例图
-                mLegend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-                // mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
-                mLegend.setXEntrySpace(7f);
-                mLegend.setYEntrySpace(5f);
-
-                PieData mpieData2 = getCountryData();
-                country_charts.setHoleRadius(60f);  //半径
-                country_charts.setTransparentCircleRadius(64f);
-                country_charts.setCenterText(woter.getPersonFight());
-                country_charts.setDrawHoleEnabled(true);
-                country_charts.setRotationAngle(90);
-                country_charts.setRotationEnabled(true);
-                country_charts.setUsePercentValues(false);
-                country_charts.setDescription("");
-                country_charts.setData(mpieData2);
-                Legend mLegend2 = country_charts.getLegend();  //设置比例图
-                mLegend2.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-                mLegend2.setXEntrySpace(7f);
-                mLegend2.setYEntrySpace(5f);
-
-                type_chart.invalidate();
-                country_charts.invalidate();
-                deathWheelProgressDialog.dismiss();
-
-            }
-        };
-        deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
-        deathWheelProgressDialog.show();
-        String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
-        // 区分南北区
-        String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
-        subscription = Network.getTypeCountryInfo(region)
-                .getTypeCountryInfo(woterId, LANG)
-                .map(TypeCountryJsonCorrectMapper.getInstance())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(typesAndCountryObserver);
+        type_chart.invalidate();
+        country_charts.invalidate();
+        deathWheelProgressDialog.dismiss();
 
         return view;
 

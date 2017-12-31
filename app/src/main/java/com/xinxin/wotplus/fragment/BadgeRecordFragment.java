@@ -3,6 +3,7 @@ package com.xinxin.wotplus.fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,7 +18,15 @@ import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.kongzhong.Statistics;
+import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
+import com.xinxin.wotplus.util.mapper.StatisticsJsonToStatisticsMapper;
+import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by xinxin on 2016/4/4.
@@ -25,7 +34,8 @@ import com.xinxin.wotplus.util.PreferenceUtils;
  */
 public class BadgeRecordFragment extends BaseFragment implements View.OnClickListener {
 
-    private Woter woter;
+    private Statistics statistics;
+    private DeathWheelProgressDialog deathWheelProgressDialog;
 
     private ImageView class_ace_img, class_1_img, class_2_img, class_3_img;
     private TextView class_ace_num, class_1_num, class_2_num, class_3_num;
@@ -40,17 +50,39 @@ public class BadgeRecordFragment extends BaseFragment implements View.OnClickLis
 
         View view = inflater.inflate(R.layout.fragment_badge_record, container, false);
 
-        // 从CharedPreference中获取woter
-        String woterString = PreferenceUtils.getCustomPrefString(getActivity(), "woter", "woterString", "");
-        Gson gson = new Gson();
-        if (!TextUtils.isEmpty(woterString)) {
-            woter = gson.fromJson(woterString, Woter.class);
-            Log.d("GsonWoter", woter.toString());
-        }
+        deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
+        deathWheelProgressDialog.show();
+
+        // 从接口获取数据
+        Observer<Statistics> observer = new Observer<Statistics>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Snackbar.make(getView(), "获取战绩信息错误！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onNext(Statistics s) {
+                statistics = s;
+                initData();
+                deathWheelProgressDialog.dismiss();
+            }
+        };
+
+        String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
+        String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
+        Network.getKongzhongNewApi(region)
+                .getStatistics(woterId, MainFragment.BATTLE_TYPE)
+                .map(StatisticsJsonToStatisticsMapper.getInstance())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
 
         initView(view);
-
-        initData();
 
         return view;
 
@@ -58,18 +90,12 @@ public class BadgeRecordFragment extends BaseFragment implements View.OnClickLis
 
     private void initData() {
 
-        // 直接使用静态图片 2016年4月17日17:09:13
-//        new DownloadImageTask(class_ace_img).execute(woter.getBadgeAndRecord().getClassAceImg());
-//        new DownloadImageTask(class_1_img).execute(woter.getBadgeAndRecord().getClass1Img());
-//        new DownloadImageTask(class_2_img).execute(woter.getBadgeAndRecord().getClass2Img());
-//        new DownloadImageTask(class_3_img).execute(woter.getBadgeAndRecord().getClass3Img());
+        class_ace_num.setText(String.valueOf(statistics.getData().getMaster_level_counts().getMaster1()));
+        class_1_num.setText(String.valueOf(statistics.getData().getMaster_level_counts().getMaster2()));
+        class_2_num.setText(String.valueOf(statistics.getData().getMaster_level_counts().getMaster3()));
+        class_3_num.setText(String.valueOf(statistics.getData().getMaster_level_counts().getMaster4()));
 
-        class_ace_num.setText(woter.getBadgeAndRecord().getClassAceNum());
-        class_1_num.setText(woter.getBadgeAndRecord().getClass1Num());
-        class_2_num.setText(woter.getBadgeAndRecord().getClass2Num());
-        class_3_num.setText(woter.getBadgeAndRecord().getClass3Num());
-
-        finghtNum.setText(woter.getBadgeAndRecord().getFinghtNum());
+        /*finghtNum.setText(woter.getBadgeAndRecord().getFinghtNum());
         victoryNum.setText(woter.getBadgeAndRecord().getVictoryNum());
         failureNum.setText(woter.getBadgeAndRecord().getFailureNum());
         survivingNum.setText(woter.getBadgeAndRecord().getSurvivingNum());
@@ -83,12 +109,12 @@ public class BadgeRecordFragment extends BaseFragment implements View.OnClickLis
         killingNum.setText(woter.getBadgeAndRecord().getKillingNum());
         averageKillingNum.setText(woter.getBadgeAndRecord().getAverageKillingNum());
         occupiedBaseNum.setText(woter.getBadgeAndRecord().getOccupiedBaseNum());
-        defendBaseNum.setText(woter.getBadgeAndRecord().getDefendBaseNum());
+        defendBaseNum.setText(woter.getBadgeAndRecord().getDefendBaseNum());*/
 
-        class_ace_layout.setOnClickListener(this);
+        /*class_ace_layout.setOnClickListener(this);
         class_1_layout.setOnClickListener(this);
         class_2_layout.setOnClickListener(this);
-        class_3_layout.setOnClickListener(this);
+        class_3_layout.setOnClickListener(this);*/
 
     }
 
@@ -130,16 +156,16 @@ public class BadgeRecordFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.class_ace_layout:
-                showDesDialog(woter.getBadgeAndRecord().getClassAceDes());
+                showDesDialog("最牛逼！");
                 break;
             case R.id.class_1_layout:
-                showDesDialog(woter.getBadgeAndRecord().getClass1Des());
+                showDesDialog("很牛逼！");
                 break;
             case R.id.class_2_layout:
-                showDesDialog(woter.getBadgeAndRecord().getClass2Des());
+                showDesDialog("牛逼！");
                 break;
             case R.id.class_3_layout:
-                showDesDialog(woter.getBadgeAndRecord().getClass3Des());
+                showDesDialog("bi!");
                 break;
         }
     }

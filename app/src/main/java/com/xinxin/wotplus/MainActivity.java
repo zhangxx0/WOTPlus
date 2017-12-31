@@ -149,13 +149,14 @@ public class MainActivity extends AppCompatActivity {
                                         replace(R.id.fl_content, new StatisticsFragment(), "statistics").
                                         commit();
                                 break;
-                            case R.id.nav_level:
+                            /*case R.id.nav_level:
+                                // 暂时在官网中不复存在
                                 setTitle(menuItem.getTitle());
                                 getSupportFragmentManager().beginTransaction().
                                         setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left).
                                         replace(R.id.fl_content, new GradeFragment()).
                                         commit();
-                                break;
+                                break;*/
                             case R.id.nav_vehicle:
                                 setTitle(menuItem.getTitle());
                                 getSupportFragmentManager().beginTransaction().

@@ -8,7 +8,6 @@ import com.xinxin.wotplus.network.api.KongzhongNewApi;
 import com.xinxin.wotplus.network.api.RecordApi;
 import com.xinxin.wotplus.network.api.TankApi;
 import com.xinxin.wotplus.network.api.TanksApi;
-import com.xinxin.wotplus.network.api.TypeCountryApi;
 import com.xinxin.wotplus.network.api.UserInfoApi;
 import com.xinxin.wotplus.network.api.UtilApi;
 import com.xinxin.wotplus.network.api.XvmInfoApi;
@@ -34,7 +33,6 @@ public class Network {
     private static TankApi tankApi;
     private static AchieveApi achieveApi;
 
-    private static TypeCountryApi typeCountryApi;
     private static TanksApi tanksApi;
 
     private static UtilApi utilApi;
@@ -189,34 +187,6 @@ public class Network {
 //        }
 
         return gradeApi;
-
-    }
-
-    /**
-     * 获取坦克类型和国家信息
-     *
-     * @param region
-     * @return
-     */
-    public static TypeCountryApi getTypeCountryInfo(String region) {
-
-        // 需根据大区判断baseurl
-        String baseUrl;
-        if (QueryActivity.REGION_NORTH.equals(region)) {
-            // 使用成就的baseUrl，都是通用的
-            baseUrl = Constant.ACHIEVE_NUMS_BASE_N;
-        } else {
-            baseUrl = Constant.ACHIEVE_NUMS_BASE_S;
-        }
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl(baseUrl)
-                .addConverterFactory(gsonConverterFactory)
-                .addCallAdapterFactory(rxJavaCallAdapterFactory)
-                .build();
-        typeCountryApi = retrofit.create(TypeCountryApi.class);
-
-        return typeCountryApi;
 
     }
 

@@ -16,7 +16,7 @@ import rx.functions.Func1;
  * Created by xinxin on 2016/10/15.
  * 将获取到的json串修正为可识别格式，并重组数据到List<TanksType>
  */
-
+@Deprecated
 public class TankTypeJsonCorrectAndToVoMapper implements Func1<ResponseBody, List<TanksType>> {
     private static TankTypeJsonCorrectAndToVoMapper INSTANCE = new TankTypeJsonCorrectAndToVoMapper();
 

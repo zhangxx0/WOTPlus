@@ -53,7 +53,7 @@ import rx.schedulers.Schedulers;
  */
 public class MainFragment extends BaseFragment {
 
-    private static final String BATTLE_TYPE = "random";
+    public static final String BATTLE_TYPE = "random";
 
     private RecyclerView mRecyclerView;
     private WoterAdapter woterAdapter;

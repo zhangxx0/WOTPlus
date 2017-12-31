@@ -1,6 +1,7 @@
 package com.xinxin.wotplus.model;
 
 import com.xinxin.wotplus.model.kongzhong.Achievements;
+import com.xinxin.wotplus.model.kongzhong.Statistics;
 import com.xinxin.wotplus.model.kongzhong.UserSummary;
 
 import java.io.Serializable;
@@ -17,28 +18,6 @@ public class Woter implements Serializable {
     private ResponseBody responseBody;
 
     private UserSummary userSummary;
-
-    // 主要信息
-
-    /**
-     * account_wins : 54.42161269608293
-     * account_id : 1509154099
-     * account_battles : 21802
-     * account_profile : /zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
-     * clan_url : http://north.warsaga.cn/clans/2083/?utm_campaign=wot-portal&utm_medium=link
-     * account_name : 康恩饭_
-     * account_exp : 13014264
-     * clan_tag : 小伙伴
-     */
-
-//    private String account_id;
-//    private String account_name;
-//    private String account_battles;
-//    private String account_exp;
-//    private String account_profile;
-//    private String account_wins;
-//    private String clan_tag;
-//    private String clan_url;
 
     /**
      * 主要信息
@@ -79,6 +58,12 @@ public class Woter implements Serializable {
     private Achievements achievements;
 
     /**
+     * 新版战绩信息
+     * 2018年1月1日01:51:01
+     */
+    private Statistics statistics;
+
+    /**
      * 徽章与战绩
      */
     private BadgeAndRecord badgeAndRecord;
@@ -93,6 +78,14 @@ public class Woter implements Serializable {
      */
     private Tanks tanks;
 
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
 
     public Achievements getAchievements() {
         return achievements;

@@ -123,12 +123,12 @@ public class TanksFragment extends BaseFragment {
         String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
         // 区分南北区
         String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
-        subscription = Network.getTypeCountryInfo(region)
+        /*subscription = Network.getTypeCountryInfo(region)
                 .getTypeCountryInfo(woterId, TypeCountryFragment.LANG)
                 .map(TankTypeJsonCorrectAndToVoMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .subscribe(observer);*/
 
 
 
