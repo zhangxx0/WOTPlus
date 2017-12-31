@@ -24,6 +24,12 @@ public class Constant {
     public static final String BASE_URL_NORTH = "http://ncw.worldoftanks.cn";
     public static final String BASE_URL_SOUTH = "http://scw.worldoftanks.cn";
 
+    /**
+     * 改版后统一的南北区API基础地址
+     */
+    public static final String BASE_URL_NORTH_NEW = "https://ncw.worldoftanks.cn/wotup/profile/";
+    public static final String BASE_URL_SOUTH_NEW = "https://scw.worldoftanks.cn/wotup/profile/";
+
 
     /**
      * XVM用户信息(已廢棄)

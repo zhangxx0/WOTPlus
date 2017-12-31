@@ -7,7 +7,6 @@ import com.xinxin.wotplus.model.TypesAndCountry;
 import com.xinxin.wotplus.model.Woter;
 import com.xinxin.wotplus.model.kongzhong.UserData;
 
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -58,10 +57,12 @@ public class JsoupHtmlUtil {
 
                 String nickname = userData.getNickname();
                 String reg_timestamp = String.valueOf(userData.getReg_timestamp());
+                String lastBattleTime = String.valueOf(userData.getSummary().getLast_battle_at());
                 UserData.ClanInfoBean clan_info = userData.getClan_info();
 
                 woter.setWoterName(nickname);
                 woter.setTimeStamp(reg_timestamp);
+                woter.setLastBattleTime(lastBattleTime);
 
                 woter.setPersonRanking("");
                 woter.setPersonWin("");

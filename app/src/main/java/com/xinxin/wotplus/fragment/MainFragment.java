@@ -27,6 +27,7 @@ import com.xinxin.wotplus.listener.HidingScrollListener;
 import com.xinxin.wotplus.model.ClanInfoUsed;
 import com.xinxin.wotplus.model.KongzhongUserInfo;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.kongzhong.UserSummary;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.HttpUtil;
 import com.xinxin.wotplus.util.PreferenceUtils;
@@ -42,6 +43,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -50,6 +52,8 @@ import rx.schedulers.Schedulers;
  * 主页面Fragment
  */
 public class MainFragment extends BaseFragment {
+
+    private static final String BATTLE_TYPE = "random";
 
     private RecyclerView mRecyclerView;
     private WoterAdapter woterAdapter;
@@ -218,7 +222,7 @@ public class MainFragment extends BaseFragment {
                 Snackbar.make(getView(), "玩家信息不存在！", Snackbar.LENGTH_LONG).show();
             } else {
                 Snackbar.make(getView(), "Rx其他错误！", Snackbar.LENGTH_LONG).show();
-                 Log.e("eeee", e.getMessage(), e);
+                Log.e("eeee", e.getMessage(), e);
             }
 
             backToQuery();
@@ -268,9 +272,10 @@ public class MainFragment extends BaseFragment {
 
         subscription = Network.getUseInfoApi(region)
                 .getUserInfo(name, name_gt)
-                .flatMap(new Func1<KongzhongUserInfo, Observable<ResponseBody>>() {
+                .flatMap(new Func1<KongzhongUserInfo, Observable<Woter>>() {
                     @Override
-                    public Observable<ResponseBody> call(KongzhongUserInfo kongzhongUserInfo) {
+                    public Observable<Woter> call(KongzhongUserInfo kongzhongUserInfo) {
+
                         clanUrl = kongzhongUserInfo.getResponse().get(0).getClan_url();
                         accountId = kongzhongUserInfo.getResponse().get(0).getAccount_id();
                         int userSize = kongzhongUserInfo.getResponse().size();
@@ -279,9 +284,18 @@ public class MainFragment extends BaseFragment {
                         // 保存woterId
                         PreferenceUtils.putCustomPrefString(getActivity(), "woterId", "woterId", accountId);
                         return userSize == 0
-                                ? Observable.<ResponseBody>error(new Exception("getUserInfoError"))
-                                : Network.getRecordApi(region)
-                                .getHtml2(account_profile);
+                                ? Observable.<Woter>error(new Exception("getUserInfoError"))
+                                : Observable.zip(
+                                    Network.getRecordApi(region).getHtml2(account_profile),
+                                    Network.getKongzhongNewApi(region).getUserSummary(accountId, BATTLE_TYPE),
+                                    new Func2<ResponseBody, UserSummary, Woter>() {
+                                        @Override
+                                        public Woter call(ResponseBody responseBody, UserSummary userSummary) {
+                                            woter.setResponseBody(responseBody);
+                                            woter.setUserSummary(userSummary);
+                                            return woter;
+                                        }
+                                    });
                     }
                 })
                 .map(HtmlToWoterMapper.getInstance())

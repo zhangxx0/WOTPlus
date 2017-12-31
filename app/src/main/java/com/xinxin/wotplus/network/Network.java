@@ -4,6 +4,7 @@ import com.xinxin.wotplus.QueryActivity;
 import com.xinxin.wotplus.network.api.AchieveApi;
 import com.xinxin.wotplus.network.api.ClanInfoApi;
 import com.xinxin.wotplus.network.api.GradeApi;
+import com.xinxin.wotplus.network.api.KongzhongNewApi;
 import com.xinxin.wotplus.network.api.RecordApi;
 import com.xinxin.wotplus.network.api.TankApi;
 import com.xinxin.wotplus.network.api.TanksApi;
@@ -40,6 +41,9 @@ public class Network {
 
     private static XvmInfoApi xvmInfoApi;
     private static XvmJsApi xvmJsApi;
+
+
+    private static KongzhongNewApi kongzhongNewApi;
 
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
@@ -130,6 +134,33 @@ public class Network {
 //        }
 
         return clanInfoApi;
+    }
+
+    /**
+     * 空中网改版新增的API接口
+     *
+     * @author zhang.xx
+     * @date 2017年12月31日15:08:08
+     * @return
+     */
+    public static KongzhongNewApi getKongzhongNewApi(String region) {
+
+        String baseUrl;
+        if (QueryActivity.REGION_NORTH.equals(region)) {
+            baseUrl = Constant.BASE_URL_NORTH_NEW;
+        } else {
+            baseUrl = Constant.BASE_URL_SOUTH_NEW;
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl(baseUrl)
+                .addConverterFactory(gsonConverterFactory)
+                .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                .build();
+        kongzhongNewApi = retrofit.create(KongzhongNewApi.class);
+
+        return kongzhongNewApi;
     }
 
     /**

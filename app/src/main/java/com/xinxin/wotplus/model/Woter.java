@@ -1,7 +1,11 @@
 package com.xinxin.wotplus.model;
 
+import com.xinxin.wotplus.model.kongzhong.UserSummary;
+
 import java.io.Serializable;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 /**
  * Created by xinxin on 2016/3/24.
@@ -9,6 +13,10 @@ import java.util.List;
  * 坦克世界玩家信息实体类
  */
 public class Woter implements Serializable {
+
+    private ResponseBody responseBody;
+
+    private UserSummary userSummary;
 
     // 主要信息
 
@@ -39,6 +47,7 @@ public class Woter implements Serializable {
 
     // 创建账号时间戳
     private String timeStamp;
+    private String lastBattleTime;
 
     // 主要信息5个
     private String personWin;
@@ -259,4 +268,27 @@ public class Woter implements Serializable {
         this.enterClanFlag = enterClanFlag;
     }
 
+    public ResponseBody getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(ResponseBody responseBody) {
+        this.responseBody = responseBody;
+    }
+
+    public UserSummary getUserSummary() {
+        return userSummary;
+    }
+
+    public void setUserSummary(UserSummary userSummary) {
+        this.userSummary = userSummary;
+    }
+
+    public String getLastBattleTime() {
+        return lastBattleTime;
+    }
+
+    public void setLastBattleTime(String lastBattleTime) {
+        this.lastBattleTime = lastBattleTime;
+    }
 }

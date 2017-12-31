@@ -3,6 +3,8 @@ package com.xinxin.wotplus.model.kongzhong;
 import java.io.Serializable;
 
 /**
+ * 用户信息（包括军团简要信息）
+ * @Description 此信息包含在战绩主页面html中的script中
  * Created by xinxin on 2017/12/31.
  */
 

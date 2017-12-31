@@ -71,9 +71,9 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (position == TYPE_THR) {
             return TYPE_THR;
         }
-        if (position == TYPE_FOR) {
-            return TYPE_FOR;
-        }
+//        if (position == TYPE_FOR) {
+//            return TYPE_FOR;
+//        }
         return super.getItemViewType(position);
     }
 
@@ -81,9 +81,9 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemCount() {
         // 可以在这个地方判断军团信息是否存在，控制返回的视图数量；
         if (mWoter.getEnterClanFlag().equals("0")) {
-            return 3;
+            return 2;
         } else {
-            return 4;
+            return 3;
         }
     }
 
@@ -98,13 +98,15 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return new MainInfoViewHolder(view);
         }
         if (viewType == TYPE_THR) {
-            View view = layoutInflater.inflate(R.layout.item_main_charts, parent, false);
-            return new ChartsViewHolder(view);
-        }
-        if (viewType == TYPE_FOR) {
             View view = layoutInflater.inflate(R.layout.item_main_clan, parent, false);
             return new ClanViewHolder(view);
+            // View view = layoutInflater.inflate(R.layout.item_main_charts, parent, false);
+            // return new ChartsViewHolder(view);
         }
+//        if (viewType == TYPE_FOR) {
+//            View view = layoutInflater.inflate(R.layout.item_main_clan, parent, false);
+//            return new ClanViewHolder(view);
+//        }
         return null;
     }
 
@@ -112,7 +114,6 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof AccountViewHolder) {
-
             ((AccountViewHolder) holder).woterName.setText(mWoter.getWoterName());
 
             String timeStamp = new BigDecimal(mWoter.getTimeStamp()).toString();
@@ -120,21 +121,31 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             String creatDay = new SimpleDateFormat("yyyy-MM-dd").format(new Date(creatLong * 1000));
             ((AccountViewHolder) holder).createAccount.setText(creatDay);
 
-            int days = (int) ((new Date().getTime() - new Date(creatLong * 1000).getTime()) / (1000 * 60 * 60 * 24));
+            String lastBattleTime = new BigDecimal(mWoter.getLastBattleTime()).toString();
+            Long lastBattleTimeL = Long.parseLong(lastBattleTime);
+            String lastBattleTimeS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(lastBattleTimeL * 1000));
+            ((AccountViewHolder) holder).lastBattleTime.setText("最后战斗时间：" + lastBattleTimeS);
 
+            int days = (int) ((new Date().getTime() - new Date(creatLong * 1000).getTime()) / (1000 * 60 * 60 * 24));
             ((AccountViewHolder) holder).fightDays.setText("您已经在坦克世界中战斗了：" + String.valueOf(days) + "天");
         }
 
         if (holder instanceof MainInfoViewHolder) {
 
-            ((MainInfoViewHolder) holder).personWin.setText(mWoter.getPersonWin());
-            ((MainInfoViewHolder) holder).personFight.setText(mWoter.getPersonFight());
-            ((MainInfoViewHolder) holder).personRanking.setText(mWoter.getPersonRanking());
-            ((MainInfoViewHolder) holder).personExp.setText(mWoter.getPersonExp());
-            ((MainInfoViewHolder) holder).personDmg.setText(mWoter.getPersonDmg());
+            ((MainInfoViewHolder) holder).personWin.setText(String.valueOf(mWoter.getUserSummary().getData().getWins_ratio()));
+            ((MainInfoViewHolder) holder).personFight.setText(String.valueOf(mWoter.getUserSummary().getData().getBattles_count()));
+            ((MainInfoViewHolder) holder).personRanking.setText(String.valueOf(mWoter.getUserSummary().getData().getGlobal_rating()));
+            ((MainInfoViewHolder) holder).personExp.setText(String.valueOf(mWoter.getUserSummary().getData().getXp_per_battle_average()));
+            ((MainInfoViewHolder) holder).personDmg.setText(String.valueOf(mWoter.getUserSummary().getData().getDamage_per_battle_average()));
+
+            ((MainInfoViewHolder) holder).personHitsRatio.setText(String.valueOf(mWoter.getUserSummary().getData().getHits_ratio()+"%"));
+            ((MainInfoViewHolder) holder).personMaxKill.setText(String.valueOf(mWoter.getUserSummary().getData().getFrags_max()));
+            ((MainInfoViewHolder) holder).personMaxExp.setText(String.valueOf(mWoter.getUserSummary().getData().getXp_max()));
+            ((MainInfoViewHolder) holder).personMaster.setText(String.valueOf(mWoter.getUserSummary().getData().getMastery().getMastery_count()+"/"+mWoter.getUserSummary().getData().getMastery().getVehicles_count()));
 
         }
 
+        // 对击杀／死亡率 伤害原因／收到 仪表盘的赋值，这里暂时用不到了； 2017年12月31日18:01:42
         if (holder instanceof ChartsViewHolder) {
 
             ((ChartsViewHolder) holder).killdie_indacator_view.setmDesiredAngle(mWoter.getKillDeathRate()!=null ? Float.valueOf(mWoter.getKillDeathRate()):0);
@@ -147,56 +158,10 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((ChartsViewHolder) holder).hurtinjuredrate.setText(mWoter.getDmgRecRate());
             ((ChartsViewHolder) holder).hurtinjureddata.setText(mWoter.getDmgRecNum());
 
-            /*try {
-
-                PieData mpieData = getKillDieData(4, 100);
-                ((ChartsViewHolder) holder).killdiechart.setHoleRadius(60f);  //半径
-                ((ChartsViewHolder) holder).killdiechart.setTransparentCircleRadius(64f);
-                ((ChartsViewHolder) holder).killdiechart.setCenterText(mWoter.getKillDeathRate());
-                ((ChartsViewHolder) holder).killdiechart.setDrawHoleEnabled(true);
-                ((ChartsViewHolder) holder).killdiechart.setRotationAngle(90);
-                ((ChartsViewHolder) holder).killdiechart.setRotationEnabled(true);
-                ((ChartsViewHolder) holder).killdiechart.setUsePercentValues(false);
-                ((ChartsViewHolder) holder).killdiechart.setDescription(""); // 设置为空
-                ((ChartsViewHolder) holder).killdiechart.setData(mpieData);
-                Legend mLegend = ((ChartsViewHolder) holder).killdiechart.getLegend();  //设置比例图
-                mLegend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);  //最右边显示
-                // mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
-                mLegend.setXEntrySpace(7f);
-                mLegend.setYEntrySpace(5f);
-
-                PieData mpieData2 = getHurtRecData(4, 100);
-                ((ChartsViewHolder) holder).hurtinjuredchart.setHoleRadius(60f);  //半径
-                ((ChartsViewHolder) holder).hurtinjuredchart.setTransparentCircleRadius(64f);
-                ((ChartsViewHolder) holder).hurtinjuredchart.setCenterText(mWoter.getDmgRecRate());
-                ((ChartsViewHolder) holder).hurtinjuredchart.setDrawHoleEnabled(true);
-                ((ChartsViewHolder) holder).hurtinjuredchart.setRotationAngle(90);
-                ((ChartsViewHolder) holder).hurtinjuredchart.setRotationEnabled(true);
-                ((ChartsViewHolder) holder).hurtinjuredchart.setUsePercentValues(false);
-                ((ChartsViewHolder) holder).hurtinjuredchart.setDescription(""); // 设置为空
-                ((ChartsViewHolder) holder).hurtinjuredchart.setData(mpieData2);
-                Legend mLegend2 = ((ChartsViewHolder) holder).hurtinjuredchart.getLegend();  //设置比例图
-                mLegend2.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);  //最右边显示
-                mLegend2.setXEntrySpace(7f);
-                mLegend2.setYEntrySpace(5f);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
-
         }
 
         if (holder instanceof ClanViewHolder) {
-
-            // 使用自定义的HttpURLConnection无效，，，不知道怎么加thread；
-//            bitmap[0] = HttpUtil.getHttpBitmap(mWoter.getClanImgSrc());
-//            ((ClanViewHolder) holder).clanFlag.setImageBitmap(bitmap[0]);
-
-            // 使用AsyncTask实现简单的图片获取；
-            // http://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
-            // 有空研究下http://blog.csdn.net/guolin_blog/article/details/17482165
-//            new DownloadImageTask(((ClanViewHolder) holder).clanFlag).execute(mWoter.getClanImgSrc());
-            Glide.with(mContext).load(mWoter.getClanImgSrc()).into(((ClanViewHolder) holder).clanFlag);
+            Glide.with(mContext).load("https:"+mWoter.getClanImgSrc()).into(((ClanViewHolder) holder).clanFlag);
 
             // 这里使用了省略，若想查看详细，可以设置一个点击的弹出；
             ((ClanViewHolder) holder).clanDescription.setText(mWoter.getClanDescription());
@@ -216,12 +181,14 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TextView woterName;
         private TextView createAccount;
         private TextView fightDays;
+        private TextView lastBattleTime;
 
         public AccountViewHolder(View itemView) {
             super(itemView);
             woterName = (TextView) itemView.findViewById(R.id.woterName);
             createAccount = (TextView) itemView.findViewById(R.id.createAccount);
             fightDays = (TextView) itemView.findViewById(R.id.fightDays);
+            lastBattleTime = (TextView) itemView.findViewById(R.id.lastBattleTime);
 
         }
     }
@@ -238,6 +205,11 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TextView personExp;
         private TextView personDmg;
 
+        private TextView personHitsRatio;
+        private TextView personMaxKill;
+        private TextView personMaxExp;
+        private TextView personMaster;
+
         public MainInfoViewHolder(View itemView) {
             super(itemView);
             personWin = (TextView) itemView.findViewById(R.id.personWin);
@@ -245,6 +217,10 @@ public class WoterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             personRanking = (TextView) itemView.findViewById(R.id.personRanking);
             personExp = (TextView) itemView.findViewById(R.id.personExp);
             personDmg = (TextView) itemView.findViewById(R.id.personDmg);
+            personHitsRatio = (TextView) itemView.findViewById(R.id.personHitsRatio);
+            personMaxKill = (TextView) itemView.findViewById(R.id.personMaxKill);
+            personMaxExp = (TextView) itemView.findViewById(R.id.personMaxExp);
+            personMaster = (TextView) itemView.findViewById(R.id.personMaster);
         }
     }
 

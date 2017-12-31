@@ -73,6 +73,21 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/lastBattleTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/wrclass_ss"
+                android:text="最后战斗时间："/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

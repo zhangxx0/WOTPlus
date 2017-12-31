@@ -54,6 +54,30 @@
                     android:layout_marginTop="@dimen/linearlayout_margin_less"
                     android:textColor="@color/green"
                     android:text="54.42%" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_tank_hit_popup" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:text="命中率"
+                    />
+
+                <TextView
+                    android:id="@+id/personHitsRatio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/value1"
+                    android:text="54.42%" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -71,10 +95,10 @@
                 android:layout_gravity="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_tank_battles_popup" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_tank_battles_popup" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,6 +114,28 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/linearlayout_margin_less"
                     android:textColor="@color/default_edgeeffect_color"
+                    android:text="21,794" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_tank_avgdmg_popup" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:text="平均伤害" />
+
+                <TextView
+                    android:id="@+id/personDmg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/accent_material_light"
                     android:text="21,794" />
             </LinearLayout>
 
@@ -133,6 +179,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -166,9 +213,32 @@
                     android:layout_marginTop="@dimen/linearlayout_margin_less"
                     android:textColor="@color/accent_material_light"
                     android:text="596" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_frag_ratio_popup" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:text="最多击毁" />
+
+                <TextView
+                    android:id="@+id/personMaxKill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/default_edgeeffect_color"
+                    android:text="596" />
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -185,22 +255,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_tank_avgdmg_popup" />
+                    android:src="@drawable/ic_tank_maxexp_popup" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textSize="12sp"
-                    android:text="平均伤害" />
+                    android:text="最大经验" />
 
                 <TextView
-                    android:id="@+id/personDmg"
+                    android:id="@+id/personMaxExp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/linearlayout_margin_less"
                     android:textColor="@color/default_color"
+                    android:text="1,187" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_thumb_up_on" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:text="战斗嘉奖" />
+
+                <TextView
+                    android:id="@+id/personMaster"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/linearlayout_margin_less"
+                    android:textColor="@color/mark_master"
+                    android:textSize="13sp"
                     android:text="1,187" />
             </LinearLayout>
 
