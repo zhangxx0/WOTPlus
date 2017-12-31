@@ -64,11 +64,6 @@ public class Woter implements Serializable {
     private Statistics statistics;
 
     /**
-     * 徽章与战绩
-     */
-    private BadgeAndRecord badgeAndRecord;
-
-    /**
      * 类型与国家
      */
     private TypesAndCountry typesAndCountry;
@@ -111,13 +106,6 @@ public class Woter implements Serializable {
         this.typesAndCountry = typesAndCountry;
     }
 
-    public BadgeAndRecord getBadgeAndRecord() {
-        return badgeAndRecord;
-    }
-
-    public void setBadgeAndRecord(BadgeAndRecord badgeAndRecord) {
-        this.badgeAndRecord = badgeAndRecord;
-    }
 
     public String getWoterName() {
         return woterName;

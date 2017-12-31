@@ -10,18 +10,15 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.TankAchievesNewAdapter;
 import com.xinxin.wotplus.base.SwipeBackBaseActivity;
-import com.xinxin.wotplus.model.Achieve;
 import com.xinxin.wotplus.model.AchieveNew;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.TankAchieveNew;
@@ -35,9 +32,7 @@ import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 import com.xinxin.wotplus.widget.RevealBackgroundView;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
 import rx.Observer;
