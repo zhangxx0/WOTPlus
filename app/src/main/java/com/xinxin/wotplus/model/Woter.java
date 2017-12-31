@@ -1,9 +1,9 @@
 package com.xinxin.wotplus.model;
 
+import com.xinxin.wotplus.model.kongzhong.Achievements;
 import com.xinxin.wotplus.model.kongzhong.UserSummary;
 
 import java.io.Serializable;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 
@@ -73,15 +73,10 @@ public class Woter implements Serializable {
     private String clanDays;
 
     /**
-     * 成就信息
+     * 新版的成就信息
+     * 2017年12月31日23:09:38
      */
     private Achievements achievements;
-
-    /**
-     * 新版的成就信息
-     * 2016年6月19日21:54:05
-     */
-    private List<AchieveNew> newAchievements;
 
     /**
      * 徽章与战绩
@@ -99,12 +94,12 @@ public class Woter implements Serializable {
     private Tanks tanks;
 
 
-    public List<AchieveNew> getNewAchievements() {
-        return newAchievements;
+    public Achievements getAchievements() {
+        return achievements;
     }
 
-    public void setNewAchievements(List<AchieveNew> newAchievements) {
-        this.newAchievements = newAchievements;
+    public void setAchievements(Achievements achievements) {
+        this.achievements = achievements;
     }
 
     public Tanks getTanks() {
@@ -137,14 +132,6 @@ public class Woter implements Serializable {
 
     public void setWoterName(String woterName) {
         this.woterName = woterName;
-    }
-
-    public Achievements getAchievements() {
-        return achievements;
-    }
-
-    public void setAchievements(Achievements achievements) {
-        this.achievements = achievements;
     }
 
     public String getClanDays() {
@@ -291,4 +278,6 @@ public class Woter implements Serializable {
     public void setLastBattleTime(String lastBattleTime) {
         this.lastBattleTime = lastBattleTime;
     }
+
+
 }

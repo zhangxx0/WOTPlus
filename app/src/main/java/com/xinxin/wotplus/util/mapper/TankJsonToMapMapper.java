@@ -82,7 +82,7 @@ public class TankJsonToMapMapper implements Func1<ResponseBody, TankAchieveNew> 
                     woter = gson.fromJson(woterString, Woter.class);
                     if (woter != null) {
                         // 获取成就的七个列表信息
-                        newAchievements = woter.getNewAchievements();
+//                        newAchievements = woter.getNewAchievements();
                     }
                 }
 

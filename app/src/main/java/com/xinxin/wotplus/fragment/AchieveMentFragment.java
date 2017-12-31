@@ -16,6 +16,7 @@ import com.xinxin.wotplus.adapter.AchieveMentAdapter;
 import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.AchieveNew;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.kongzhong.Achievements;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.AchieveJsonToMapMapper;
@@ -33,6 +34,8 @@ import rx.schedulers.Schedulers;
  * 成就Fragment
  */
 public class AchieveMentFragment extends BaseFragment {
+
+    private static final String LANGUAGE = "zh-cn";
 
     private RecyclerView recyclerview_achieve;
     private AchieveMentAdapter adapter;
@@ -55,7 +58,7 @@ public class AchieveMentFragment extends BaseFragment {
         fab.hide();
 
 
-        Observer<List<AchieveNew>> achieveObserver = new Observer<List<AchieveNew>>() {
+        Observer<Achievements> achieveObserver = new Observer<Achievements>() {
             @Override
             public void onCompleted() {
             }
@@ -67,9 +70,9 @@ public class AchieveMentFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(List<AchieveNew> achieveNews) {
+            public void onNext(Achievements achievements) {
 
-                woter.setNewAchievements(achieveNews);
+                woter.setAchievements(achievements);
 
                 adapter = new AchieveMentAdapter(getActivity(), woter);
                 // RecyclerView 动画
@@ -85,12 +88,18 @@ public class AchieveMentFragment extends BaseFragment {
         String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
         String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
 
-        Network.getAchieveApi(region)
+        Network.getKongzhongNewApi(region)
+                .getFullAchievements(woterId, LANGUAGE)
+//                .map(AchieveJsonToMapMapper.getInstance())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(achieveObserver);
+        /*Network.getAchieveApi(region)
                 .getAchievesNums(woterId)
                 .map(AchieveJsonToMapMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(achieveObserver);
+                .subscribe(achieveObserver);*/
 
         return view;
     }

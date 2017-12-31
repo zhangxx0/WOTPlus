@@ -45,7 +45,7 @@ public class AchieveJsonToMapMapper implements Func1<ResponseBody, List<AchieveN
             woter = gson.fromJson(woterString, Woter.class);
             if (woter != null) {
                 // 获取成就的七个列表信息
-                newAchievements = woter.getNewAchievements();
+//                newAchievements = woter.getNewAchievements();
             }
         }
 

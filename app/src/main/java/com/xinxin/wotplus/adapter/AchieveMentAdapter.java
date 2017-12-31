@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.AchieveNew;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.kongzhong.Achievements;
 
 import java.util.List;
 
@@ -47,87 +48,19 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        // 处理多余的史诗勋章
-        if (position == 2) {
-            removeUniqueAchieve(position);
-        }
+        Achievements achievements = mWoter.getAchievements();
+        int getNums = achievements.getData().getData().get(position).getEarned_achievements();
+        int totalNums = achievements.getData().getData().get(position).getAvailable_achievements();
 
-        // 处理多余的纪念勋章
-        if (position == 4) {
-            removeUniqueAchieve(position);
-        }
-
-        // 处理阶段奖励
-        if (position == 5) {
-            /* 图标处理（big图有值但是没实际图） mWoter.getNewAchievements().get(position).getAchievements().get(0).getIcons().setBig("");
-            mWoter.getNewAchievements().get(position).getAchievements().get(1).getIcons().setBig("");
-            mWoter.getNewAchievements().get(position).getAchievements().get(2).getIcons().setBig("");
-            mWoter.getNewAchievements().get(position).getAchievements().get(3).getIcons().setBig("");*/
-
-            List<AchieveNew.AchievementsEntity> stageList = mWoter.getNewAchievements().get(position).getAchievements();
-
-            // 倒叙遍历
-            for (int i = stageList.size() - 1; i >= 0; i--) {
-                AchieveNew.AchievementsEntity achievementsEntity = stageList.get(i);
-
-                // 处理级别勋章
-                // （1）nums!=0的情况
-                if (!"0".equals(achievementsEntity.getNums())) {
-                    Double number = (Double) achievementsEntity.getNumber();
-                    if (!achievementsEntity.getNums().equals(number.intValue()+"")) {
-                        stageList.remove(i);
-                    }
-                }
-                // （2）nums==0的情况
-                if ("0".equals(achievementsEntity.getNums())) {
-                    Double number = (Double) achievementsEntity.getNumber();
-                    if (number.intValue() != 4) {
-                        stageList.remove(i);
-                    }
-                }
-                // 处理战斗嘉奖-去除
-                // 注意上面的操作已经删掉了除特级之外的三个等级的勋章，所以这里只删掉特级
-                if ("markOfMastery".equals(achievementsEntity.getName()) && "4.0".equals(achievementsEntity.getNumber().toString())) {
-                    stageList.remove(i);
-                }
-
-            }
-
-            mWoter.getNewAchievements().get(position).setAchievements(stageList);
-        }
-
-        // 处理特殊勋章
+        String sub_title = achievements.getData().getData().get(position).getMark()
+                + " " + getNums + "/" + totalNums + "";
+        // 特殊勋章 只展示获取个数
         if (position == 6) {
-            List<AchieveNew.AchievementsEntity> specialList = mWoter.getNewAchievements().get(position).getAchievements();
-
-            // 倒叙遍历
-            for (int i = specialList.size() - 1; i >= 0; i--) {
-                AchieveNew.AchievementsEntity achievementsEntity = specialList.get(i);
-
-                //
-                if ("0".equals(achievementsEntity.getNums())) {
-                    specialList.remove(i);
-                }
-
-            }
-
-            mWoter.getNewAchievements().get(position).setAchievements(specialList);
+            sub_title = achievements.getData().getData().get(position).getMark() + " " + getNums;
         }
-
-        // 获得的勋章数量
-        AchieveNew achieveNew = mWoter.getNewAchievements().get(position);
-        int getNums = 0;
-        for (AchieveNew.AchievementsEntity achievementsEntity : achieveNew.getAchievements()) {
-            if (!"0".equals(achievementsEntity.getNums())) {
-                getNums++;
-            }
-        }
-
-        String sub_title = achieveNew.getLocalization().getMark()
-                + " " + getNums + "/" + achieveNew.getAchievements().size() + "";
         ((BaseViewHolder) holder).achieve_sub_title.setText(sub_title);
 
-        subadapter = new AchieveAdapter(mWoter.getNewAchievements().get(position), mContext);
+        subadapter = new AchieveAdapter(mWoter.getAchievements().getData().getData().get(position).getAchievements(), mContext);
 
         // sub RecyclerView 的处理
         GridLayoutManager gm = new GridLayoutManager(mContext, 4);
@@ -180,7 +113,7 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      * @param position
      */
     private void removeUniqueAchieve(int position) {
-        List<AchieveNew.AchievementsEntity> achievementsEntities = mWoter.getNewAchievements().get(position).getAchievements();
+        /*List<AchieveNew.AchievementsEntity> achievementsEntities = mWoter.getNewAchievements().get(position).getAchievements();
 
         // 倒叙遍历
         for (int i = achievementsEntities.size() - 1; i >= 0; i--) {
@@ -192,7 +125,7 @@ public class AchieveMentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         }
 
-        mWoter.getNewAchievements().get(position).setAchievements(achievementsEntities);
+        mWoter.getNewAchievements().get(position).setAchievements(achievementsEntities);*/
     }
 
     private void showDesDialog(String classAceDes) {

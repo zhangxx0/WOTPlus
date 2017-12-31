@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.AchieveNew;
+import com.xinxin.wotplus.model.kongzhong.Achievements;
+
+import java.util.List;
 
 /**
  * Created by xinxin on 2016/4/3.
@@ -21,8 +24,7 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context mContext;
     private LayoutInflater layoutInflater;
 
-    // private List<Achieve> achieveList;
-    private AchieveNew achieveNew;
+    private List<List<String>> achievements;
 
     // 通过adapter中自己去提供回调
     public interface OnItemClickLitener {
@@ -38,8 +40,8 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    public AchieveAdapter(AchieveNew achieveNew, Context mContext) {
-        this.achieveNew = achieveNew;
+    public AchieveAdapter(List<List<String>> achList, Context mContext) {
+        this.achievements = achList;
         this.mContext = mContext;
         layoutInflater = LayoutInflater.from(mContext);
     }
@@ -60,21 +62,19 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
-        // final Achieve achieve = achieveList.get(position);
-        final AchieveNew.AchievementsEntity achieve = achieveNew.getAchievements().get(position);
+        final List<List<String>> achieve = achievements;
 
-        // 效果是实现了，这个地方对图片的处理是否不妥？
-        // 有什么缺点?缓存什么的怎么弄？自己写还是使用框架? 2016年4月3日15:20:31
-//        new DownloadImageTask(((AchieveViewHolder) holder).achieve_icon).execute(achieve.getAchivementImg());
-        String icon = achieve.getIcons().getBig();
+        System.out.println("achieve:" + achieve);
+
+        String icon = achieve.get(position).get(9);
         if ("".equals(icon) || icon == null) {
-            icon = achieve.getIcons().getDefaultX();
+            icon = achieve.get(position).get(8);
         }
         icon = "http:" + icon;
 
         Glide.with(mContext).load(icon).centerCrop().into(((AchieveViewHolder) holder).achieve_icon);
-        ((AchieveViewHolder) holder).achieve_name.setText(achieve.getLocalization().getMark());
-        ((AchieveViewHolder) holder).achieve_num.setText(achieve.getNums());
+        ((AchieveViewHolder) holder).achieve_name.setText(achieve.get(position).get(4));
+        ((AchieveViewHolder) holder).achieve_num.setText(achieve.get(position).get(10) != null ? achieve.get(position).get(10) : "0");
 
         // 如果设置了回调，则设置点击事件
         if (mOnItemClickLitener != null) {
@@ -83,7 +83,7 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
                     // 成就的描述信息
-                    String description = achieve.getLocalization().getDescription() +"\n"+ achieve.getLocalization().getCondition();
+                    String description = achieve.get(5).get(1) +"\n"+ achieve.get(6).get(1);
                     mOnItemClickLitener.onItemClick(holder.itemView, pos, description);
                 }
             });
@@ -102,7 +102,7 @@ public class AchieveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return achieveNew.getAchievements().size();
+        return achievements.size();
     }
 
     /**
