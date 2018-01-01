@@ -10,11 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.xinxin.wotplus.MyApplication;
@@ -23,9 +32,11 @@ import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.TypesAndCountry;
 import com.xinxin.wotplus.model.TypesAndCountryNewVO;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.kongzhong.Statistics;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.PreferenceUtils;
 import com.xinxin.wotplus.util.mapper.AchieveJsonToMapMapper;
+import com.xinxin.wotplus.util.mapper.StatisticsJsonToStatisticsMapper;
 import com.xinxin.wotplus.util.mapper.TypeCountryJsonCorrectMapper;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
 
@@ -43,10 +54,11 @@ public class TypeCountryFragment extends BaseFragment {
 
     public static final String LANG = "zh-cn";
 
-    private Woter woter;
+    private Statistics statistics;
 
-    private PieChart type_chart;
-    private PieChart country_charts;
+    private BarChart level_chart;
+    private BarChart type_chart;
+    private BarChart country_charts;
 
     private DeathWheelProgressDialog deathWheelProgressDialog;
 
@@ -58,52 +70,42 @@ public class TypeCountryFragment extends BaseFragment {
         deathWheelProgressDialog = DeathWheelProgressDialog.createDialog(getActivity());
         deathWheelProgressDialog.show();
 
-        // 从CharedPreference中获取woter
-        final String woterString = PreferenceUtils.getCustomPrefString(getActivity(), "woter", "woterString", "");
-        Gson gson = new Gson();
-        if (!TextUtils.isEmpty(woterString)) {
-            woter = gson.fromJson(woterString, Woter.class);
-            Log.d("GsonWoter", woter.toString());
-        }
+        // 从接口获取数据
+        Observer<Statistics> observer = new Observer<Statistics>() {
+            @Override
+            public void onCompleted() {
+            }
 
-        type_chart = (PieChart) view.findViewById(R.id.type_chart);
-        country_charts = (PieChart) view.findViewById(R.id.country_chart);
+            @Override
+            public void onError(Throwable e) {
+                Snackbar.make(getView(), "获取战绩信息错误！", Snackbar.LENGTH_LONG).show();
+                deathWheelProgressDialog.dismiss();
+            }
 
+            @Override
+            public void onNext(Statistics s) {
+                statistics = s;
+                setLevelChartData();
+                setCountryChartData();
+                setTypeChartData();
+                deathWheelProgressDialog.dismiss();
+            }
+        };
 
-        // 处理数据
-        woter.setTypesAndCountry(null);
+        String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
+        String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
+        Network.getKongzhongNewApi(region)
+                .getStatistics(woterId, MainFragment.BATTLE_TYPE)
+                .map(StatisticsJsonToStatisticsMapper.getInstance())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
 
-        /*PieData mpieData = getTypeData();
-        type_chart.setHoleRadius(60f);  //半径
-        type_chart.setTransparentCircleRadius(64f);
-        type_chart.setCenterText(woter.getPersonFight());
-        type_chart.setDrawHoleEnabled(true);
-        type_chart.setRotationAngle(90);
-        type_chart.setRotationEnabled(true);
-        type_chart.setUsePercentValues(false);
-        type_chart.setDescription("");
-        type_chart.setData(mpieData);
-        Legend mLegend = type_chart.getLegend();  //设置比例图
-        mLegend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        // mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
-        mLegend.setXEntrySpace(7f);
-        mLegend.setYEntrySpace(5f);
+        level_chart = (BarChart) view.findViewById(R.id.level_chart);
+        type_chart = (BarChart) view.findViewById(R.id.type_chart);
+        country_charts = (BarChart) view.findViewById(R.id.country_chart);
 
-        PieData mpieData2 = getCountryData();
-        country_charts.setHoleRadius(60f);  //半径
-        country_charts.setTransparentCircleRadius(64f);
-        country_charts.setCenterText(woter.getPersonFight());
-        country_charts.setDrawHoleEnabled(true);
-        country_charts.setRotationAngle(90);
-        country_charts.setRotationEnabled(true);
-        country_charts.setUsePercentValues(false);
-        country_charts.setDescription("");
-        country_charts.setData(mpieData2);
-        Legend mLegend2 = country_charts.getLegend();  //设置比例图
-        mLegend2.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        mLegend2.setXEntrySpace(7f);
-        mLegend2.setYEntrySpace(5f);*/
-
+        level_chart.invalidate();
         type_chart.invalidate();
         country_charts.invalidate();
         deathWheelProgressDialog.dismiss();
@@ -112,151 +114,245 @@ public class TypeCountryFragment extends BaseFragment {
 
     }
 
+    private void setLevelChartData() {
 
-    /**
-     * 获取坦克类型piechart数据
-     *
-     * @return
-     */
-    private PieData getTypeData() {
-        TypesAndCountry tc = woter.getTypesAndCountry();
+        level_chart.setDescription(null);
 
-        ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
-        xValues.add("LT");
-        xValues.add("MT");
-        xValues.add("HT");
-        xValues.add("TD");
-        xValues.add("SPG");
+        XAxis xAxis = level_chart.getXAxis();//获取x轴
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置X轴标签显示位置
+        xAxis.setDrawGridLines(false);//不绘制格网线
+        xAxis.setGranularity(1f);//设置最小间隔，防止当放大时，出现重复标签。
+        xAxis.setLabelCount(10);
+        xAxis.setValueFormatter(new IAxisValueFormatter(){
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return String.valueOf((int) value+1);
+            }
+        });
 
-        ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据
-        // 饼图数据
-        /**
-         * 使用比值
-         */
-        // 计算比值
-        // 使用百分比
-//        float quarterly1 = Float.parseFloat(tc.getPercentageLt().toString().replace("%", ""));
-//        float quarterly2 = Float.parseFloat(tc.getPercentageMt().toString().replace("%", ""));
-//        float quarterly3 = Float.parseFloat(tc.getPercentageHt().toString().replace("%", ""));
-//        float quarterly4 = Float.parseFloat(tc.getPercentageTd().toString().replace("%", ""));
-//        float quarterly5 = Float.parseFloat(tc.getPercentageSpg().toString().replace("%", ""));
-        // 使用场数
-        float quarterly1 = Float.parseFloat(tc.getNumsLt());
-        float quarterly2 = Float.parseFloat(tc.getNumsMt());
-        float quarterly3 = Float.parseFloat(tc.getNumsHt());
-        float quarterly4 = Float.parseFloat(tc.getNumsTd());
-        float quarterly5 = Float.parseFloat(tc.getNumsSpg());
+        //y轴设置
+        YAxis leftAxis = level_chart.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawLabels(false);
+        leftAxis.setDrawAxisLine(false);
 
-        yValues.add(new Entry(quarterly1, 0));
-        yValues.add(new Entry(quarterly2, 1));
-        yValues.add(new Entry(quarterly3, 2));
-        yValues.add(new Entry(quarterly4, 3));
-        yValues.add(new Entry(quarterly5, 4));
+        YAxis rightAxis = level_chart.getAxisRight();
+        rightAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawLabels(false);
+        rightAxis.setDrawAxisLine(false);
 
-        //y轴的集合
-        PieDataSet pieDataSet = new PieDataSet(yValues, "坦克类型"/*显示在比例图上*/);
-        pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        Statistics.DataBean.TiersBean tiers = statistics.getData().getTiers();
+        yVals1.add(new BarEntry(0, tiers.getTier1().getBattles_count()));
+        yVals1.add(new BarEntry(1, tiers.getTier2().getBattles_count()));
+        yVals1.add(new BarEntry(2, tiers.getTier3().getBattles_count()));
+        yVals1.add(new BarEntry(3, tiers.getTier4().getBattles_count()));
+        yVals1.add(new BarEntry(4, tiers.getTier5().getBattles_count()));
+        yVals1.add(new BarEntry(5, tiers.getTier6().getBattles_count()));
+        yVals1.add(new BarEntry(6, tiers.getTier7().getBattles_count()));
+        yVals1.add(new BarEntry(7, tiers.getTier8().getBattles_count()));
+        yVals1.add(new BarEntry(8, tiers.getTier9().getBattles_count()));
+        yVals1.add(new BarEntry(9, tiers.getTier10().getBattles_count()));
 
-        // 饼图颜色
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
+        BarDataSet set1;
 
-        //  colors.add(Color.RED);
+        if (level_chart.getData() != null &&
+                level_chart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) level_chart.getData().getDataSetByIndex(0);
+            set1.setValues(yVals1);
+            level_chart.getData().notifyDataChanged();
+            level_chart.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(yVals1, "按等级");
 
-        pieDataSet.setColors(colors);
+            set1.setDrawIcons(false);
 
-        DisplayMetrics metrics = MyApplication.getContext().getResources().getDisplayMetrics();
-        float px = 5 * (metrics.densityDpi / 160f);
-        pieDataSet.setSelectionShift(px); // 选中态多出的长度
+            set1.setColors(ColorTemplate.COLORFUL_COLORS);
 
-        PieData pieData = new PieData(xValues, pieDataSet);
+            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+            dataSets.add(set1);
 
-        return pieData;
+            BarData data = new BarData(dataSets);
+            data.setValueTextSize(10f);
+            // 这特么是个啥呢？ 2018年1月1日16:55:15
+//            data.setValueTypeface(mTfLight);
+            data.setBarWidth(0.9f);
+
+            level_chart.setData(data);
+        }
     }
 
-    /**
-     * 获取国家piechart数据
-     *
-     * @return
-     */
-    private PieData getCountryData() {
-        TypesAndCountry tc = woter.getTypesAndCountry();
+    private void setCountryChartData() {
 
-        ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
-        xValues.add("S系");
-        xValues.add("D系");
-        xValues.add("M系");
-        xValues.add("F系");
-        xValues.add("Y系");
-        xValues.add("C系");
-        xValues.add("R系");
-        xValues.add("J系");
+        country_charts.setDescription(null);
 
-        ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据
-        // 饼图数据
-        /**
-         * 使用比值
-         */
-        // 计算比值
-        // 使用百分比
-//        float quarterly1 = Float.parseFloat(tc.getPercentageUssr().toString().replace("%", ""));
-//        float quarterly2 = Float.parseFloat(tc.getPercentageGe().toString().replace("%", ""));
-//        float quarterly3 = Float.parseFloat(tc.getPercentageUsa().toString().replace("%", ""));
-//        float quarterly4 = Float.parseFloat(tc.getPercentageFr().toString().replace("%", ""));
-//        float quarterly5 = Float.parseFloat(tc.getPercentageUk().toString().replace("%", ""));
-//        float quarterly6 = Float.parseFloat(tc.getPercentageCn().toString().replace("%", ""));
-//        float quarterly7 = Float.parseFloat(tc.getPercentageJa().toString().replace("%", ""));
-//        float quarterly8 = Float.parseFloat(tc.getPercentageCz().toString().replace("%", ""));
-        // 使用场数比
-        float quarterly1 = Float.parseFloat(tc.getNumsUssr().toString());
-        float quarterly2 = Float.parseFloat(tc.getNumsGe().toString());
-        float quarterly3 = Float.parseFloat(tc.getNumsUsa().toString());
-        float quarterly4 = Float.parseFloat(tc.getNumsFr().toString());
-        float quarterly5 = Float.parseFloat(tc.getNumsUk().toString());
-        float quarterly6 = Float.parseFloat(tc.getNumsCn().toString());
-        float quarterly7 = Float.parseFloat(tc.getNumsJa().toString());
-        float quarterly8 = Float.parseFloat(tc.getNumsCz().toString());
+        XAxis xAxis = country_charts.getXAxis();//获取x轴
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置X轴标签显示位置
+        xAxis.setDrawGridLines(false);//不绘制格网线
+        xAxis.setGranularity(1f);//设置最小间隔，防止当放大时，出现重复标签。
+        xAxis.setLabelCount(10);
+        xAxis.setValueFormatter(new IAxisValueFormatter(){
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                String nation = "系";
+                switch ((int) value ) {
+                    case 0:
+                        return "C系";
+                    case 1:
+                        return "S系";
+                    case 2:
+                        return "D系";
+                    case 3:
+                        return "M系";
+                    case 4:
+                        return "F系";
+                    case 5:
+                        return "Y系";
+                    case 6:
+                        return "R系";
+                    case 7:
+                        return "J系";
+                    case 8:
+                        return "V系";
+                }
+                return nation;
+            }
+        });
 
-        yValues.add(new Entry(quarterly1, 0));
-        yValues.add(new Entry(quarterly2, 1));
-        yValues.add(new Entry(quarterly3, 2));
-        yValues.add(new Entry(quarterly4, 3));
-        yValues.add(new Entry(quarterly5, 4));
-        yValues.add(new Entry(quarterly6, 5));
-        yValues.add(new Entry(quarterly7, 6));
-        yValues.add(new Entry(quarterly8, 7));
+        //y轴设置
+        YAxis leftAxis = country_charts.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawLabels(false);
+        leftAxis.setDrawAxisLine(false);
 
-        //y轴的集合
-        PieDataSet pieDataSet = new PieDataSet(yValues, "国家"/*显示在比例图上*/);
-        pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
+        YAxis rightAxis = country_charts.getAxisRight();
+        rightAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawLabels(false);
+        rightAxis.setDrawAxisLine(false);
 
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
-        // 饼图颜色
-        colors.add(ColorTemplate.getHoloBlue());
+        Statistics.DataBean.NationsBean nations = statistics.getData().getNations();
+        yVals1.add(new BarEntry(0, nations.getChina().getBattles_count()));
+        yVals1.add(new BarEntry(1, nations.getUssr().getBattles_count()));
+        yVals1.add(new BarEntry(2, nations.getGermany().getBattles_count()));
+        yVals1.add(new BarEntry(3, nations.getUsa().getBattles_count()));
+        yVals1.add(new BarEntry(4, nations.getFrance().getBattles_count()));
+        yVals1.add(new BarEntry(5, nations.getUk().getBattles_count()));
+        yVals1.add(new BarEntry(6, nations.getJapan().getBattles_count()));
+        yVals1.add(new BarEntry(7, nations.getCzech().getBattles_count()));
+        yVals1.add(new BarEntry(8, nations.getSweden().getBattles_count()));
 
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
+        BarDataSet set1;
 
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
+        if (country_charts.getData() != null &&
+                country_charts.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) country_charts.getData().getDataSetByIndex(0);
+            set1.setValues(yVals1);
+            country_charts.getData().notifyDataChanged();
+            country_charts.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(yVals1, "按系别");
 
-//        colors.add(Color.RED);
+            set1.setDrawIcons(false);
 
-        pieDataSet.setColors(colors);
+            set1.setColors(ColorTemplate.VORDIPLOM_COLORS);
 
-        DisplayMetrics metrics = MyApplication.getContext().getResources().getDisplayMetrics();
-        float px = 5 * (metrics.densityDpi / 160f);
-        pieDataSet.setSelectionShift(px); // 选中态多出的长度
+            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+            dataSets.add(set1);
 
-        PieData pieData = new PieData(xValues, pieDataSet);
+            BarData data = new BarData(dataSets);
+            data.setValueTextSize(10f);
+            // 这特么是个啥呢？ 2018年1月1日16:55:15
+//            data.setValueTypeface(mTfLight);
+            data.setBarWidth(0.9f);
 
-        return pieData;
+            country_charts.setData(data);
+        }
     }
+
+    private void setTypeChartData() {
+
+        type_chart.setDescription(null);
+
+        XAxis xAxis = type_chart.getXAxis();//获取x轴
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置X轴标签显示位置
+        xAxis.setDrawGridLines(false);//不绘制格网线
+        xAxis.setGranularity(1f);//设置最小间隔，防止当放大时，出现重复标签。
+        xAxis.setLabelCount(10);
+        xAxis.setValueFormatter(new IAxisValueFormatter(){
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                String nation = "";
+                switch ((int) value ) {
+                    case 0:
+                        return "LT";
+                    case 1:
+                        return "MT";
+                    case 2:
+                        return "HT";
+                    case 3:
+                        return "TD";
+                    case 4:
+                        return "SPG";
+                }
+                return nation;
+            }
+        });
+
+        //y轴设置
+        YAxis leftAxis = type_chart.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawLabels(false);
+        leftAxis.setDrawAxisLine(false);
+
+        YAxis rightAxis = type_chart.getAxisRight();
+        rightAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawLabels(false);
+        rightAxis.setDrawAxisLine(false);
+
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+
+        Statistics.DataBean.TypesBean types = statistics.getData().getTypes();
+        yVals1.add(new BarEntry(0, types.getLightTank().getBattles_count()));
+        yVals1.add(new BarEntry(1, types.getMediumTank().getBattles_count()));
+        yVals1.add(new BarEntry(2, types.getHeavyTank().getBattles_count()));
+        yVals1.add(new BarEntry(3, types.getATSPG().getBattles_count()));
+        yVals1.add(new BarEntry(4, types.getSPG().getBattles_count()));
+
+        BarDataSet set1;
+
+        if (type_chart.getData() != null &&
+                type_chart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) type_chart.getData().getDataSetByIndex(0);
+            set1.setValues(yVals1);
+            type_chart.getData().notifyDataChanged();
+            type_chart.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(yVals1, "按类型");
+
+            set1.setDrawIcons(false);
+
+            set1.setColors(ColorTemplate.JOYFUL_COLORS);
+
+            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+            dataSets.add(set1);
+
+            BarData data = new BarData(dataSets);
+            data.setValueTextSize(10f);
+            // 这特么是个啥呢？ 2018年1月1日16:55:15
+//            data.setValueTypeface(mTfLight);
+            data.setBarWidth(0.9f);
+
+            type_chart.setData(data);
+        }
+    }
+
 }

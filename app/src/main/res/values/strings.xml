@@ -24,19 +24,25 @@
 
     <!--最高战斗数据-->
     <string name="max_kill">单次战斗最多击毁</string>
-    <string name="max_exp">单次战斗获得最大经验</string>
+    <string name="max_exp">单次战斗最大经验</string>
     <string name="max_hit">单次战斗最大伤害</string>
 
     <!--总分-->
-    <string name="fight">参加战斗</string>
+    <string name="fight">战斗</string>
     <string name="victory">胜利</string>
     <string name="failure">失败</string>
     <string name="survive">幸存</string>
+
+    <string name="damage_coefficient">杀伤率</string>
+    <string name="frags_count_coefficient">战损比</string>
+    <string name="damage_blocked_coefficient">装甲特性</string>
+    <string name="capture_points">占领基地点数</string>
+    <string name="dropped_capture_points">基地防守得分</string>
+
+    <!---->
     <string name="exp">经验</string>
     <string name="aveexp">场均经验</string>
     <string name="maxexp">单次获得最大经验</string>
-
-    <!--场均战绩-->
     <string name="destroy">击毁</string>
     <string name="find">发现</string>
     <string name="hitrate">命中率</string>
@@ -44,6 +50,15 @@
     <string name="avehit">战斗造成的平均伤害</string>
     <string name="occupied_base">占领基地点数</string>
     <string name="defend_base">基地防守得分</string>
+
+    <!--场均战绩-->
+    <string name="damage_dealt_avg">杀伤</string>
+    <string name="damage_received_avg">受到伤害</string>
+    <string name="stun_num_avg">弹震次数</string>
+    <string name="damage_assisted_avg">由您协助造成的伤害</string>
+    <string name="damage_assisted_stun_avg">对受到您弹震影响的敌方坦克造成的伤害</string>
+    <string name="spotted_count_avg">点亮敌方坦克</string>
+    <string name="frags_count_avg">击毁敌方坦克</string>
 
 
     <!--战车信息统计-->

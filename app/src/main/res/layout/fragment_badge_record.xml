@@ -248,7 +248,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
                             android:text="@string/max_kill"
                             android:textSize="16sp" />
@@ -262,7 +262,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -276,7 +276,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
                             android:text="@string/max_exp"
                             android:textSize="16sp" />
@@ -290,7 +290,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -304,7 +304,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
                             android:text="@string/max_hit"
                             android:textSize="16sp" />
@@ -318,7 +318,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -369,17 +369,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_battles" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
                             android:text="@string/fight"
                             android:textSize="16sp" />
@@ -393,7 +387,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -403,17 +397,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_wins_count" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
                             android:text="@string/victory"
                             android:textSize="16sp" />
@@ -427,7 +415,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -437,17 +425,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_defeat" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
                             android:text="@string/failure"
                             android:textSize="16sp" />
@@ -461,7 +443,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -471,17 +453,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_survived" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
                             android:text="@string/survive"
                             android:textSize="16sp" />
@@ -495,7 +471,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -505,23 +481,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_total_exp" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/exp"
+                            android:text="@string/damage_coefficient"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/experienceNum"
+                            android:id="@+id/damage_coefficient"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -529,7 +499,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -539,23 +509,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_avg_exp" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/aveexp"
+                            android:text="@string/frags_count_coefficient"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/averageExpNum"
+                            android:id="@+id/frags_count_coefficient"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -563,7 +527,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -573,23 +537,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_max_exp" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/maxexp"
+                            android:text="@string/damage_blocked_coefficient"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/maxExpNum"
+                            android:id="@+id/damage_blocked_coefficient"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -597,11 +555,66 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
+                            android:layout_weight="1"
+                            android:text="@string/capture_points"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/capture_points"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/linearlayout_margin_more"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="123"
+                            android:textColor="@color/text_shadow"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
+                            android:layout_weight="1"
+                            android:text="@string/dropped_capture_points"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/dropped_capture_points"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/linearlayout_margin_more"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="123"
+                            android:textColor="@color/text_shadow"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -648,23 +661,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_destroyed" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/destroy"
+                            android:text="@string/exp"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/destoryNum"
+                            android:id="@+id/exp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -672,7 +679,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -682,23 +689,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_spotted" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/find"
+                            android:text="@string/damage_dealt_avg"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/findNum"
+                            android:id="@+id/damage_dealt_avg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -706,7 +707,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -716,23 +717,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_hit_ratio" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/hitrate"
+                            android:text="@string/damage_received_avg"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/hitRate"
+                            android:id="@+id/damage_received_avg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -740,7 +735,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -750,23 +745,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_dmg_caused" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/hitnum"
+                            android:text="@string/stun_num_avg"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/killingNum"
+                            android:id="@+id/stun_num_avg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -774,7 +763,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -784,23 +773,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_avg_dmg" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/avehit"
+                            android:text="@string/damage_assisted_avg"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/averageKillingNum"
+                            android:id="@+id/damage_assisted_avg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -808,7 +791,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -818,23 +801,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_base_capture" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/occupied_base"
+                            android:text="@string/damage_assisted_stun_avg"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/occupiedBaseNum"
+                            android:id="@+id/damage_assisted_stun_avg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -842,7 +819,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -852,23 +829,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/linearlayout_margin_less">
 
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_more"
-                            android:src="@drawable/ic_stat_base_defense" />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/linearlayout_margin_less"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
                             android:layout_weight="1"
-                            android:text="@string/defend_base"
+                            android:text="@string/spotted_count_avg"
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/defendBaseNum"
+                            android:id="@+id/spotted_count_avg"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -876,7 +847,35 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="123"
-                            android:textColor="@color/gold"
+                            android:textColor="@color/text_shadow"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/linearlayout_margin_less">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/linearlayout_margin"
+                            android:layout_weight="1"
+                            android:text="@string/frags_count_avg"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/frags_count_avg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/linearlayout_margin_more"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="123"
+                            android:textColor="@color/text_shadow"
                             android:textSize="16sp" />
 
                     </LinearLayout>

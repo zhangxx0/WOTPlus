@@ -20,9 +20,9 @@
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/linearlayout_margin_more"
                 android:layout_weight="1">
-                <!--坦克类型-->
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/type_chart"
+                <!--等级-->
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/level_chart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -33,9 +33,22 @@
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/linearlayout_margin_more"
                 android:layout_weight="1">
-                <!--国家-->
-                <com.github.mikephil.charting.charts.PieChart
+                <!--系别-->
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/country_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/linearlayout_margin_more"
+                android:layout_weight="1">
+                <!--类型-->
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/type_chart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
