@@ -22,9 +22,11 @@ import com.xinxin.wotplus.base.BaseFragment;
 import com.xinxin.wotplus.model.Tanks;
 import com.xinxin.wotplus.model.TanksType;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.kongzhong.Statistics;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.PreferenceUtils;
+import com.xinxin.wotplus.util.mapper.StatisticsJsonToStatisticsMapper;
 import com.xinxin.wotplus.util.mapper.TankTypeJsonCorrectAndToVoMapper;
 import com.xinxin.wotplus.util.mapper.TypeCountryJsonCorrectMapper;
 import com.xinxin.wotplus.widget.DeathWheelProgressDialog;
@@ -70,7 +72,7 @@ public class TanksFragment extends BaseFragment {
         }
 
         // 数据改为动态获取之后，在此补充数据
-        Observer<List<TanksType>> observer = new Observer<List<TanksType>>() {
+        Observer<Statistics> observer = new Observer<Statistics>() {
             @Override
             public void onCompleted() {
             }
@@ -82,10 +84,8 @@ public class TanksFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(List<TanksType> tanksTypes) {
-                Tanks tanks = new Tanks();
-                tanks.setTanksTypes(tanksTypes);
-                woter.setTanks(tanks);
+            public void onNext(Statistics statistics) {
+                woter.setStatistics(statistics);
 
                 tanksAdapter = new TanksAdapter(getActivity(), woter);
                 // 点击事件
@@ -123,14 +123,13 @@ public class TanksFragment extends BaseFragment {
         String woterId = PreferenceUtils.getCustomPrefString(getActivity(), "woterId", "woterId", "");
         // 区分南北区
         String region = PreferenceUtils.getCustomPrefString(getActivity(), "queryinfo", "region", "");
-        /*subscription = Network.getTypeCountryInfo(region)
-                .getTypeCountryInfo(woterId, TypeCountryFragment.LANG)
-                .map(TankTypeJsonCorrectAndToVoMapper.getInstance())
+        subscription = Network.getKongzhongNewApi(region)
+                .getStatistics(woterId, MainFragment.BATTLE_TYPE)
+                .map(StatisticsJsonToStatisticsMapper.getInstance())
+//                .map(TankTypeJsonCorrectAndToVoMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);*/
-
-
+                .subscribe(observer);
 
         return view;
     }

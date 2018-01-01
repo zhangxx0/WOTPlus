@@ -8,6 +8,8 @@ import com.xinxin.wotplus.model.AchieveNew;
 import com.xinxin.wotplus.model.TankAchieveNew;
 import com.xinxin.wotplus.model.TankAchieveSummary;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.dto.AchievementsAndResponsebody;
+import com.xinxin.wotplus.model.kongzhong.Achievements;
 import com.xinxin.wotplus.util.PreferenceUtils;
 
 import java.io.IOException;
@@ -22,7 +24,7 @@ import rx.functions.Func1;
 /**
  * Created by xinxin on 2016/6/20.
  */
-public class TankJsonToMapMapper implements Func1<ResponseBody, TankAchieveNew> {
+public class TankJsonToMapMapper implements Func1<AchievementsAndResponsebody, TankAchieveNew> {
 
     private static TankJsonToMapMapper INSTANCE = new TankJsonToMapMapper();
 
@@ -35,7 +37,7 @@ public class TankJsonToMapMapper implements Func1<ResponseBody, TankAchieveNew> 
 
 
     @Override
-    public TankAchieveNew call(ResponseBody responseBody) {
+    public TankAchieveNew call(AchievementsAndResponsebody achievementsAndResponsebody) {
         TankAchieveNew tankAchieveNew = new TankAchieveNew();
 
         // （1）成就数量Map
@@ -44,11 +46,11 @@ public class TankJsonToMapMapper implements Func1<ResponseBody, TankAchieveNew> 
         TankAchieveSummary summary;
         // （3）需要组合成就信息与成就数量
 
-        if (responseBody != null) {
+        if (achievementsAndResponsebody.getResponseBody() != null) {
             try {
 
                 // （1）
-                String strRead0 = responseBody.string().replace(" ", "");
+                String strRead0 = achievementsAndResponsebody.getResponseBody().string().replace(" ", "");
                 String strRead = strRead0.replace("\"", "");
 
                 String mapString = strRead.substring(0, strRead.lastIndexOf("{") - 10);
@@ -73,44 +75,33 @@ public class TankJsonToMapMapper implements Func1<ResponseBody, TankAchieveNew> 
                 tankAchieveNew.setTankAchieveSummary(summary);
 
                 // （3）
-                Woter woter;
-                List<AchieveNew> newAchievements = new ArrayList<AchieveNew>();
-
-                // 从CharedPreference中获取woter
-                String woterString = PreferenceUtils.getCustomPrefString(MyApplication.getContext(), "woter", "woterString", "");
-                if (!TextUtils.isEmpty(woterString)) {
-                    woter = gson.fromJson(woterString, Woter.class);
-                    if (woter != null) {
-                        // 获取成就的七个列表信息
-//                        newAchievements = woter.getNewAchievements();
-                    }
-                }
+                List<Achievements.DataBean.AchDataBean> achDataBeanList = achievementsAndResponsebody.getAchievements().getData().getData();
 
                 // 重组之后的获取成就列表；
-                List<AchieveNew.AchievementsEntity> rebuildTankAchieveList = new ArrayList<>();
+                List<List<String>> rebuildTankAchieveList = new ArrayList<>();
 
                 // 根据成就数量map找出战车所获取到的成就
-                if (newAchievements.size() > 0) {
+                if (achDataBeanList.size() > 0) {
                     // 遍历7个大类
-                    for (int i = 0; i < newAchievements.size(); i++) {
+                    for (int i = 0; i < achDataBeanList.size(); i++) {
 
-                        List<AchieveNew.AchievementsEntity> achievements = newAchievements.get(i).getAchievements();
+                        List<List<String>> achievements = achDataBeanList.get(i).getAchievements();
                         // 遍历每个大类中的所有成就
                         for (int j = 0; j < achievements.size(); j++) {
 
-                            String achieveName = achievements.get(j).getName();
+                            String achieveName = achievements.get(j).get(0);
                             // 遍历map找出存在的成就，并set获取数量
                             if (achieveMap.containsKey(achieveName)) {
                                 // 设置勋章数目
-                                achievements.get(j).setNums(achieveMap.get(achieveName) + "");
-                                if (achievements.get(j).getNumber() != null) {
-                                    Double number = (Double) achievements.get(j).getNumber();
+                                achievements.get(j).set(10,achieveMap.get(achieveName) + "");
+                                if (achievements.get(j).get(10) != null) {
+                                    /*String number = achievements.get(j).get(10);
                                     if (number.intValue() == Integer.valueOf(achieveMap.get(achieveName)+"") &&
                                             !"markOfMastery".equals(achievements.get(j).getName())) {
-
                                         rebuildTankAchieveList.add(achievements.get(j));
+                                    }*/
+                                    rebuildTankAchieveList.add(achievements.get(j));
 
-                                    }
                                 } else {
                                     rebuildTankAchieveList.add(achievements.get(j));
                                 }
@@ -120,7 +111,7 @@ public class TankJsonToMapMapper implements Func1<ResponseBody, TankAchieveNew> 
                     }
 
                 }
-                tankAchieveNew.setRebuildTankAchieveList(rebuildTankAchieveList);
+                tankAchieveNew.setRebuildTankAchieveListNew(rebuildTankAchieveList);
 
 
             } catch (IOException e) {

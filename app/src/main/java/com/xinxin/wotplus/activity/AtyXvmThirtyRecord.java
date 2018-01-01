@@ -142,7 +142,7 @@ public class AtyXvmThirtyRecord extends SwipeBackBaseActivity {
         firWotProgressDialog.show();
 
         Observable.zip(Network.getXvmInfo().getXvmThirtyDay(woterId),
-                Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
+                Network.getXvmjsApi(1).getTanksjs().map(TanksjsToMapMapper.getInstance()),
                 new Func2<List<XvmMainInfo.DaylistEntity>, Map, XvmAllInfo>() {
                     @Override
                     public XvmAllInfo call(List<XvmMainInfo.DaylistEntity> daylistEntities, Map map) {

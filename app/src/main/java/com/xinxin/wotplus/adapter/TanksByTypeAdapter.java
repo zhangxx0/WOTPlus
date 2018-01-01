@@ -72,6 +72,9 @@ public class TanksByTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_japan);
         } else if ("czech".equals(tank.getTankCountry())) {
             ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_czech);
+        } else if ("sweden".equals(tank.getTankCountry())) {
+            // 缺少瑞典国旗图片 2018年1月1日20:11:14
+            ((TankShortInfo) holder).tankCountry.setImageResource(R.drawable.ch_czech);
         }
 
         ((TankShortInfo) holder).tankLevel.setText(tank.getTankLevel());

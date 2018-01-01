@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.gmariotti.recyclerview.adapter.SlideInRightAnimatorAdapter;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

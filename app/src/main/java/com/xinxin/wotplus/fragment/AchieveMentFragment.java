@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
  */
 public class AchieveMentFragment extends BaseFragment {
 
-    private static final String LANGUAGE = "zh-cn";
+    public static final String LANGUAGE = "zh-cn";
 
     private RecyclerView recyclerview_achieve;
     private AchieveMentAdapter adapter;

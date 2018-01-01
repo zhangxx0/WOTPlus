@@ -60,6 +60,7 @@ public class AtyXvmTankTop extends SwipeBackBaseActivity {
         public void onError(Throwable e) {
             Log.e("tank", e.getMessage(), e);
             Snackbar.make(recyclerview_xvm_tanktop, "获取坦克榜单出错！", Snackbar.LENGTH_LONG).show();
+            firWotProgressDialog.dismiss();
         }
 
         @Override
@@ -98,8 +99,8 @@ public class AtyXvmTankTop extends SwipeBackBaseActivity {
         firWotProgressDialog = DeathWheelProgressDialog.createDialog(this);
         firWotProgressDialog.show();
 
-        Observable.zip(Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
-                Network.getXvmjsApi().getTankTop().map(XvmTankTopToVoMapper.getInstance()),
+        Observable.zip(Network.getXvmjsApi(1).getTanksjs().map(TanksjsToMapMapper.getInstance()),
+                Network.getXvmjsApi(0).getTankTop().map(XvmTankTopToVoMapper.getInstance()),
                 new Func2<Map, List<XvmTankTopVO>, XvmTankTopAll>() {
                     @Override
                     public XvmTankTopAll call(Map map, List<XvmTankTopVO> tankTopVOs) {

@@ -74,6 +74,7 @@ public class Constant {
     // public static final String XVM_JS_BASE_URL = "http://182.18.61.50/Data/";
     public static final String XVM_BASE_URL = "http://rank.kongzhong.com/Data/action/WotAction/";
     public static final String XVM_JS_BASE_URL = "http://rank.kongzhong.com/Data/";
+    public static final String XVM_JS_BASE_URL_NEW = "http://xvm.qingcdn.com/Data/";
 
     /**
      * FIR_API_TOKEN

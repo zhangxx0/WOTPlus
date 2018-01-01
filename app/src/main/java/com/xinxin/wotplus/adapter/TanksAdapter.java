@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.model.TanksType;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.kongzhong.Statistics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private int[] tanksTypesImgs0 = {R.drawable.filter_ic_light2, R.drawable.filter_ic_medium2, R.drawable.filter_ic_heavy2,
             R.drawable.filter_ic_td2, R.drawable.filter_ic_sau2};
 
-    List<TanksType> tanksTypes = new ArrayList<TanksType>();
+    private Statistics statistics = new Statistics();
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
@@ -44,12 +45,11 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
-
     public TanksAdapter(Context mContext, Woter woter) {
         this.mContext = mContext;
         this.woter = woter;
         layoutInflater = LayoutInflater.from(mContext);
-        tanksTypes = woter.getTanks().getTanksTypes();
+        statistics = woter.getStatistics();
     }
 
     @Override
@@ -60,12 +60,8 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText(tanksTypes.get(position).getTanksTypeName() + " " + tanksTypes.get(position).getTanksTypeNum());
-        ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(tanksTypes.get(position).getTanksTypeFightNum());
-        ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(tanksTypes.get(position).getTanksTypeWinRating());
-        ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(tanksTypes.get(position).getTanksTypeBadgeNum());
-        ((TanksTypeViewHolder) holder).tanksTypeImg.setImageResource(tanksTypesImgs[position]);
 
+        // 先设置点击事件，避免后面的return导致点击事件未设置；2018年1月1日19:57:08
         // 如果设置了回调，则设置点击事件
         if (mOnItemClickLitener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -86,11 +82,50 @@ public class TanksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
         }
 
+        Statistics.DataBean.TypesBean types = statistics.getData().getTypes();
+        switch (position) {
+            case 0:
+                ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText("轻型坦克");
+                ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(String.valueOf(types.getLightTank().getBattles_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(String.valueOf(types.getLightTank().getWins_count_percent()));
+                ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(String.valueOf(types.getLightTank().getMaster_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeImg.setImageResource(tanksTypesImgs[position]);
+                return;
+            case 1:
+                ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText("中型坦克");
+                ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(String.valueOf(types.getMediumTank().getBattles_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(String.valueOf(types.getMediumTank().getWins_count_percent()));
+                ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(String.valueOf(types.getMediumTank().getMaster_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeImg.setImageResource(tanksTypesImgs[position]);
+                return;
+            case 2:
+                ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText("重型坦克");
+                ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(String.valueOf(types.getHeavyTank().getBattles_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(String.valueOf(types.getHeavyTank().getWins_count_percent()));
+                ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(String.valueOf(types.getHeavyTank().getMaster_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeImg.setImageResource(tanksTypesImgs[position]);
+                return;
+            case 3:
+                ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText("坦克歼击车");
+                ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(String.valueOf(types.getATSPG().getBattles_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(String.valueOf(types.getATSPG().getWins_count_percent()));
+                ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(String.valueOf(types.getATSPG().getMaster_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeImg.setImageResource(tanksTypesImgs[position]);
+                return;
+            case 4:
+                ((TanksTypeViewHolder) holder).tanksTypeNameAndNum.setText("火炮");
+                ((TanksTypeViewHolder) holder).tanksTypeFightNum.setText(String.valueOf(types.getSPG().getBattles_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeWinRating.setText(String.valueOf(types.getSPG().getWins_count_percent()));
+                ((TanksTypeViewHolder) holder).tanksTypeBadgeNum.setText(String.valueOf(types.getSPG().getMaster_count()));
+                ((TanksTypeViewHolder) holder).tanksTypeImg.setImageResource(tanksTypesImgs[position]);
+                return;
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return tanksTypes.size();
+        return 5;
     }
 
     class TanksTypeViewHolder extends RecyclerView.ViewHolder {

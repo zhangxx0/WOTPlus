@@ -68,6 +68,7 @@ public class Woter implements Serializable {
      */
     private TypesAndCountry typesAndCountry;
 
+
     /**
      * 战车
      */

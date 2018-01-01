@@ -5,6 +5,7 @@ import com.xinxin.wotplus.model.kongzhong.UserSummary;
 
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -39,6 +40,18 @@ public interface KongzhongNewApi {
      */
     @GET("statistics/")
     Observable<ResponseBody> getStatistics(@Query("spa_id") String spaId, @Query("battle_type") String battleType);
+
+    /**
+     * 战车列表信息
+     */
+    @POST("vehicles/list/")
+    Observable<ResponseBody> getTankList();
+
+    /**
+     * 战车成就信息
+     */
+    @GET("vehicles/achievements/")
+    Observable<ResponseBody> getTankAchievements(@Query("spa_id") String spaId, @Query("vehicle_cd")String vehicleCd, @Query("language") String language);
 
 
 }

@@ -11,6 +11,8 @@ public class TankAchieveNew implements Serializable {
 
     List<AchieveNew.AchievementsEntity> rebuildTankAchieveList;
 
+    List<List<String>> rebuildTankAchieveListNew;
+
     Map achieveMap;
 
     List<AchieveNew> achieveNews;
@@ -18,7 +20,13 @@ public class TankAchieveNew implements Serializable {
     TankAchieveSummary tankAchieveSummary;
 
 
+    public List<List<String>> getRebuildTankAchieveListNew() {
+        return rebuildTankAchieveListNew;
+    }
 
+    public void setRebuildTankAchieveListNew(List<List<String>> rebuildTankAchieveListNew) {
+        this.rebuildTankAchieveListNew = rebuildTankAchieveListNew;
+    }
 
     public TankAchieveSummary getTankAchieveSummary() {
         return tankAchieveSummary;

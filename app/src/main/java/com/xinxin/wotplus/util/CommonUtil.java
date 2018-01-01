@@ -527,8 +527,16 @@ public class CommonUtil {
 
                 TankInfo ti1 = (TankInfo) map.get(lhs.getTankid() + "");
                 TankInfo ti2 = (TankInfo) map.get(rhs.getTankid() + "");
-
-                return ti2.getLevel() - ti1.getLevel();
+                if (ti1 != null && ti2 != null) {
+                    if (ti2.getLevel() > ti1.getLevel()) {
+                        return 1;
+                    }
+                    if (ti2.getLevel() == ti1.getLevel()){
+                        return 0;
+                    }
+                    return -1;
+                }
+                return -1;
             }
         });
 

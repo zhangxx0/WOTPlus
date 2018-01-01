@@ -138,7 +138,7 @@ public class AtyXvmActiveTank extends SwipeBackBaseActivity {
 //                .subscribe(activeTankObserver);
 
         Observable.zip(Network.getXvmInfo().getXvmMainInfo(name, region),
-                Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
+                Network.getXvmjsApi(1).getTanksjs().map(TanksjsToMapMapper.getInstance()),
                 new Func2<XvmMainInfo, Map, XvmActiveTanks>() {
                     @Override
                     public XvmActiveTanks call(XvmMainInfo xvmMainInfo, Map map) {

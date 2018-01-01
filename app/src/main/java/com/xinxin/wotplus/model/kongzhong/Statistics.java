@@ -15,36 +15,6 @@ public class Statistics implements Serializable {
      */
 
     private String status;
-    /**
-     * tiers : {"tier3":{"battles_count":488,"wins_count":268,"master_count":21,"battles_count_percent":1.74,"wins_count_percent":54.92},"tier8":{"battles_count":4214,"wins_count":2311,"master_count":28,"battles_count_percent":15.06,"wins_count_percent":54.84},"tier2":{"battles_count":943,"wins_count":576,"master_count":23,"battles_count_percent":3.37,"wins_count_percent":61.08},"tier5":{"battles_count":4289,"wins_count":2381,"master_count":27,"battles_count_percent":15.33,"wins_count_percent":55.51},"tier10":{"battles_count":4155,"wins_count":2179,"master_count":21,"battles_count_percent":14.85,"wins_count_percent":52.44},"tier9":{"battles_count":5499,"wins_count":2990,"master_count":22,"battles_count_percent":19.65,"wins_count_percent":54.37},"tier7":{"battles_count":4122,"wins_count":2193,"master_count":29,"battles_count_percent":14.73,"wins_count_percent":53.2},"tier6":{"battles_count":3221,"wins_count":1786,"master_count":25,"battles_count_percent":11.51,"wins_count_percent":55.45},"tier4":{"battles_count":885,"wins_count":478,"master_count":21,"battles_count_percent":3.16,"wins_count_percent":54.01},"tier1":{"battles_count":167,"wins_count":107,"master_count":9,"battles_count_percent":0.6,"wins_count_percent":64.07}}
-     * nations : {"ussr":{"battles_count":3546,"wins_count":2040,"master_count":37,"battles_count_percent":12.67,"wins_count_percent":57.53},"usa":{"battles_count":4800,"wins_count":2721,"master_count":45,"battles_count_percent":17.15,"wins_count_percent":56.69},"germany":{"battles_count":12879,"wins_count":6779,"master_count":69,"battles_count_percent":46.03,"wins_count_percent":52.64},"china":{"battles_count":3457,"wins_count":1930,"master_count":23,"battles_count_percent":12.35,"wins_count_percent":55.83},"uk":{"battles_count":930,"wins_count":522,"master_count":26,"battles_count_percent":3.32,"wins_count_percent":56.13},"france":{"battles_count":1737,"wins_count":916,"master_count":12,"battles_count_percent":6.21,"wins_count_percent":52.73},"japan":{"battles_count":1,"wins_count":1,"master_count":1,"battles_count_percent":0,"wins_count_percent":100},"czech":{"battles_count":105,"wins_count":65,"master_count":4,"battles_count_percent":0.38,"wins_count_percent":61.9},"sweden":{"battles_count":528,"wins_count":295,"master_count":9,"battles_count_percent":1.89,"wins_count_percent":55.87}}
-     * types : {"lightTank":{"battles_count":5633,"wins_count":3090,"master_count":62,"battles_count_percent":20.13,"wins_count_percent":54.86},"heavyTank":{"battles_count":7900,"wins_count":4312,"master_count":32,"battles_count_percent":28.23,"wins_count_percent":54.58},"mediumTank":{"battles_count":6957,"wins_count":3822,"master_count":60,"battles_count_percent":24.86,"wins_count_percent":54.94},"ATSPG":{"battles_count":4334,"wins_count":2409,"master_count":50,"battles_count_percent":15.49,"wins_count_percent":55.58},"SPG":{"battles_count":3159,"wins_count":1636,"master_count":22,"battles_count_percent":11.29,"wins_count_percent":51.79}}
-     * master_levels : {"master2":26,"master4":128,"master3":56,"master1":16}
-     * battles_count : 27983
-     * wins_count : 15269
-     * losses_count : 12205
-     * survived_battles : 10643
-     * capture_points : 49230
-     * dropped_capture_points : 32253
-     * frags_max : 11
-     * xp_max : 4567
-     * damage_max : 8226
-     * damage_assisted_avg : 285
-     * wins_count_percent : 54.56
-     * losses_count_percent : 43.62
-     * survived_battles_percent : 38.03
-     * xp_amount_avg : 637
-     * damage_dealt_avg : 1299
-     * damage_received_avg : 874
-     * spotted_count_avg : 1.25
-     * frags_count_avg : 1.15
-     * stun_num_avg : 7
-     * damage_assisted_stun_avg : 507
-     * frags_count_coefficient : 1.85
-     * damage_coefficient : 1.49
-     * damage_blocked_coefficient : 0.42
-     * master_level_counts : {"master2":26,"master4":128,"master3":56,"master1":16}
-     */
 
     private DataBean data;
 
@@ -1465,8 +1435,8 @@ public class Statistics implements Serializable {
                 private int battles_count;
                 private int wins_count;
                 private int master_count;
-                private int battles_count_percent;
-                private int wins_count_percent;
+                private double battles_count_percent;
+                private double wins_count_percent;
 
                 public int getBattles_count() {
                     return battles_count;
@@ -1492,7 +1462,7 @@ public class Statistics implements Serializable {
                     this.master_count = master_count;
                 }
 
-                public int getBattles_count_percent() {
+                public double getBattles_count_percent() {
                     return battles_count_percent;
                 }
 
@@ -1500,7 +1470,7 @@ public class Statistics implements Serializable {
                     this.battles_count_percent = battles_count_percent;
                 }
 
-                public int getWins_count_percent() {
+                public double getWins_count_percent() {
                     return wins_count_percent;
                 }
 

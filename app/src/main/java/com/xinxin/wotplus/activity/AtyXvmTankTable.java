@@ -120,7 +120,7 @@ public class AtyXvmTankTable extends SwipeBackBaseActivity {
         // 获取单车数据
         Observable.zip(Network.getXvmInfo().getXvmTankTable(woterId),
                 Network.getXvmInfo().getXvmMainInfo(name, region),
-                Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
+                Network.getXvmjsApi(1).getTanksjs().map(TanksjsToMapMapper.getInstance()),
                 new Func3<List<XvmMainInfo.TanklistEntity>, XvmMainInfo, Map, XvmAllInfo>() {
 
                     @Override

@@ -22,9 +22,9 @@ public class TankAchievesNewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<AchieveNew.AchievementsEntity> achieveList;
+    private List<List<String>> achieveList;
 
-    public TankAchievesNewAdapter(List<AchieveNew.AchievementsEntity> achieveList, Context context) {
+    public TankAchievesNewAdapter(List<List<String>> achieveList, Context context) {
         this.achieveList = achieveList;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
@@ -39,12 +39,12 @@ public class TankAchievesNewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        AchieveNew.AchievementsEntity achieve = achieveList.get(position);
+        List<String> achieve = achieveList.get(position);
 
-        ((TankAchieveViewHolder) holder).tank_achieve_name.setText(achieve.getLocalization().getMark());
-        ((TankAchieveViewHolder) holder).achieve_num_for_tank.setText(achieve.getNums() + "");
+        ((TankAchieveViewHolder) holder).tank_achieve_name.setText(achieve.get(4));
+        ((TankAchieveViewHolder) holder).achieve_num_for_tank.setText(achieve.get(10) + "");
 
-        String picUrl = "http:"+achieve.getIcons().getBig();
+        String picUrl = "http:"+achieve.get(9);
 
         Glide.with(context).load(picUrl).into(((TankAchieveViewHolder) holder).tank_achieve_icon);
 

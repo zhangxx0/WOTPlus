@@ -295,12 +295,16 @@ public class Network {
      *
      * @return
      */
-    public static XvmJsApi getXvmjsApi() {
+    public static XvmJsApi getXvmjsApi(int flag) {
+        String base = Constant.XVM_JS_BASE_URL;
+        if (flag == 1) {
+            base = Constant.XVM_JS_BASE_URL_NEW;
+        }
 
 //        if (xvmJsApi == null) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(Constant.XVM_JS_BASE_URL)
+                .baseUrl(base)
                 .addCallAdapterFactory(rxJavaCallAdapterFactory)
                 .build();
         xvmJsApi = retrofit.create(XvmJsApi.class);

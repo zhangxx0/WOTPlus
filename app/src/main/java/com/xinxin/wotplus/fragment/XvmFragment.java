@@ -143,7 +143,7 @@ public class XvmFragment extends BaseFragment {
          * 将主信息和tanks.js信息结合
          */
         Observable.zip(Network.getXvmInfo().getXvmMainInfo(name, region),
-                Network.getXvmjsApi().getTanksjs().map(TanksjsToMapMapper.getInstance()),
+                Network.getXvmjsApi(1).getTanksjs().map(TanksjsToMapMapper.getInstance()),
                 new Func2<XvmMainInfo, Map, XvmAllInfo>() {
                     @Override
                     public XvmAllInfo call(XvmMainInfo xvmMainInfo, Map map) {

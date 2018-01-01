@@ -19,11 +19,15 @@ import android.widget.TextView;
 import com.xinxin.wotplus.R;
 import com.xinxin.wotplus.adapter.TankAchievesNewAdapter;
 import com.xinxin.wotplus.base.SwipeBackBaseActivity;
+import com.xinxin.wotplus.fragment.AchieveMentFragment;
+import com.xinxin.wotplus.fragment.TypeCountryFragment;
 import com.xinxin.wotplus.model.AchieveNew;
 import com.xinxin.wotplus.model.AchieveTank;
 import com.xinxin.wotplus.model.TankAchieveNew;
 import com.xinxin.wotplus.model.TankAchieveSummary;
 import com.xinxin.wotplus.model.Woter;
+import com.xinxin.wotplus.model.dto.AchievementsAndResponsebody;
+import com.xinxin.wotplus.model.kongzhong.Achievements;
 import com.xinxin.wotplus.network.Network;
 import com.xinxin.wotplus.util.Constant;
 import com.xinxin.wotplus.util.PreferenceUtils;
@@ -35,8 +39,11 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import it.gmariotti.recyclerview.adapter.ScaleInAnimatorAdapter;
+import okhttp3.ResponseBody;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -147,12 +154,29 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(tankObserver);
 
-        Network.getAchieveApi(region)
-                .getTankAchieve(woterId, tankId)
+        Observable.zip(Network.getAchieveApi(region)
+                        .getTankAchieve(woterId, tankId),
+                Network.getKongzhongNewApi(region)
+                        .getFullAchievements(woterId, AchieveMentFragment.LANGUAGE),
+                new Func2<ResponseBody, Achievements, AchievementsAndResponsebody>() {
+                    @Override
+                    public AchievementsAndResponsebody call(ResponseBody responseBody, Achievements achievements) {
+                        AchievementsAndResponsebody dto = new AchievementsAndResponsebody();
+                        dto.setAchievements(achievements);
+                        dto.setResponseBody(responseBody);
+                        return dto;
+                    }
+                })
                 .map(TankJsonToMapMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tankObserverNew);
+        /*Network.getAchieveApi(region)
+                .getTankAchieve(woterId, tankId)
+                .map(TankJsonToMapMapper.getInstance())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tankObserverNew);*/
 
         // 下面这个是想多了，不用这么复杂，而且zip的第一个请求获取的数据也没啥用
         /*Observable.zip(Network.getAchieveApi().getTankAchieve(woterId, tankId).map(TankJsonToMapMapper.getInstance()),
@@ -181,11 +205,11 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
      */
     private void showTankAchieveNew(TankAchieveNew tankAchieveNew) {
 
-        List<AchieveNew.AchievementsEntity> achieveList = tankAchieveNew.getRebuildTankAchieveList();
+        List<List<String>> achieveListNew = tankAchieveNew.getRebuildTankAchieveListNew();
 
         // 根据成就的多少，判断展示的行数 <=8 则展示1行，其余展示两行
         int spanCount = 1;
-        if (achieveList.size() >= 8) {
+        if (achieveListNew.size() >= 8) {
             spanCount = 2;
         }
         GridLayoutManager gm = new GridLayoutManager(AtyTank.this, spanCount);
@@ -193,7 +217,7 @@ public class AtyTank extends SwipeBackBaseActivity implements RevealBackgroundVi
         recyclerView.setLayoutManager(gm);
 
         // new
-        adapter = new TankAchievesNewAdapter(achieveList, AtyTank.this);
+        adapter = new TankAchievesNewAdapter(achieveListNew, AtyTank.this);
         // RecyclerView 动画
         ScaleInAnimatorAdapter animatorAdapter = new ScaleInAnimatorAdapter(adapter, recyclerView);
         recyclerView.setAdapter(animatorAdapter);
