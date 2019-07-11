@@ -11,21 +11,24 @@ public class Constant {
      * 官网获取用户ID信息等
      * http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=%E6%8A%98%E8%85%BE5%E5%8F%B7&name_gt=
      */
-    public static String USER_BASE_URL_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
-    public static String USER_BASE_URL_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static String USER_BASE_URL_NORTH = "https://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static String USER_BASE_URL_SOUTH = "https://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
     /**
      * 获取战绩页面html
      * 北区：
      * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
+     * https://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-%E5%BA%B7%E6%81%A9%E9%A5%AD_/
      * 南区：
      * http://scw.worldoftanks.cn/zh-cn/community/accounts/1800661743-%E6%8A%98%E8%85%BE5%E5%8F%B7/
      */
-    public static final String BASE_URL_NORTH = "http://ncw.worldoftanks.cn";
-    public static final String BASE_URL_SOUTH = "http://scw.worldoftanks.cn";
+    public static final String BASE_URL_NORTH = "https://ncw.worldoftanks.cn";
+    public static final String BASE_URL_SOUTH = "https://scw.worldoftanks.cn";
 
     /**
      * 改版后统一的南北区API基础地址
+     *
+     * https://ncw.worldoftanks.cn/wotup/profile/summary/?spa_id=1509154099&battle_type=random
      */
     public static final String BASE_URL_NORTH_NEW = "https://ncw.worldoftanks.cn/wotup/profile/";
     public static final String BASE_URL_SOUTH_NEW = "https://scw.worldoftanks.cn/wotup/profile/";
@@ -55,8 +58,8 @@ public class Constant {
      * public static final String GRADE_URL = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/?timerange=28&group=all";
      * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1509154099-/account_ratings/
      */
-    public static final String GRADE_URL_BASE_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
-    public static final String GRADE_URL_BASE_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String GRADE_URL_BASE_NORTH = "https://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String GRADE_URL_BASE_SOUTH = "https://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
     /**
      * 战车战绩
@@ -64,8 +67,8 @@ public class Constant {
      * http://ncw.worldoftanks.cn/zh-cn/community/accounts/1503597733/vehicle_details/?vehicle_cd=3889
      * 1503597733/vehicle_details/?vehicle_cd=3649
      */
-    public static final String TANK_ACHIEVE_URL_BASE_NORTH = "http://ncw.worldoftanks.cn/zh-cn/community/accounts/";
-    public static final String TANK_ACHIEVE_URL_BASE_SOUTH = "http://scw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String TANK_ACHIEVE_URL_BASE_NORTH = "https://ncw.worldoftanks.cn/zh-cn/community/accounts/";
+    public static final String TANK_ACHIEVE_URL_BASE_SOUTH = "https://scw.worldoftanks.cn/zh-cn/community/accounts/";
 
     /**
      * XVM

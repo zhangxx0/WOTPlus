@@ -14,6 +14,7 @@ public interface UserInfoApi {
 
     // 获取玩家信息-根据昵称和大区
     // http://scw.worldoftanks.cn/zh-cn/community/accounts/search/?name=%E6%8A%98%E8%85%BE5%E5%8F%B7&name_gt=
+    // https://ncw.worldoftanks.cn/zh-cn/community/accounts/search/?name=%E5%BA%B7%E6%81%A9%E9%A5%AD_&name_gt=
     @Headers(
             "X-Requested-With: XMLHttpRequest"
     )
